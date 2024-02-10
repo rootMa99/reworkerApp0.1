@@ -4,12 +4,14 @@ import { useDispatch } from "react-redux";
 import api from "../../services/api";
 import { loginSActions } from "../../store/loginSlice";
 import c from "./Login.module.css";
+import Notification from "./Notification";
 
 const Login = () => {
   const [loginCred, setLogingCred] = useState({
     name: "",
     pwd: "",
   });
+  const [err, setErr] = useState(false);
   const dispatch = useDispatch();
 
   const ClickHandler = async (e) => {
@@ -39,6 +41,7 @@ const Login = () => {
         );
       } catch (error) {
         console.error("Error:", error);
+        setErr(true);
       }
     }
   };
@@ -51,37 +54,48 @@ const Login = () => {
     setLogingCred((p) => ({ ...p, pwd: e.target.value }));
   };
 
+  if (err) {
+    setTimeout(() => {
+      setErr(false);
+    }, 10000);
+  }
+
   return (
-    <form className={c["Form-container"]} onSubmit={ClickHandler}>
-      <h2 className={c["login-title"]}> Login </h2>
+    <React.Fragment>
+      <form className={c["Form-container"]} onSubmit={ClickHandler}>
+        <h2 className={c["login-title"]}> Login </h2>
 
-      <div>
-        <div id="error" className={c["error-message"]}></div>
-      </div>
-      <div className={c["user-container"]}>
-        <input
-          type="text"
-          name="matricule"
-          placeholder="User Name"
-          className={c["username"]}
-          value={loginCred.name}
-          onChange={nameChangeHadler}
-        />
-      </div>
+        <div>
+          <div id="error" className={c["error-message"]}></div>
+        </div>
+        <div className={c["user-container"]}>
+          <input
+            type="text"
+            name="matricule"
+            placeholder="User Name"
+            className={c["username"]}
+            value={loginCred.name}
+            onChange={nameChangeHadler}
+          />
+        </div>
 
-      <div className={c["password-container"]}>
-        <input
-          type="password"
-          name="password"
-          placeholder="User Password"
-          className={c["userpassword"]}
-          value={loginCred.pwd}
-          onChange={pwdChangeHadler}
-        />
-      </div>
+        <div className={c["password-container"]}>
+          <input
+            type="password"
+            name="password"
+            placeholder="User Password"
+            className={c["userpassword"]}
+            value={loginCred.pwd}
+            onChange={pwdChangeHadler}
+          />
+        </div>
 
-      <button className={c["Login"]}>Submit</button>
-    </form>
+        <button className={c["Login"]}>Submit</button>
+      </form>
+      {
+        err && <Notification message="The username or password you entered is incorrect. Please try again." />
+      }
+    </React.Fragment>
   );
 };
 
