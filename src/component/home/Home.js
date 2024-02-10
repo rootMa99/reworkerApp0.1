@@ -55,6 +55,28 @@ const Home = (p) => {
             <td>shift Leader</td>
             <td>status</td>
           </tr>
+          <tr>
+            <td>Matricule</td>
+            <td>reference</td>
+            <td>pdd</td>
+            <td>pcd</td>
+            <td>crew</td>
+            <td>reworkid</td>
+            <td>team Leader</td>
+            <td>shift Leader</td>
+            <td>status</td>
+          </tr>
+          <tr>
+            <td>Matricule</td>
+            <td>reference</td>
+            <td>pdd</td>
+            <td>pcd</td>
+            <td>crew</td>
+            <td>reworkid</td>
+            <td>team Leader</td>
+            <td>shift Leader</td>
+            <td>status</td>
+          </tr>
         </tbody>
       </table>
     </div>
