@@ -1,6 +1,7 @@
 import { useState } from "react";
 import c from "./Home.module.css";
 import BackDrop from "../ui/BackDrop";
+import PopupFormRef from "./PopupFormRef";
 const Home = (p) => {
   const [popUp, setPopUp] = useState(false);
 
@@ -10,7 +11,8 @@ const Home = (p) => {
 
   return (
     <div className={c.holder}>
-      {popUp && <BackDrop />}
+      {popUp && <BackDrop  click={clickHandler}/>}
+      {popUp && <PopupFormRef />}
 
       <button className={c.button} onClick={clickHandler}>
         add reference
@@ -20,37 +22,37 @@ const Home = (p) => {
         <thead>
           <tr style={{ backgroundColor: "black" }}>
             <th>Matricule</th>
-            <th>first Name</th>
-            <th>last name</th>
-            <th>category</th>
+            <th>reference</th>
+            <th>pdd</th>
+            <th>pcd</th>
             <th>crew</th>
-            <th>planning Leader</th>
+            <th>reworkid</th>
             <th>team Leader</th>
-            <th>parada</th>
+            <th>shift Leader</th>
             <th>status</th>
           </tr>
         </thead>
         <tbody>
           <tr>
             <td>Matricule</td>
-            <td>first Name</td>
-            <td>last name</td>
-            <td>category</td>
+            <td>reference</td>
+            <td>pdd</td>
+            <td>pcd</td>
             <td>crew</td>
-            <td>planning Leader</td>
+            <td>reworkid</td>
             <td>team Leader</td>
-            <td>parada</td>
+            <td>shift Leader</td>
             <td>status</td>
           </tr>
           <tr>
             <td>Matricule</td>
-            <td>first Name</td>
-            <td>last name</td>
-            <td>category</td>
+            <td>reference</td>
+            <td>pdd</td>
+            <td>pcd</td>
             <td>crew</td>
-            <td>planning Leader</td>
+            <td>reworkid</td>
             <td>team Leader</td>
-            <td>parada</td>
+            <td>shift Leader</td>
             <td>status</td>
           </tr>
         </tbody>

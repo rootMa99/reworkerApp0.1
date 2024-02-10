@@ -25,7 +25,7 @@
   
   .button:focus,
   .button:hover {
-    color: orange;
+    color: orangered;
   }
   
   .button:focus:after,
@@ -41,8 +41,8 @@
     left: 50%;
     position: absolute;
     width: 0%;
-    height: 2px;
-    background-color: orange;
+    height: 3px;
+    background-color: orangered;
     transition-timing-function: cubic-bezier(0.25, 0.8, 0.25, 1);
     transition-duration: 400ms;
     transition-property: width, left;
@@ -55,13 +55,13 @@
     text-transform: uppercase;
     text-align: center;
     font-size: large;
-    color: #f8714f;
+    color: orangered;
     font-weight: bolder;
   }
   .table {
     width: 97%;
     border-collapse: initial;
-    border: 2px solid #f84018;
+    border: 2px solid orangered;
     border-radius: 20px;
     margin-bottom: 2rem;
     animation: rsin 0.25s ease-in forwards;
@@ -74,7 +74,7 @@
     font-family: Formular, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
       "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
       "Segoe UI Symbol";
-    color: #f97d62;
+    color: orange;
     text-align: center;
     text-transform: uppercase;
    
@@ -96,7 +96,7 @@
     padding: 8px;
     padding-top: 10px;
     color: #fdcec4;
-    text-transform: uppercase;
+    text-transform:capitalize;
     font-weight: 450;
   }
   
