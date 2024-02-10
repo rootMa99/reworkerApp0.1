@@ -18,31 +18,33 @@ const Login = () => {
     e.preventDefault();
 
     if (loginCred.name.trim() !== "" && loginCred.pwd.trim() !== "") {
-      const body = { username: loginCred.name, password: loginCred.pwd };
+      // const body = { username: loginCred.name, password: loginCred.pwd };
 
-      try {
-        const response = await fetch(`${api}/auth/login`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(body),
-        });
+      // try {
+      //   const response = await fetch(`${api}/auth/login`, {
+      //     method: "POST",
+      //     headers: {
+      //       "Content-Type": "application/json",
+      //     },
+      //     body: JSON.stringify(body),
+      //   });
 
-        const data = await response.json();
-        console.log(data);
-        dispatch(
-          loginSActions.login({
-            role: data.user.role,
-            id: data.user.id,
-            username: data.user.username,
-            token: data.token,
-          })
-        );
-      } catch (error) {
-        console.error("Error:", error);
-        setErr(true);
-      }
+      //   const data = await response.json();
+      //   console.log(data);
+      //   dispatch(
+      //     loginSActions.login({
+      //       role: data.user.role,
+      //       id: data.user.id,
+      //       username: data.user.username,
+      //       token: data.token,
+      //     })
+      //   );
+      // } catch (error) {
+      //   console.error("Error:", error);
+      //   setErr(true);
+      // }
+   
+
     }
   };
 
@@ -54,11 +56,11 @@ const Login = () => {
     setLogingCred((p) => ({ ...p, pwd: e.target.value }));
   };
 
-  if (err) {
-    setTimeout(() => {
-      setErr(false);
-    }, 10000);
-  }
+  // if (err) {
+  //   setTimeout(() => {
+  //     setErr(false);
+  //   }, 10000);
+  // }
 
   return (
     <React.Fragment>
