@@ -2,5 +2,9 @@
   text-align: center;
   background-color: #282c34;
   width: 100vw;
-  height: 100vh;
+  height: 96vh;
+  margin-top: 4vh;
+  overflow: hidden;
+  overflow-y: auto;
+
 }
