@@ -13,6 +13,7 @@ function App() {
       <NavBar />
       {!isLoged.login && <Login />}
       {isLoged.login && (
+        
         <Suspense>
           <Routes>
             <Route index path="/" element={<Navigate replace to="/home" />} />

@@ -5,7 +5,7 @@ import api from "../../services/api";
 import { loginSActions } from "../../store/loginSlice";
 import c from "./Login.module.css";
 
-const Login = ({ setToken, setRole }) => {
+const Login = () => {
   const [loginCred, setLogingCred] = useState({
     name: "",
     pwd: "",
@@ -17,14 +17,7 @@ const Login = ({ setToken, setRole }) => {
 
     if (loginCred.name.trim() !== "" && loginCred.pwd.trim() !== "") {
       const body = { username: loginCred.name, password: loginCred.pwd };
-      let data;
-      // try {
-      //   const response = await api.post("/auth/login", body);
-      //   data = response.data;
-      // } catch (error) {
-      //   alert(error.response.data.msg);
-      //   // console.log('here');
-      // }
+
       try {
         const response = await fetch(`${api}/auth/login`, {
           method: "POST",
@@ -33,22 +26,20 @@ const Login = ({ setToken, setRole }) => {
           },
           body: JSON.stringify(body),
         });
-    
-         data = await response.json();
-        
+
+        const data = await response.json();
+        console.log(data);
+        dispatch(
+          loginSActions.login({
+            role: data.user.role,
+            id: data.user.id,
+            username: data.user.username,
+            token: data.token,
+          })
+        );
       } catch (error) {
         console.error("Error:", error);
       }
-      
-      console.log(data);
-      dispatch(
-        loginSActions.login({
-          role: data.user.role,
-          id: data.user.id,
-          username: data.user.username,
-          token: data.token,
-        })
-      );
     }
   };
 
