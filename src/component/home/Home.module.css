@@ -1,0 +1,191 @@
+.holder {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    margin-top: 1rem;
+  }
+  .button {
+    font-size: 18px;
+    color: orange;
+    font-family: inherit;
+    font-weight: 800;
+    cursor: pointer;
+    position: relative;
+    border: none;
+    background: none;
+    text-transform: uppercase;
+    transition-timing-function: cubic-bezier(0.25, 0.8, 0.25, 1);
+    transition-duration: 400ms;
+    transition-property: color;
+    margin-bottom: 1.5rem;
+  }
+  
+  .button:focus,
+  .button:hover {
+    color: orange;
+  }
+  
+  .button:focus:after,
+  .button:hover:after {
+    width: 100%;
+    left: 0%;
+  }
+  
+  .button:after {
+    content: "";
+    pointer-events: none;
+    bottom: -2px;
+    left: 50%;
+    position: absolute;
+    width: 0%;
+    height: 2px;
+    background-color: orange;
+    transition-timing-function: cubic-bezier(0.25, 0.8, 0.25, 1);
+    transition-duration: 400ms;
+    transition-property: width, left;
+  }
+  .title {
+    font-family: Formular, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+      "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
+      "Segoe UI Symbol";
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    text-align: center;
+    font-size: large;
+    color: #f8714f;
+    font-weight: bolder;
+  }
+  .table {
+    width: 97%;
+    border-collapse: initial;
+    border: 2px solid #f84018;
+    border-radius: 20px;
+    margin-bottom: 2rem;
+    animation: rsin 0.25s ease-in forwards;
+    table-layout: fixed;
+  }
+  /* .table thead {
+    background-color: #4f1103 ;
+  } */
+  .table th {
+    font-family: Formular, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+      "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
+      "Segoe UI Symbol";
+    color: #f97d62;
+    text-align: center;
+    text-transform: uppercase;
+   
+  }
+  .table th:first-of-type {
+    border-radius: 14px 0 0 0;
+  }
+  .table th:last-of-type {
+    border-radius: 0 14px 0 0;
+  }
+  .table tr {
+      background-color: rgba(0, 0, 0, 0.233);
+}
+.table tr:nth-child(even) {
+      background-color: rgba(0, 0, 0, 0.596);
+  }
+  .table td {
+    text-align: center;
+    padding: 8px;
+    padding-top: 10px;
+    color: #fdcec4;
+    text-transform: uppercase;
+    font-weight: 450;
+  }
+  
+  
+  .table tr:last-of-type td:last-of-type {
+    border-radius: 0 0 14px 0;
+  }
+  .table tr:last-of-type td:first-of-type {
+    border-radius: 0 0 0 14px;
+  }
+  
+  @keyframes rsin {
+    0% {
+      opacity: 0;
+      transform: translateY(6rem);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  .input {
+    border-radius: 14px;
+    outline: 2px solid #f84018;
+    border: 0;
+    font-family: Formular, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+      "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
+      "Segoe UI Symbol";
+    background-color: #4f1103;
+    outline-offset: 3px;
+    padding: 0px 0.5rem;
+    transition: 0.25s;
+    width: 20rem;
+    margin-bottom: 1rem;
+    font-size: large;
+    color: #fdcec4;
+    text-align: center;
+  }
+  ::placeholder,
+  .nbp {
+    color: #fdcec4;
+    font-family: Formular, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+      "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
+      "Segoe UI Symbol";
+  }
+  
+  .input:focus,
+  .input:hover {
+    outline-offset: 5px;
+    background-color: #f33716;
+    transform: scaleY(1.2);
+  }
+  .nbp {
+    color: #f87d61;
+    position: absolute;
+    top: 3rem;
+    right: 3rem;
+    font-size: larger;
+    text-transform: uppercase;
+  }
+  
+  .buttonEm,
+  .buttonEmL {
+    position: absolute;
+    top: 3rem;
+    left: 9rem;
+    color: #f87d61;
+    font-family: Formular, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+      "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
+      "Segoe UI Symbol";
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 5px;
+    border: 1px solid #fc380c;
+    background-color: black;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: small;
+    margin: 0;
+  }
+  
+  .buttonEmL {
+    left: 3rem;
+  }
+  
+  .buttonEm:hover,
+  .buttonEmL:hover {
+    color: #f3baae;
+    background-color: rgb(68, 32, 15);
+    transform: scale(1.01);
+  }
+  
