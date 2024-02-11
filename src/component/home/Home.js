@@ -11,7 +11,7 @@ const Home = (p) => {
 
   return (
     <div className={c.holder}>
-      {popUp && <BackDrop  click={clickHandler}/>}
+      {popUp && <BackDrop click={clickHandler} />}
       {popUp && <PopupFormRef />}
 
       <button className={c.button} onClick={clickHandler}>
@@ -21,64 +21,73 @@ const Home = (p) => {
       <table className={`${c.table}`}>
         <thead>
           <tr style={{ backgroundColor: "black" }}>
-            <th>Matricule</th>
-            <th>reference</th>
-            <th>pdd</th>
-            <th>pcd</th>
-            <th>crew</th>
-            <th>reworkid</th>
-            <th>team Leader</th>
-            <th>shift Leader</th>
-            <th>status</th>
+            <th>date/time</th>
+            <th>Ref</th>
+            <th>Equipe</th>
+            <th>Problem</th>
+            <th>Details</th>
+            <th>PDF*</th>
+            <th>Status</th>
+            <th>PPD*</th>
+            <th>IdPD*</th>
+            <th>Foreman Action</th>
+            <th>CP*</th>
+            <th>Audit Action</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td>Matricule</td>
-            <td>reference</td>
-            <td>pdd</td>
-            <td>pcd</td>
-            <td>crew</td>
-            <td>reworkid</td>
-            <td>team Leader</td>
-            <td>shift Leader</td>
-            <td>status</td>
+            <td>date/time</td>
+            <td>Ref</td>
+            <td>Equipe</td>
+            <td>Problem</td>
+            <td>Details</td>
+            <td>PDF*</td>
+            <td>Status</td>
+            <td>PPD*</td>
+            <td>IdPD*</td>
+            <td>Foreman Action</td>
+            <td>CP*</td>
+            <td>Audit Action</td>
           </tr>
           <tr>
-            <td>Matricule</td>
-            <td>reference</td>
-            <td>pdd</td>
-            <td>pcd</td>
-            <td>crew</td>
-            <td>reworkid</td>
-            <td>team Leader</td>
-            <td>shift Leader</td>
-            <td>status</td>
+            <td>date/time</td>
+            <td>Ref</td>
+            <td>Equipe</td>
+            <td>Problem</td>
+            <td>Details</td>
+            <td>PDF*</td>
+            <td>Status</td>
+            <td>PPD*</td>
+            <td>IdPD*</td>
+            <td>Foreman Action</td>
+            <td>CP*</td>
+            <td>Audit Action</td>
           </tr>
           <tr>
-            <td>Matricule</td>
-            <td>reference</td>
-            <td>pdd</td>
-            <td>pcd</td>
-            <td>crew</td>
-            <td>reworkid</td>
-            <td>team Leader</td>
-            <td>shift Leader</td>
-            <td>status</td>
-          </tr>
-          <tr>
-            <td>Matricule</td>
-            <td>reference</td>
-            <td>pdd</td>
-            <td>pcd</td>
-            <td>crew</td>
-            <td>reworkid</td>
-            <td>team Leader</td>
-            <td>shift Leader</td>
-            <td>status</td>
+            <td>date/time</td>
+            <td>Ref</td>
+            <td>Equipe</td>
+            <td>Problem</td>
+            <td>Details</td>
+            <td>PDF*</td>
+            <td>Status</td>
+            <td>PPD*</td>
+            <td>IdPD*</td>
+            <td>Foreman Action</td>
+            <td>CP*</td>
+            <td>Audit Action</td>
           </tr>
         </tbody>
       </table>
+      <div className={c.ter}>
+        <ul className={c.underList}>
+          <li className={c.list}>PDF*: <span>poste detecteur</span></li>
+          <li className={c.list}>PPD*: <span>poste detecteur</span></li>
+          <li className={c.list}>IDPD*: <span>poste detecteur</span></li>
+          <li className={c.list}>CP*: <span>poste detecteur</span></li>
+        </ul>
+      </div>
     </div>
   );
 };
