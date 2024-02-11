@@ -4,7 +4,7 @@
     border-radius: 10px;
     background-color: #40414f;
     transform: translate(0px,0px);
-    box-shadow: 5px 5px orange;
+    box-shadow: 5px 5px orangered;
     position: fixed;
     z-index: 11111;
     top: 50%;
@@ -21,7 +21,7 @@
     width: 16rem;
     height: 1rem;
     /* transform: translate(5px,-3px); */
-    color: orange;
+    color: orangered;
     padding: 10px;
     font-weight: bold;
   }
@@ -46,11 +46,11 @@
     position: absolute;
     width: 1%;
     height: 30px;
-    background-color: orange;
+    background-color: orangered;
     transform: translate(-20px,10px);
   }
   .MsgInput::placeholder {
-    color: orange;
+    color: orangered;
     font-style: italic; 
     text-transform: capitalize;
   }

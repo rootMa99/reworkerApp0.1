@@ -26,13 +26,13 @@ const Home = (p) => {
             <th>Equipe</th>
             <th>Problem</th>
             <th>Details</th>
-            <th>PDF*</th>
+            <th>pdd*</th>
             <th>Status</th>
             <th>PPD*</th>
             <th>IdPD*</th>
-            <th>Foreman Action</th>
+            <th>CM. Action</th>
             <th>CP*</th>
-            <th>Audit Action</th>
+            <th>Aud. Action</th>
           </tr>
         </thead>
         <tbody>
@@ -42,7 +42,7 @@ const Home = (p) => {
             <td>Equipe</td>
             <td>Problem</td>
             <td>Details</td>
-            <td>PDF*</td>
+            <td>pdd*</td>
             <td>Status</td>
             <td>PPD*</td>
             <td>IdPD*</td>
@@ -56,7 +56,7 @@ const Home = (p) => {
             <td>Equipe</td>
             <td>Problem</td>
             <td>Details</td>
-            <td>PDF*</td>
+            <td>pdd*</td>
             <td>Status</td>
             <td>PPD*</td>
             <td>IdPD*</td>
@@ -70,7 +70,7 @@ const Home = (p) => {
             <td>Equipe</td>
             <td>Problem</td>
             <td>Details</td>
-            <td>PDF*</td>
+            <td>pdd*</td>
             <td>Status</td>
             <td>PPD*</td>
             <td>IdPD*</td>
@@ -82,7 +82,7 @@ const Home = (p) => {
       </table>
       <div className={c.ter}>
         <ul className={c.underList}>
-          <li className={c.list}>PDF*: <span>poste detecteur</span></li>
+          <li className={c.list}>pdd*: <span>poste detecteur</span></li>
           <li className={c.list}>PPD*: <span>poste detecteur</span></li>
           <li className={c.list}>IDPD*: <span>poste detecteur</span></li>
           <li className={c.list}>CP*: <span>poste detecteur</span></li>
