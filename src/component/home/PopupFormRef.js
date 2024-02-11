@@ -16,6 +16,38 @@ const PopupFormRef = (p) => {
     setInit(true);
     console.log(refd)
   };
+
+  const handleInputChange = (event) => {
+    const value = event.target.value;
+    const qwertyValue = convertToQwerty(value);
+    setRefd(qwertyValue);
+  };
+
+  const convertToQwerty = (value) => {
+    const azertyToQwertyMap = {
+      'a': 'q',
+      'z': 'w',
+      'w': 'z',
+      'q': 'a',
+      '&':1,
+      'é':2,
+      '"':3,
+      "'":4,
+      '(':5,
+      '-':6,
+      'è':7,
+      '_':8,
+      'ç':9,
+      'à':0,
+    };
+
+    const qwertyValue = value
+      .split('')
+      .map(char => azertyToQwertyMap[char] || char)
+      .join('');
+
+    return qwertyValue;
+  };
   // return (
   //   <form>
   //     <label>
@@ -35,7 +67,7 @@ const PopupFormRef = (p) => {
             placeholder="reference.."
             className={c["MsgInput"]}
             type="text"
-            onChange={(e) => setRefd(e.target.value)}
+            onChange={handleInputChange}
           />
 
           <svg

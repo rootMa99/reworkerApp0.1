@@ -90,15 +90,18 @@
     opacity: 0.5;
   }
   
-  .form-container .form-group input:focus {
+  .form-container .form-group input:focus,
+  .form-container .form-group input:hover,
+  .form-container .form-group textarea:focus,
+  .form-container .form-group textarea:hover {
     outline: none;
     border-color: orangered;
   }
   
-  .form-container .form-group textarea:focus {
+  /* .form-container .form-group textarea:focus {
     outline: none;
     border-color: orangered;
-  }
+  } */
   
   .form-container .form-submit-btn {
     display: flex;

@@ -3,7 +3,7 @@ import Select from "react-select";
 const customStyles = {
   control: (provided, state) => ({
     ...provided,
-    width: "100%",
+    width: "97%",
     height: "auto",
     fontWeight: "600",
     textTransform: "uppercase",
@@ -14,19 +14,19 @@ const customStyles = {
     letterSpacing: "2px",
     textAlign: "center",
     outline: "none",
-    border: "2px solid #8b1f04",
-    backgroundColor: "rgba(24, 13, 13, 0.37)",
+    border: "1px solid #414141",
+    backgroundColor: "transparent",
     boxShadow: "none",
+    margin:"auto",
     "&:hover": {
-      border: "2px solid #f84018",
-      backgroundColor: "rgba(100, 98, 98, 0.37)",
+      border: "1px solid orangered",
       cursor: "pointer",
     },
   }),
   option: (provided, state) => ({
     width: "100%",
     padding: "0.5rem",
-    color: state.isFocused ? "#f3f3f3" : "#8b1f04",
+    color: state.isFocused ? "#f3f3f3" : "orangered",
     backgroundColor: state.isFocused && "#474b4d",
     fontFamily: `Formular, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
                 "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
@@ -53,11 +53,11 @@ const customStyles = {
     scrollbarWidth: "thin",
     msOverflowStyle: "none",
     "&::-webkit-scrollbar": {
-      width: "9px",
+      width: "5px",
       backgroundColor: "#535151",
     },
     "&::-webkit-scrollbar-thumb": {
-      backgroundColor: "#8a0101",
+      backgroundColor: "orangered",
     },
     "&::-webkit-scrollbar-track": {
       backgroundColor: "transparent",
@@ -115,6 +115,9 @@ const optionData = [
   },
 ];
 
+const dataPost=["US1","US2","US3","US4","US5","US6","US7","US8","US9","US10","CEL 1","CEL 2","CEL 3","CEL 4","CEL 5","CEL 7","CEL 8","CEL 9","CEL 10","CEL 11","CEL 12","CEL 1-A","CEL 13","CEL 14","CEL 15","CEL 15-1","CEL 16","CEL 17","CEL 18","CEL 19","CEL 20","CEL 21","CEL 22","CEL 23","CEL 24","CEL 26","CEL 27","ROB SUB","POST 1","POST 2"]
+
+
 const FormAddDetails = (p) => {
     const handleSubmit = (event) => {
       event.preventDefault();
@@ -134,10 +137,19 @@ const FormAddDetails = (p) => {
           </div>
           <div className={c["form-group"]}>
             <label htmlFor="problem">Problem</label>
-            <input required name="problem" id="problem" type="text" />
+            <Select
+            options={optionData}
+            id="multiSelect"
+            inputId="shiftleader1"
+            // onChange={changeHandler}
+            styles={customStyles}
+            defaultValue={" "}
+            isMulti
+            // onChange={problemChange}
+          />
           </div>
           <div className={c["form-group"]}>
-            <label htmlFor="textarea">Details?</label>
+            <label htmlFor="textarea">Details</label>
             <textarea required cols="25" rows="5" id="textarea" name="textarea"></textarea>
           </div>
           <div className={c["form-group"]}>
