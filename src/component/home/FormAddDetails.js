@@ -108,14 +108,10 @@ const optionData = [
   {
     value: "bruler",
     label: "bruler",
-  },
-  {
-    value: "autres",
-    label: "autres",
-  },
+  }
 ];
 
-const dataPost=["US1","US2","US3","US4","US5","US6","US7","US8","US9","US10","CEL 1","CEL 2","CEL 3","CEL 4","CEL 5","CEL 7","CEL 8","CEL 9","CEL 10","CEL 11","CEL 12","CEL 1-A","CEL 13","CEL 14","CEL 15","CEL 15-1","CEL 16","CEL 17","CEL 18","CEL 19","CEL 20","CEL 21","CEL 22","CEL 23","CEL 24","CEL 26","CEL 27","ROB SUB","POST 1","POST 2"]
+// const dataPost=["US1","US2","US3","US4","US5","US6","US7","US8","US9","US10","CEL 1","CEL 2","CEL 3","CEL 4","CEL 5","CEL 7","CEL 8","CEL 9","CEL 10","CEL 11","CEL 12","CEL 1-A","CEL 13","CEL 14","CEL 15","CEL 15-1","CEL 16","CEL 17","CEL 18","CEL 19","CEL 20","CEL 21","CEL 22","CEL 23","CEL 24","CEL 26","CEL 27","ROB SUB","POST 1","POST 2"]
 
 
 const FormAddDetails = (p) => {

@@ -5,8 +5,14 @@ const loginS = createSlice({
   initialState: {
     isLoged: { login: false, role: "", token: "", id: "", username: "" },
     data: [],
+    dataSelect: {},
   },
   reducers: {
+    addDataSelect(s, p) {
+      if (s.dataSelect.length === 0) {
+        s.dataSelect = p.payload;
+      }
+    },
     login(s, p) {
       s.isLoged.login = true;
       s.isLoged.role = p.payload.role;
@@ -19,10 +25,10 @@ const loginS = createSlice({
     },
     addData(s, p) {
       if (s.data.length === 0) {
-        if(p.payload.status){
+        if (p.payload.status) {
           s.data.push(...p.payload.data);
-        }else{
-          s.data.push(p.payload)
+        } else {
+          s.data.push(p.payload);
         }
       } else {
         s.data.unshift(p.payload);
@@ -72,18 +78,20 @@ const loginS = createSlice({
       s.data[index].problem = p.payload.data.problem;
       s.data[index].motif = p.payload.data.motif;
       s.data[index].motif = p.payload.data.motif;
-      s.data[index].positionToDetectFault = p.payload.data.positionToDetectFault;
+      s.data[index].positionToDetectFault =
+        p.payload.data.positionToDetectFault;
       s.data[index].cableStatus = p.payload.data.foremanAction;
-      s.data[index].positionOfWhoProducesDefect = p.payload.data.positionOfWhoProducesDefect;
+      s.data[index].positionOfWhoProducesDefect =
+        p.payload.data.positionOfWhoProducesDefect;
       s.data[index].idOfWhoProducesDefect =
         p.payload.data.idOfWhoProducesDefect;
       s.data[index].foremanAction = p.payload.data.foremanAction;
       s.data[index].causeOfTheProblem = p.payload.data.causeOfTheProblem;
       s.data[index].auditAction = p.payload.data.auditAction;
     },
-    deleteRow(s, p){
-      s.data=s.data.filter(f=>f._id !== p.payload);
-    }
+    deleteRow(s, p) {
+      s.data = s.data.filter((f) => f._id !== p.payload);
+    },
   },
 });
 
