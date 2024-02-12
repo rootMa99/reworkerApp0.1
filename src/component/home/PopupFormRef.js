@@ -7,6 +7,7 @@ const PopupFormRef = (p) => {
   const [refd, setRefd] = useState("");
   const [init, setInit] = useState(false);
 
+
   useEffect(() => {
     inputRef.current.focus();
   }, []);
@@ -14,40 +15,41 @@ const PopupFormRef = (p) => {
   const submitHandler = (e) => {
     e.preventDefault();
     setInit(true);
-    console.log(refd)
+    console.log(refd);
   };
 
   const handleInputChange = (event) => {
     const value = event.target.value;
-    const qwertyValue = convertToQwerty(value);
-    setRefd(qwertyValue);
+    // const qwertyValue = convertToQwerty(value);
+    // setRefd(qwertyValue.slice(1));
+    setRefd(value.slice(1));
   };
 
-  const convertToQwerty = (value) => {
-    const azertyToQwertyMap = {
-      'a': 'q',
-      'z': 'w',
-      'w': 'z',
-      'q': 'a',
-      '&':1,
-      'é':2,
-      '"':3,
-      "'":4,
-      '(':5,
-      '-':6,
-      'è':7,
-      '_':8,
-      'ç':9,
-      'à':0,
-    };
+  // const convertToQwerty = (value) => {
+  //   const azertyToQwertyMap = {
+  //     'a': 'q',
+  //     'z': 'w',
+  //     'w': 'z',
+  //     'q': 'a',
+  //     '&':1,
+  //     'é':2,
+  //     '"':3,
+  //     "'":4,
+  //     '(':5,
+  //     '-':6,
+  //     'è':7,
+  //     '_':8,
+  //     'ç':9,
+  //     'à':0,
+  //   };
 
-    const qwertyValue = value
-      .split('')
-      .map(char => azertyToQwertyMap[char] || char)
-      .join('');
+  //   const qwertyValue = value
+  //     .split('')
+  //     .map(char => azertyToQwertyMap[char] || char)
+  //     .join('');
 
-    return qwertyValue;
-  };
+  //   return qwertyValue;
+  // };
   // return (
   //   <form>
   //     <label>

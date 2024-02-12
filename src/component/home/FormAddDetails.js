@@ -1,5 +1,8 @@
-import c from "./FormAddDetails.module.css"
+import { useSelector } from "react-redux";
+import c from "./FormAddDetails.module.css";
 import Select from "react-select";
+import { selectCreator } from "../hooks/benifFunc";
+import { useState } from "react";
 const customStyles = {
   control: (provided, state) => ({
     ...provided,
@@ -17,14 +20,14 @@ const customStyles = {
     border: "1px solid #414141",
     backgroundColor: "transparent",
     boxShadow: "none",
-    margin:"auto",
+    margin: "auto",
     "&:hover": {
       border: "1px solid orangered",
       cursor: "pointer",
     },
   }),
   option: (provided, state) => ({
-    width: "100%",
+    width: "97%",
     padding: "0.5rem",
     color: state.isFocused ? "#f3f3f3" : "orangered",
     backgroundColor: state.isFocused && "#474b4d",
@@ -47,7 +50,7 @@ const customStyles = {
     color: "#f3f3f3",
   }),
   menuList: (provided) => ({
-    maxHeight: "350px",
+    maxHeight: "200px",
     overflowY: "auto",
     overflowX: "hidden",
     scrollbarWidth: "thin",
@@ -64,98 +67,108 @@ const customStyles = {
     },
   }),
 };
-const optionData = [
-  {
-    value: "Fil avec manque terminal",
-    label: "Fil avec manque terminal",
-  },
-  {
-    value: "Fil avec manque Seal",
-    label: "Fil avec manque Seal",
-  },
-  {
-    value: "Fil avec terminal sans patille",
-    label: "Fil avec terminal sans patille",
-  },
-  {
-    value: "Fil avec sertissage NOK",
-    label: "Fil avec sertissage NOK",
-  },
-  {
-    value: "Fil avec seal qui s'échappe des griffes",
-    label: "Fil avec seal qui s'échappe des griffes",
-  },
-  {
-    value: "Fil endommagé",
-    label: "Fil endommagé",
-  },
-  {
-    value: "Fil coupé",
-    label: "Fil coupé",
-  },
-  {
-    value: "Epissure NOK après '1' réparation",
-    label: "Epissure NOK après '1' réparation",
-  },
-  {
-    value: "Ring NOK après '1' réparation",
-    label: "Ring NOK après '1' réparation",
-  },
-  {
-    value: "Composant déformé/cassé",
-    label: "Composant déformé/cassé",
-  },
-  {
-    value: "bruler",
-    label: "bruler",
-  }
-];
-
-// const dataPost=["US1","US2","US3","US4","US5","US6","US7","US8","US9","US10","CEL 1","CEL 2","CEL 3","CEL 4","CEL 5","CEL 7","CEL 8","CEL 9","CEL 10","CEL 11","CEL 12","CEL 1-A","CEL 13","CEL 14","CEL 15","CEL 15-1","CEL 16","CEL 17","CEL 18","CEL 19","CEL 20","CEL 21","CEL 22","CEL 23","CEL 24","CEL 26","CEL 27","ROB SUB","POST 1","POST 2"]
-
 
 const FormAddDetails = (p) => {
-    const handleSubmit = (event) => {
-      event.preventDefault();
-      
-    };
-  
-    return (
-      <div className={c["form-container"]}>
-        <form className={c.form} onSubmit={handleSubmit}>
-          <div className={c["form-group"]}>
-            <label htmlFor="reference">reference</label>
-            <input required name="reference" id="reference" type="text" value={p.refs} disabled/>
-          </div>
-          <div className={c["form-group"]}>
-            <label htmlFor="crew">crew</label>
-            <input required name="crew" id="crew" type="text" />
-          </div>
-          <div className={c["form-group"]}>
-            <label htmlFor="problem">Problem</label>
-            <Select
-            options={optionData}
+  const { dataSelect } = useSelector((s) => s.loginr);
+  const [dataInp, setDataInp] = useState({
+    reference: p.refs,
+    crew: [],
+    problem: [],
+    details: "",
+    pdd: [],
+  });
+
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    console.log(dataInp)
+  };
+
+  const onchangeHandler = (e, t) => {
+    const datap = [];
+    t && e.map((m) => datap.push(m.value));
+    switch (t) {
+      case "problem":
+        setDataInp((prev) => ({ ...prev, problem: datap }));
+        break;
+      case "crew":
+        setDataInp((prev) => ({ ...prev, crew: datap }));
+        break;
+      case "pdd":
+        setDataInp((prev) => ({ ...prev, pdd: datap }));
+        break;
+      default:
+        setDataInp((prev) => ({ ...prev, details: e.target.value }));
+    }
+  };
+  return (
+    <div className={c["form-container"]}>
+      <form className={c.form} onSubmit={handleSubmit}>
+        <div className={c["form-group"]}>
+          <label htmlFor="reference">reference</label>
+          <input
+            required
+            name="reference"
+            id="reference"
+            type="text"
+            value={p.refs}
+            disabled
+          />
+        </div>
+        <div className={c["form-group"]}>
+          <label htmlFor="crew">crew</label>
+          <Select
+            options={selectCreator(dataSelect.crews)}
             id="multiSelect"
             inputId="shiftleader1"
-            // onChange={changeHandler}
             styles={customStyles}
             defaultValue={" "}
             isMulti
-            // onChange={problemChange}
+            onChange={(e) => onchangeHandler(e, "crew")}
           />
-          </div>
-          <div className={c["form-group"]}>
-            <label htmlFor="textarea">Details</label>
-            <textarea required cols="25" rows="5" id="textarea" name="textarea"></textarea>
-          </div>
-          <div className={c["form-group"]}>
-            <label htmlFor="pdd">pdd</label>
-            <input required name="pdd" id="pdd" type="text" />
-          </div>
-          <button type="submit" className={c["form-submit-btn"]}>Submit</button>
-        </form>
-      </div>
-    );
-  };
-  
-  export default FormAddDetails;
+        </div>
+        <div className={c["form-group"]}>
+          <label htmlFor="problem">Problem</label>
+          <Select
+            options={selectCreator(dataSelect.problems)}
+            id="multiSelect"
+            inputId="shiftleader1"
+            styles={customStyles}
+            defaultValue={" "}
+            isMulti
+            onChange={(e) => onchangeHandler(e, "problem")}
+          />
+        </div>
+        <div className={c["form-group"]}>
+          <label htmlFor="textarea">Details</label>
+          <textarea
+            required
+            cols="25"
+            rows="5"
+            id="textarea"
+            name="textarea96"
+            onChange={onchangeHandler}
+          ></textarea>
+        </div>
+        <div className={c["form-group"]}>
+          <label htmlFor="pdd">pdd</label>
+          <Select
+            options={selectCreator(dataSelect.postes)}
+            id="multiSelect"
+            inputId="shiftleader1"
+            styles={customStyles}
+            defaultValue={" "}
+            isMulti
+            menuPlacement="top"
+            onChange={(e) => onchangeHandler(e, "pdd")}
+          />
+        </div>
+        <button type="submit" className={c["form-submit-btn"]}>
+          Submit
+        </button>
+      </form>
+    </div>
+  );
+};
+
+export default FormAddDetails;

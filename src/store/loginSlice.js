@@ -9,9 +9,7 @@ const loginS = createSlice({
   },
   reducers: {
     addDataSelect(s, p) {
-      if (s.dataSelect.length === 0) {
         s.dataSelect = p.payload;
-      }
     },
     login(s, p) {
       s.isLoged.login = true;
