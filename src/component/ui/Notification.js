@@ -2,11 +2,23 @@ import React from "react";
 import c from "./Notification.module.css";
 
 const Notification = (p) => {
+  const classe = !p.urg
+    ? `${c["notifications-container"]}`
+    : `${c["notifications-containerurg"]}`;
+  const classealt = !p.urg
+    ? `${c["alert"]}`
+    : `${c["alerturg"]}`;
+  const classealtP = !p.urg
+    ? `${c["alert-prompt-wrap"]}`
+    : `${c["alert-prompt-wrap-urg"]}`;
   return (
-    <div className={c["notifications-container"]}>
-      <div className={c["alert"]}>
+    <div className={classe}>
+      <div
+        className={classealt}
+      >
         <div className={c["flex"]}>
-          <div className={c["flex-shrink-0"]}>
+  
+  <div className={c["flex-shrink-0"]} style={p.urg ?{color: "rgb(238 245 134)"} : {}} >
             <svg
               aria-hidden="true"
               fill="currentColor"
@@ -21,7 +33,7 @@ const Notification = (p) => {
               ></path>
             </svg>
           </div>
-          <div className={c["alert-prompt-wrap"]}>
+          <div className={classealtP}>
             <p className={`${c["text-sm"]} ${c["text-yellow-700"]}`}>
               {p.message}
             </p>

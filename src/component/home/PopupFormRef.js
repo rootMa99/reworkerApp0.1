@@ -1,19 +1,40 @@
 import React, { useEffect, useRef, useState } from "react";
 import c from "./PopupFormRef.module.css";
 import FormAddDetails from "./FormAddDetails";
+import { useDispatch, useSelector } from "react-redux";
+import api from "../../services/api";
+import { loginSActions } from "../../store/loginSlice";
 
 const PopupFormRef = (p) => {
   const inputRef = useRef(null);
   const [refd, setRefd] = useState("");
   const [init, setInit] = useState(false);
-
+  const dispatch = useDispatch();
+  const { isLoged } = useSelector((s) => s.loginr);
 
   useEffect(() => {
     inputRef.current.focus();
   }, []);
 
-  const submitHandler = (e) => {
+  const submitHandler = async (e) => {
     e.preventDefault();
+
+    try {
+      const response = await fetch(`${api}/reworker/${refd}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${isLoged.token}`,
+        },
+      });
+
+      const data = await response.json();
+      console.log(data);
+      dispatch(loginSActions.setUrgent(data.isUrgent));
+    } catch (error) {
+      console.error("Error:", error);
+    }
+
     setInit(true);
     console.log(refd);
   };

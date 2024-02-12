@@ -2,7 +2,8 @@ import { useSelector } from "react-redux";
 import c from "./FormAddDetails.module.css";
 import Select from "react-select";
 import { selectCreator } from "../hooks/benifFunc";
-import { useState } from "react";
+import React, { useState } from "react";
+import Notification from "../ui/Notification";
 const customStyles = {
   control: (provided, state) => ({
     ...provided,
@@ -69,105 +70,105 @@ const customStyles = {
 };
 
 const FormAddDetails = (p) => {
-  const { dataSelect } = useSelector((s) => s.loginr);
+  const { dataSelect, urgent } = useSelector((s) => s.loginr);
   const [dataInp, setDataInp] = useState({
     reference: p.refs,
-    crew: [],
+    crew: "",
     problem: [],
     details: "",
-    pdd: [],
+    pdd: "",
   });
-
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log(dataInp)
+    console.log(dataInp);
   };
 
   const onchangeHandler = (e, t) => {
     const datap = [];
-    t && e.map((m) => datap.push(m.value));
+    t === "problem" && e.map((m) => datap.push(m.value));
     switch (t) {
       case "problem":
         setDataInp((prev) => ({ ...prev, problem: datap }));
         break;
       case "crew":
-        setDataInp((prev) => ({ ...prev, crew: datap }));
+        setDataInp((prev) => ({ ...prev, crew: e.value }));
         break;
       case "pdd":
-        setDataInp((prev) => ({ ...prev, pdd: datap }));
+        setDataInp((prev) => ({ ...prev, pdd: e.value }));
         break;
       default:
         setDataInp((prev) => ({ ...prev, details: e.target.value }));
     }
   };
   return (
-    <div className={c["form-container"]}>
-      <form className={c.form} onSubmit={handleSubmit}>
-        <div className={c["form-group"]}>
-          <label htmlFor="reference">reference</label>
-          <input
-            required
-            name="reference"
-            id="reference"
-            type="text"
-            value={p.refs}
-            disabled
-          />
-        </div>
-        <div className={c["form-group"]}>
-          <label htmlFor="crew">crew</label>
-          <Select
-            options={selectCreator(dataSelect.crews)}
-            id="multiSelect"
-            inputId="shiftleader1"
-            styles={customStyles}
-            defaultValue={" "}
-            isMulti
-            onChange={(e) => onchangeHandler(e, "crew")}
-          />
-        </div>
-        <div className={c["form-group"]}>
-          <label htmlFor="problem">Problem</label>
-          <Select
-            options={selectCreator(dataSelect.problems)}
-            id="multiSelect"
-            inputId="shiftleader1"
-            styles={customStyles}
-            defaultValue={" "}
-            isMulti
-            onChange={(e) => onchangeHandler(e, "problem")}
-          />
-        </div>
-        <div className={c["form-group"]}>
-          <label htmlFor="textarea">Details</label>
-          <textarea
-            required
-            cols="25"
-            rows="5"
-            id="textarea"
-            name="textarea96"
-            onChange={onchangeHandler}
-          ></textarea>
-        </div>
-        <div className={c["form-group"]}>
-          <label htmlFor="pdd">pdd</label>
-          <Select
-            options={selectCreator(dataSelect.postes)}
-            id="multiSelect"
-            inputId="shiftleader1"
-            styles={customStyles}
-            defaultValue={" "}
-            isMulti
-            menuPlacement="top"
-            onChange={(e) => onchangeHandler(e, "pdd")}
-          />
-        </div>
-        <button type="submit" className={c["form-submit-btn"]}>
-          Submit
-        </button>
-      </form>
-    </div>
+    <React.Fragment>
+      {urgent && <Notification message="caution: this cable is urgent, please don't ignore it" urg={true} />}
+      <div className={c["form-container"]}>
+        <form className={c.form} onSubmit={handleSubmit}>
+          <div className={c["form-group"]}>
+            <label htmlFor="reference">reference</label>
+            <input
+              required
+              name="reference"
+              id="reference"
+              type="text"
+              value={p.refs}
+              disabled
+            />
+          </div>
+          <div className={c["form-group"]}>
+            <label htmlFor="crew">crew</label>
+            <Select
+              options={selectCreator(dataSelect.crews)}
+              id="multiSelect"
+              inputId="shiftleader1"
+              styles={customStyles}
+              defaultValue={" "}
+              onChange={(e) => onchangeHandler(e, "crew")}
+            />
+          </div>
+          <div className={c["form-group"]}>
+            <label htmlFor="problem">Problem</label>
+            <Select
+              options={selectCreator(dataSelect.problems)}
+              id="multiSelect"
+              inputId="shiftleader1"
+              styles={customStyles}
+              defaultValue={" "}
+              isMulti
+              onChange={(e) => onchangeHandler(e, "problem")}
+            />
+          </div>
+          <div className={c["form-group"]}>
+            <label htmlFor="textarea">Details</label>
+            <textarea
+              required
+              cols="25"
+              rows="5"
+              id="textarea"
+              name="textarea96"
+              onChange={onchangeHandler}
+            ></textarea>
+          </div>
+          <div className={c["form-group"]}>
+            <label htmlFor="pdd">pdd</label>
+            <Select
+              options={selectCreator(dataSelect.postes)}
+              id="multiSelect"
+              inputId="shiftleader1"
+              styles={customStyles}
+              defaultValue={" "}
+              menuPlacement="top"
+              onChange={(e) => onchangeHandler(e, "pdd")}
+            />
+          </div>
+          <button type="submit" className={c["form-submit-btn"]}>
+            Submit
+          </button>
+        </form>
+      </div>
+    </React.Fragment>
   );
 };
 

@@ -6,10 +6,14 @@ const loginS = createSlice({
     isLoged: { login: false, role: "", token: "", id: "", username: "" },
     data: [],
     dataSelect: {},
+    urgent:false,
   },
   reducers: {
     addDataSelect(s, p) {
         s.dataSelect = p.payload;
+    },
+    setUrgent(s,p){
+      s.urgent=p.payload
     },
     login(s, p) {
       s.isLoged.login = true;

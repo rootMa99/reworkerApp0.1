@@ -2,9 +2,12 @@ import { useState } from "react";
 import c from "./Home.module.css";
 import BackDrop from "../ui/BackDrop";
 import PopupFormRef from "./PopupFormRef";
+import { useSelector } from "react-redux";
 const Home = (p) => {
   const [popUp, setPopUp] = useState(false);
+  const { urgent } = useSelector((s) => s.loginr);
 
+  console.log(urgent)
   const clickHandler = (e) => {
     setPopUp(!popUp);
   };
@@ -82,10 +85,18 @@ const Home = (p) => {
       </table>
       <div className={c.ter}>
         <ul className={c.underList}>
-          <li className={c.list}>pdd*: <span>poste detecteur</span></li>
-          <li className={c.list}>PPD*: <span>poste detecteur</span></li>
-          <li className={c.list}>IDPD*: <span>poste detecteur</span></li>
-          <li className={c.list}>CP*: <span>poste detecteur</span></li>
+          <li className={c.list}>
+            pdd*: <span>poste detecteur</span>
+          </li>
+          <li className={c.list}>
+            PPD*: <span>poste detecteur</span>
+          </li>
+          <li className={c.list}>
+            IDPD*: <span>poste detecteur</span>
+          </li>
+          <li className={c.list}>
+            CP*: <span>poste detecteur</span>
+          </li>
         </ul>
       </div>
     </div>
