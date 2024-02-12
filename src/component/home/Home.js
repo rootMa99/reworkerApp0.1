@@ -1,16 +1,46 @@
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import c from "./Home.module.css";
 import BackDrop from "../ui/BackDrop";
 import PopupFormRef from "./PopupFormRef";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import api from "../../services/api";
+import { loginSActions } from "../../store/loginSlice";
 const Home = (p) => {
   const [popUp, setPopUp] = useState(false);
-  const { urgent } = useSelector((s) => s.loginr);
+  const [page, setPage] = useState({ page: 1, totalPage: 0 });
+  const { urgent, isLoged, data } = useSelector((s) => s.loginr);
+  const dispatch = useDispatch();
 
-  console.log(urgent)
+  console.log(urgent);
   const clickHandler = (e) => {
     setPopUp(!popUp);
   };
+
+  const callback = useCallback(async () => {
+    try {
+      const response = await fetch(`${api}/data?page=${page.page}&limit=5`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${isLoged.token}`,
+        },
+      });
+
+      const data = await response.json();
+      console.log(data);
+      setPage((prev) => ({
+        ...prev,
+        totalPage: data.totalPages,
+      }));
+      dispatch(loginSActions.addData({ data: data.data, status: true }));
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  }, [dispatch, page.page, isLoged.token]);
+
+  useEffect(() => {
+    callback();
+  }, [callback]);
 
   return (
     <div className={c.holder}>
@@ -24,10 +54,10 @@ const Home = (p) => {
       <table className={`${c.table}`}>
         <thead>
           <tr style={{ backgroundColor: "black" }}>
-            <th>date/time</th>
-            <th>Ref</th>
+            <th width="auto">date/time</th>
+            <th width="auto">Ref</th>
             <th>Equipe</th>
-            <th>Problem</th>
+            <th width="20%">Problem</th>
             <th>Details</th>
             <th>pdd*</th>
             <th>Status</th>
@@ -35,39 +65,58 @@ const Home = (p) => {
             <th>IdPD*</th>
             <th>CM. Action</th>
             <th>CP*</th>
-            <th>Aud. Action</th>
+            <th>audi. Action</th>
+            <th>Sl. Action</th>
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>date/time</td>
-            <td>Ref</td>
-            <td>Equipe</td>
-            <td>Problem</td>
-            <td>Details</td>
-            <td>pdd*</td>
-            <td>Status</td>
-            <td>PPD*</td>
-            <td>IdPD*</td>
-            <td>Foreman Action</td>
-            <td>CP*</td>
-            <td>Audit Action</td>
-          </tr>
+          {data.length>0 && data.map((m) => (
+            <tr key={m._id}>
+              <td>{m.createdAt.split("T")[0]}<br/><span className={c.timed}>{m.createdAt.split("T")[1].split(":")[0]}:{m.createdAt.split("T")[1].split(":")[1]}</span></td>
+              <td>{m.reference}</td>
+              <td>{m.crew}</td>
+              <td>
+                <ul className={c.underl}>
+                  {m.problem.map((m, i) => (
+                    <li key={i} className={c.listu}> {m} </li>
+                  ))}
+                </ul>
+              </td>
+              <td>{m.details}</td>
+              <td>{m.pDD}</td>
+              <td>{m.cableStatus}</td>
+              <td>{m.pPD}</td>
+              <td>{m.idPD}</td>
+              <td>{m.teamLeaderAction}</td>
+              <td>{m.cP}</td>
+              <td>{m.auditorAction}</td>
+              <td>{m.shiftLeaderAction}</td>
+            </tr>
+          ))}
         </tbody>
       </table>
+      <div>
+            <span>
+            &laquo;
+            </span>
+            {page.page}/{page.totalPage}
+            <span>
+            &raquo;
+            </span>
+      </div>
       <div className={c.ter}>
         <ul className={c.underList}>
           <li className={c.list}>
-            pdd*: <span>poste detecteur</span>
+            PDD*: <span>poste détecte défaut </span>
           </li>
           <li className={c.list}>
-            PPD*: <span>poste detecteur</span>
+            PPD*: <span>poste produit défaut</span>
           </li>
           <li className={c.list}>
-            IDPD*: <span>poste detecteur</span>
+            IDPD*: <span>ID produit défaut</span>
           </li>
           <li className={c.list}>
-            CP*: <span>poste detecteur</span>
+            CP*: <span>cause de problem</span>
           </li>
         </ul>
       </div>
