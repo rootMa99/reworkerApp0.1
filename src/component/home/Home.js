@@ -53,34 +53,6 @@ const Home = (p) => {
             <td>CP*</td>
             <td>Audit Action</td>
           </tr>
-          <tr>
-            <td>date/time</td>
-            <td>Ref</td>
-            <td>Equipe</td>
-            <td>Problem</td>
-            <td>Details</td>
-            <td>pdd*</td>
-            <td>Status</td>
-            <td>PPD*</td>
-            <td>IdPD*</td>
-            <td>Foreman Action</td>
-            <td>CP*</td>
-            <td>Audit Action</td>
-          </tr>
-          <tr>
-            <td>date/time</td>
-            <td>Ref</td>
-            <td>Equipe</td>
-            <td>Problem</td>
-            <td>Details</td>
-            <td>pdd*</td>
-            <td>Status</td>
-            <td>PPD*</td>
-            <td>IdPD*</td>
-            <td>Foreman Action</td>
-            <td>CP*</td>
-            <td>Audit Action</td>
-          </tr>
         </tbody>
       </table>
       <div className={c.ter}>

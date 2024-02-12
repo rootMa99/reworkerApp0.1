@@ -4,6 +4,7 @@ import Select from "react-select";
 import { selectCreator } from "../hooks/benifFunc";
 import React, { useState } from "react";
 import Notification from "../ui/Notification";
+import api from "../../services/api";
 const customStyles = {
   control: (provided, state) => ({
     ...provided,
@@ -70,7 +71,7 @@ const customStyles = {
 };
 
 const FormAddDetails = (p) => {
-  const { dataSelect, urgent } = useSelector((s) => s.loginr);
+  const { dataSelect, urgent, isLoged} = useSelector((s) => s.loginr);
   const [dataInp, setDataInp] = useState({
     reference: p.refs,
     crew: "",
@@ -79,9 +80,32 @@ const FormAddDetails = (p) => {
     pdd: "",
   });
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     console.log(dataInp);
+    const body = {
+      reference: dataInp.reference,
+      pDD: dataInp.pdd,
+      crew: dataInp.crew,
+      details: dataInp.details,
+      problem: dataInp.problem
+    };
+    try {
+        const response = await fetch(`${api}/reworker`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${isLoged.token}`,
+          },
+          body: JSON.stringify(body),
+        });
+  
+        const data = await response.json();
+        console.log(data);
+        // dispatch(loginSActions.setUrgent(data.isUrgent));
+      } catch (error) {
+        console.error("Error:", error);
+      }
   };
 
   const onchangeHandler = (e, t) => {
@@ -103,7 +127,12 @@ const FormAddDetails = (p) => {
   };
   return (
     <React.Fragment>
-      {urgent && <Notification message="caution: this cable is urgent, please don't ignore it" urg={true} />}
+      {urgent && (
+        <Notification
+          message="caution: this cable is urgent, please don't ignore it"
+          urg={true}
+        />
+      )}
       <div className={c["form-container"]}>
         <form className={c.form} onSubmit={handleSubmit}>
           <div className={c["form-group"]}>
