@@ -6,6 +6,7 @@ import React, { useState } from "react";
 import Notification from "../ui/Notification";
 import api from "../../services/api";
 import { loginSActions } from "../../store/loginSlice";
+import FormDetailsData from "./FormDetailsData";
 const customStyles = {
   control: (provided, state) => ({
     ...provided,
@@ -71,8 +72,23 @@ const customStyles = {
   }),
 };
 
+const statusC = [
+  {
+    value: "in-Progress",
+    label: "in-Progress",
+  },
+  {
+    value: "Repaired",
+    label: "Repaired",
+  },
+  {
+    value: "Scrap",
+    label: "Scrap",
+  },
+];
+
 const FormAddDetails = (p) => {
-  const { dataSelect, urgent, isLoged} = useSelector((s) => s.loginr);
+  const { dataSelect, urgent, isLoged } = useSelector((s) => s.loginr);
   const [dataInp, setDataInp] = useState({
     reference: p.refs,
     crew: "",
@@ -80,7 +96,10 @@ const FormAddDetails = (p) => {
     details: "",
     pdd: "",
   });
-  const dispatch=useDispatch();
+  const [statusc, setStatusC] = useState("");
+  const dispatch = useDispatch();
+
+  console.log(urgent);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -90,26 +109,26 @@ const FormAddDetails = (p) => {
       pDD: dataInp.pdd,
       crew: dataInp.crew,
       details: dataInp.details,
-      problem: dataInp.problem
+      problem: dataInp.problem,
     };
     try {
-        const response = await fetch(`${api}/reworker`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${isLoged.token}`,
-          },
-          body: JSON.stringify(body),
-        });
-  
-        const data = await response.json();
-        console.log(data, p.page);
-        dispatch(loginSActions.unshiftData({data:data, page:p.page}));
+      const response = await fetch(`${api}/reworker`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${isLoged.token}`,
+        },
+        body: JSON.stringify(body),
+      });
 
-        p.click()
-      } catch (error) {
-        console.error("Error:", error);
-      }
+      const data = await response.json();
+      console.log(data, p.page);
+      dispatch(loginSActions.unshiftData({ data: data, page: p.page }));
+
+      p.click();
+    } catch (error) {
+      console.error("Error:", error);
+    }
   };
 
   const onchangeHandler = (e, t) => {
@@ -125,13 +144,16 @@ const FormAddDetails = (p) => {
       case "pdd":
         setDataInp((prev) => ({ ...prev, pdd: e.value }));
         break;
+      case "status":
+        setStatusC(e.value);
+        break;
       default:
         setDataInp((prev) => ({ ...prev, details: e.target.value }));
     }
   };
   return (
     <React.Fragment>
-      {urgent && (
+      {urgent.urgent && (
         <Notification
           message="caution: this cable is urgent, please don't ignore it"
           urg={true}
@@ -139,63 +161,83 @@ const FormAddDetails = (p) => {
       )}
       <div className={c["form-container"]}>
         <form className={c.form} onSubmit={handleSubmit}>
-          <div className={c["form-group"]}>
-            <label htmlFor="reference">reference</label>
-            <input
-              required
-              name="reference"
-              id="reference"
-              type="text"
-              value={p.refs}
-              disabled
-            />
-          </div>
-          <div className={c["form-group"]}>
-            <label htmlFor="crew">crew</label>
-            <Select
-              options={selectCreator(dataSelect.crews)}
-              id="multiSelect"
-              inputId="shiftleader1"
-              styles={customStyles}
-              defaultValue={" "}
-              onChange={(e) => onchangeHandler(e, "crew")}
-            />
-          </div>
-          <div className={c["form-group"]}>
-            <label htmlFor="problem">Problem</label>
-            <Select
-              options={selectCreator(dataSelect.problems)}
-              id="multiSelect"
-              inputId="shiftleader1"
-              styles={customStyles}
-              defaultValue={" "}
-              isMulti
-              onChange={(e) => onchangeHandler(e, "problem")}
-            />
-          </div>
-          <div className={c["form-group"]}>
-            <label htmlFor="textarea">Details</label>
-            <textarea
-              required
-              cols="25"
-              rows="5"
-              id="textarea"
-              name="textarea96"
-              onChange={onchangeHandler}
-            ></textarea>
-          </div>
-          <div className={c["form-group"]}>
-            <label htmlFor="pdd">pdd</label>
-            <Select
-              options={selectCreator(dataSelect.postes)}
-              id="multiSelect"
-              inputId="shiftleader1"
-              styles={customStyles}
-              defaultValue={" "}
-              menuPlacement="top"
-              onChange={(e) => onchangeHandler(e, "pdd")}
-            />
-          </div>
+          {urgent.data === null ? (
+            <React.Fragment>
+              <div className={c["form-group"]}>
+                <label htmlFor="reference">reference</label>
+                <input
+                  required
+                  name="reference"
+                  id="reference"
+                  type="text"
+                  value={p.refs}
+                  disabled
+                />
+              </div>
+              <div className={c["form-group"]}>
+                <label htmlFor="crew">crew</label>
+                <Select
+                  options={selectCreator(dataSelect.crews)}
+                  id="multiSelect"
+                  inputId="shiftleader1"
+                  styles={customStyles}
+                  defaultValue={" "}
+                  onChange={(e) => onchangeHandler(e, "crew")}
+                />
+              </div>
+              <div className={c["form-group"]}>
+                <label htmlFor="problem">Problem</label>
+                <Select
+                  options={selectCreator(dataSelect.problems)}
+                  id="multiSelect"
+                  inputId="shiftleader1"
+                  styles={customStyles}
+                  defaultValue={" "}
+                  isMulti
+                  onChange={(e) => onchangeHandler(e, "problem")}
+                />
+              </div>
+              <div className={c["form-group"]}>
+                <label htmlFor="textarea">Details</label>
+                <textarea
+                  required
+                  cols="25"
+                  rows="5"
+                  id="textarea"
+                  name="textarea96"
+                  onChange={onchangeHandler}
+                ></textarea>
+              </div>
+              <div className={c["form-group"]}>
+                <label htmlFor="pdd">pdd</label>
+                <Select
+                  options={selectCreator(dataSelect.postes)}
+                  id="multiSelect"
+                  inputId="shiftleader1"
+                  styles={customStyles}
+                  defaultValue={" "}
+                  menuPlacement="top"
+                  onChange={(e) => onchangeHandler(e, "pdd")}
+                />
+              </div>
+            </React.Fragment>
+          ) : (
+            <React.Fragment>
+              <h3> this cable already stored, please set status</h3>
+              <FormDetailsData data={urgent.data} />
+              <div className={c["form-group"]}>
+                <label htmlFor="problem">cable status</label>
+                <Select
+                  options={statusC}
+                  id="multiSelect"
+                  inputId="shiftleader1"
+                  styles={customStyles}
+                  defaultValue={" "}
+                  onChange={(e) => onchangeHandler(e, "status")}
+                />
+              </div>
+            </React.Fragment>
+          )}
           <button type="submit" className={c["form-submit-btn"]}>
             Submit
           </button>

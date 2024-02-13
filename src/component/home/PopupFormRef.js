@@ -30,7 +30,7 @@ const PopupFormRef = (p) => {
 
       const data = await response.json();
       console.log(data);
-      dispatch(loginSActions.setUrgent(data.isUrgent));
+      dispatch(loginSActions.setUrgent({urgent:data.isUrgent, data: data.data}));
     } catch (error) {
       console.error("Error:", error);
     }

@@ -6,14 +6,14 @@ const loginS = createSlice({
     isLoged: { login: false, role: "", token: "", id: "", username: "" },
     data: [],
     dataSelect: {},
-    urgent:false,
+    urgent: { urgent: false, data: null },
   },
   reducers: {
     addDataSelect(s, p) {
-        s.dataSelect = p.payload;
+      s.dataSelect = p.payload;
     },
-    setUrgent(s,p){
-      s.urgent=p.payload
+    setUrgent(s, p) {
+      s.urgent = { urgent: p.payload.urgent, data: p.payload.data };
     },
     login(s, p) {
       s.isLoged.login = true;
@@ -26,7 +26,7 @@ const loginS = createSlice({
       s.isLoged = { login: false, role: "", token: "", id: "", username: "" };
     },
     addData(s, p) {
-      s.data=p.payload.data;
+      s.data = p.payload.data;
       // if (s.data.length === 0) {
       //   if (p.payload.status) {
       //     s.data.push(...p.payload.data);
@@ -37,8 +37,8 @@ const loginS = createSlice({
       //   s.data.unshift(p.payload);
       // }
     },
-    unshiftData(s,p){
-      if(p.payload.page===1){
+    unshiftData(s, p) {
+      if (p.payload.page === 1) {
         s.data.unshift(p.payload.data);
       }
     },
