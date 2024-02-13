@@ -1,10 +1,11 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import c from "./FormAddDetails.module.css";
 import Select from "react-select";
 import { selectCreator } from "../hooks/benifFunc";
 import React, { useState } from "react";
 import Notification from "../ui/Notification";
 import api from "../../services/api";
+import { loginSActions } from "../../store/loginSlice";
 const customStyles = {
   control: (provided, state) => ({
     ...provided,
@@ -79,6 +80,7 @@ const FormAddDetails = (p) => {
     details: "",
     pdd: "",
   });
+  const dispatch=useDispatch();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -101,8 +103,10 @@ const FormAddDetails = (p) => {
         });
   
         const data = await response.json();
-        console.log(data);
-        // dispatch(loginSActions.setUrgent(data.isUrgent));
+        console.log(data, p.page);
+        dispatch(loginSActions.unshiftData({data:data, page:p.page}));
+
+        p.click()
       } catch (error) {
         console.error("Error:", error);
       }

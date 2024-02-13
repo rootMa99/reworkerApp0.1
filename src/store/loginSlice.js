@@ -37,6 +37,11 @@ const loginS = createSlice({
       //   s.data.unshift(p.payload);
       // }
     },
+    unshiftData(s,p){
+      if(p.payload.page===1){
+        s.data.unshift(p.payload.data);
+      }
+    },
     addaudit(s, p) {
       const index = s.data.findIndex((f) => f._id === p.payload.id);
       if (

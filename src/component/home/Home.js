@@ -61,11 +61,11 @@ const Home = (p) => {
   return (
     <div className={c.holder}>
       {popUp && <BackDrop click={clickHandler} />}
-      {popUp && <PopupFormRef />}
+      {popUp && <PopupFormRef click={clickHandler} page={page.page} />}
 
-      <button className={c.button} onClick={clickHandler}>
+      {isLoged.role==="Reworker" &&<button className={c.button} onClick={clickHandler}>
         add reference
-      </button>
+      </button>}
 
       <table className={`${c.table}`}>
         <thead>
@@ -73,8 +73,8 @@ const Home = (p) => {
             <th width="auto">date/time</th>
             <th width="auto">Ref</th>
             <th>Equipe</th>
-            <th width="20%">Problem</th>
-            <th>Details</th>
+            <th width="15%">Problem</th>
+            <th width="15%">Details</th>
             <th>pdd*</th>
             <th>Status</th>
             <th>PPD*</th>

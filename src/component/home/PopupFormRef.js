@@ -114,7 +114,7 @@ const PopupFormRef = (p) => {
           <span className={c.l}></span>
         </form>
       ) : (
-        <FormAddDetails refs={refd} />
+        <FormAddDetails refs={refd} click={p.click} page={p.page} />
       )}
     </React.Fragment>
   );
