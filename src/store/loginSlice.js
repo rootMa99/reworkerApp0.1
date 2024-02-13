@@ -27,19 +27,21 @@ const loginS = createSlice({
     },
     addData(s, p) {
       s.data = p.payload.data;
-      // if (s.data.length === 0) {
-      //   if (p.payload.status) {
-      //     s.data.push(...p.payload.data);
-      //   } else {
-      //     s.data.push(p.payload);
-      //   }
-      // } else {
-      //   s.data.unshift(p.payload);
-      // }
     },
     unshiftData(s, p) {
       if (p.payload.page === 1) {
         s.data.unshift(p.payload.data);
+      }
+    },
+    editStatus(s, p) {
+      const index = s.data.findIndex((f) => f._id === p.payload.id);
+      if (index !== -1) {
+        s.data[index].cableStatus = p.payload.cableStatus;
+      } else {
+        let data = p.payload.data;
+        console.log(data.cableStatus, p.payload.cableStatus);
+        data = { ...data, cableStatus: p.payload.cableStatus };
+        s.data.push(data);
       }
     },
     addaudit(s, p) {

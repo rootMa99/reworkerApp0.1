@@ -104,13 +104,21 @@ const FormAddDetails = (p) => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     console.log(dataInp);
-    const body = {
-      reference: dataInp.reference,
-      pDD: dataInp.pdd,
-      crew: dataInp.crew,
-      details: dataInp.details,
-      problem: dataInp.problem,
-    };
+    let body;
+    if (urgent.data === null) {
+      body = {
+        reference: dataInp.reference,
+        pDD: dataInp.pdd,
+        crew: dataInp.crew,
+        details: dataInp.details,
+        problem: dataInp.problem,
+      };
+    } else {
+      body = {
+        reference: urgent.data.reference,
+        cableStatus: statusc,
+      };
+    }
     try {
       const response = await fetch(`${api}/reworker`, {
         method: "POST",
@@ -123,8 +131,17 @@ const FormAddDetails = (p) => {
 
       const data = await response.json();
       console.log(data, p.page);
-      dispatch(loginSActions.unshiftData({ data: data, page: p.page }));
-
+      if (urgent.data === null) {
+        dispatch(loginSActions.unshiftData({ data: data, page: p.page }));
+      } else {
+        dispatch(
+          loginSActions.editStatus({
+            cableStatus: statusc,
+            id: urgent.data._id,
+            data:urgent.data
+          })
+        );
+      }
       p.click();
     } catch (error) {
       console.error("Error:", error);
@@ -224,7 +241,7 @@ const FormAddDetails = (p) => {
           ) : (
             <React.Fragment>
               <h3 className={c.notif}>
-              This cable has already been stored. Please update its status.
+                This cable has already been stored. Please update its status.
               </h3>
               <FormDetailsData data={urgent.data} />
               <div className={c["form-group"]}>
