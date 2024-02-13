@@ -133,12 +133,16 @@ const FormAddDetails = (p) => {
       console.log(data, p.page);
       if (urgent.data === null) {
         dispatch(loginSActions.unshiftData({ data: data, page: p.page }));
+        if (urgent.urgent) {
+          dispatch(loginSActions.unshiftDataUrgent(data));
+        }
       } else {
         dispatch(
           loginSActions.editStatus({
             cableStatus: statusc,
             id: urgent.data._id,
-            data:urgent.data
+            data: urgent.data,
+            urgent: urgent.urgent
           })
         );
       }

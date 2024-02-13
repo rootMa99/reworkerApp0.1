@@ -18,7 +18,10 @@ const PopupFormRef = (p) => {
 
   const submitHandler = async (e) => {
     e.preventDefault();
-
+    if (refd.length !== 8) {
+      alert("reference invalid, please try again");
+      return;
+    }
     try {
       const response = await fetch(`${api}/reworker/${refd}`, {
         method: "GET",
@@ -30,7 +33,9 @@ const PopupFormRef = (p) => {
 
       const data = await response.json();
       console.log(data);
-      dispatch(loginSActions.setUrgent({urgent:data.isUrgent, data: data.data}));
+      dispatch(
+        loginSActions.setUrgent({ urgent: data.isUrgent, data: data.data })
+      );
     } catch (error) {
       console.error("Error:", error);
     }
@@ -43,7 +48,8 @@ const PopupFormRef = (p) => {
     const value = event.target.value;
     // const qwertyValue = convertToQwerty(value);
     // setRefd(qwertyValue.slice(1));
-    setRefd(value.slice(1).trim());
+
+    setRefd(value.trim().length === 8 ? value : value.slice(1));
   };
 
   // const convertToQwerty = (value) => {

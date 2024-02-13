@@ -7,8 +7,12 @@ const loginS = createSlice({
     data: [],
     dataSelect: {},
     urgent: { urgent: false, data: null },
+    urgentData:[]
   },
   reducers: {
+    addUrgentData(s,p){
+      s.urgentData=p.payload
+    },
     addDataSelect(s, p) {
       s.dataSelect = p.payload;
     },
@@ -33,6 +37,9 @@ const loginS = createSlice({
         s.data.unshift(p.payload.data);
       }
     },
+    unshiftDataUrgent(s, p) {
+      s.urgentData.unshift(p.payload);
+    },
     editStatus(s, p) {
       const index = s.data.findIndex((f) => f._id === p.payload.id);
       if (index !== -1) {
@@ -42,6 +49,10 @@ const loginS = createSlice({
         console.log(data.cableStatus, p.payload.cableStatus);
         data = { ...data, cableStatus: p.payload.cableStatus };
         s.data.push(data);
+      }
+      if(p.payload.urgent){
+        const t=JSON.parse(JSON.stringify(s.urgentData)).filter(f=>f._id!==p.payload.id)
+        s.urgentData=t
       }
     },
     addaudit(s, p) {

@@ -43,15 +43,6 @@ const Login = () => {
         console.error("Error:", error);
         setErr(true);
       }
-      // dispatch(
-      //   loginSActions.login({
-      //     role:"demo role",
-      //     id: "data.user.id",
-      //     username: "data.user.username",
-      //     token: "data.token",
-      //   })
-      // );
-
     }
   };
 

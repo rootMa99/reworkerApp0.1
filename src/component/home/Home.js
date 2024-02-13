@@ -8,7 +8,7 @@ import { loginSActions } from "../../store/loginSlice";
 const Home = (p) => {
   const [popUp, setPopUp] = useState(false);
   const [page, setPage] = useState({ page: 1, totalPage: 0 });
-  const { urgent, isLoged, data } = useSelector((s) => s.loginr);
+  const { urgent, isLoged, data, urgentData } = useSelector((s) => s.loginr);
   const dispatch = useDispatch();
 
   console.log(urgent);
@@ -33,6 +33,23 @@ const Home = (p) => {
         totalPage: data.totalPages,
       }));
       dispatch(loginSActions.addData({ data: data.data, status: true }));
+      
+    } catch (error) {
+      console.error("Error:", error);
+    }
+    try {
+      const response = await fetch(`${api}/urgent`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${isLoged.token}`,
+        },
+      });
+
+      const data = await response.json();
+      console.log(data);
+      dispatch(loginSActions.addUrgentData(data));
+      
     } catch (error) {
       console.error("Error:", error);
     }
@@ -64,9 +81,51 @@ const Home = (p) => {
       {popUp && <PopupFormRef click={clickHandler} page={page.page} />}
 
       {isLoged.role==="Reworker" &&<button className={c.button} onClick={clickHandler}>
-        add reference
+        scan reference
       </button>}
-
+      
+      <table className={`${c.table}`} style={{marginBottom:"2rem"}}>
+        <thead>
+          <tr style={{ backgroundColor: "black" }}>
+            <th width="auto">date/time</th>
+            <th width="auto">Ref</th>
+            <th>Equipe</th>
+            <th width="30%">Problem</th>
+            <th width="15%">Details</th>
+            <th>pdd*</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          {urgentData.length > 0 &&
+            urgentData.map((m) => (
+              <tr key={m._id}>
+                <td>
+                  {m.createdAt.split("T")[0]}
+                  <br />
+                  <span className={c.timed}>
+                    {m.createdAt.split("T")[1].split(":")[0]}:
+                    {m.createdAt.split("T")[1].split(":")[1]}
+                  </span>
+                </td>
+                <td>{m.reference}</td>
+                <td>{m.crew}</td>
+                <td style={{padding:"8px 0"}}>
+                  <ul className={c.underl}>
+                    {m.problem.map((m, i) => (
+                      <li key={i} className={c.listu}>
+                        {m}
+                      </li>
+                    ))}
+                  </ul>
+                </td>
+                <td>{m.details}</td>
+                <td>{m.pDD}</td>
+                <td>{m.cableStatus}</td>
+              </tr>
+            ))}
+        </tbody>
+      </table>
       <table className={`${c.table}`}>
         <thead>
           <tr style={{ backgroundColor: "black" }}>
