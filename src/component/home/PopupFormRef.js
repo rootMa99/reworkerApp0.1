@@ -43,7 +43,7 @@ const PopupFormRef = (p) => {
     const value = event.target.value;
     // const qwertyValue = convertToQwerty(value);
     // setRefd(qwertyValue.slice(1));
-    setRefd(value.slice(1));
+    setRefd(value.slice(1).trim());
   };
 
   // const convertToQwerty = (value) => {

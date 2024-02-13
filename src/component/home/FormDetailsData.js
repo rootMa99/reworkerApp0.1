@@ -10,7 +10,7 @@ const FormDetailsData = (p) => {
       <div className={c.wrapDt}>
         <h3>timestamp: </h3>
         {p.data.createdAt.split("T")[0]}
-        <br />
+        {" / "}
         <span className={c.timed}>
           {p.data.createdAt.split("T")[1].split(":")[0]}:
           {p.data.createdAt.split("T")[1].split(":")[1]}
@@ -34,7 +34,7 @@ const FormDetailsData = (p) => {
       </div>
       <div className={c.wrapDt}>
         <h3>pdd: </h3>
-        <span>{p.data.pDD}</span>
+        <span className={c.timed}>{p.data.pDD}</span>
       </div>
       <div className={c.wrapDt}>
         <h3>cable Status: </h3>

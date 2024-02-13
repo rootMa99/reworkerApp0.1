@@ -223,7 +223,9 @@ const FormAddDetails = (p) => {
             </React.Fragment>
           ) : (
             <React.Fragment>
-              <h3> this cable already stored, please set status</h3>
+              <h3 className={c.notif}>
+              This cable has already been stored. Please update its status.
+              </h3>
               <FormDetailsData data={urgent.data} />
               <div className={c["form-group"]}>
                 <label htmlFor="problem">cable status</label>
@@ -232,7 +234,10 @@ const FormAddDetails = (p) => {
                   id="multiSelect"
                   inputId="shiftleader1"
                   styles={customStyles}
-                  defaultValue={" "}
+                  defaultValue={{
+                    value: urgent.data.cableStatus,
+                    label: urgent.data.cableStatus,
+                  }}
                   onChange={(e) => onchangeHandler(e, "status")}
                 />
               </div>
