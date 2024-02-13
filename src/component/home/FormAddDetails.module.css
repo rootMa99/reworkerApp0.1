@@ -1,7 +1,7 @@
 .form-container {
     width: 40rem;
     background: linear-gradient(#212121, #212121) padding-box,
-                linear-gradient(145deg, transparent 35%,orangered, orange) border-box;
+                linear-gradient(145deg, transparent 35%,#f33716, orange) border-box;
     border: 2px solid transparent;
     padding: 32px 24px;
     font-size: 14px;
@@ -95,12 +95,12 @@
   .form-container .form-group textarea:focus,
   .form-container .form-group textarea:hover {
     outline: none;
-    border-color: orangered;
+    border-color: #f33716;
   }
   
   /* .form-container .form-group textarea:focus {
     outline: none;
-    border-color: orangered;
+    border-color: #f33716;
   } */
   
   .form-container .form-submit-btn {
@@ -124,14 +124,14 @@
   }
   
   .form-container .form-submit-btn:hover {
-    background-color: orangered;
-    border-color: orangered;
+    background-color: #f33716;
+    border-color: #f33716;
     color: #fff;
   }
   
   
   .notif{
-    color: orangered;
+    color: #f33716;
     font-weight: 600;
     font-size: medium;
     text-transform: uppercase;

@@ -26,14 +26,14 @@ const customStyles = {
     boxShadow: "none",
     margin: "auto",
     "&:hover": {
-      border: "1px solid orangered",
+      border: "1px solid #f33716",
       cursor: "pointer",
     },
   }),
   option: (provided, state) => ({
     width: "97%",
     padding: "0.5rem",
-    color: state.isFocused ? "#f3f3f3" : "orangered",
+    color: state.isFocused ? "#f3f3f3" : "#f33716",
     backgroundColor: state.isFocused && "#474b4d",
     fontFamily: `Formular, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
                 "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
@@ -64,7 +64,7 @@ const customStyles = {
       backgroundColor: "#535151",
     },
     "&::-webkit-scrollbar-thumb": {
-      backgroundColor: "orangered",
+      backgroundColor: "#f33716",
     },
     "&::-webkit-scrollbar-track": {
       backgroundColor: "transparent",

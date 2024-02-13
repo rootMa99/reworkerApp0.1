@@ -5,6 +5,28 @@ import PopupFormRef from "./PopupFormRef";
 import { useDispatch, useSelector } from "react-redux";
 import api from "../../services/api";
 import { loginSActions } from "../../store/loginSlice";
+
+
+const stylec=status=>{
+  return status === "Repaired"
+      ? {
+          color: "#006B63",
+          fontWeight: "700",
+          borderBottom: "9px solid #006B63",
+        }
+      : status === "in-Progress"
+      ? {
+          color: "#D9F28B",
+          fontWeight: "700",
+          borderBottom: "9px solid #D9F28B",
+        }
+      : {
+          color: "#CF3335",
+          fontWeight: "700",
+          borderBottom: "9px solid #CF3335",
+        };
+}
+
 const Home = (p) => {
   const [popUp, setPopUp] = useState(false);
   const [page, setPage] = useState({ page: 1, totalPage: 0 });
@@ -83,10 +105,10 @@ const Home = (p) => {
       {isLoged.role==="Reworker" &&<button className={c.button} onClick={clickHandler}>
         scan reference
       </button>}
-      
-      <table className={`${c.table}`} style={{marginBottom:"2rem"}}>
+      <h2 className={c.titleCab}>urgent cables</h2>
+      <table className={`${c.table} ${c.tableur}`} style={{marginBottom:"2rem"}}>
         <thead>
-          <tr style={{ backgroundColor: "black" }}>
+          <tr style={{ backgroundColor: "black"}}>
             <th width="auto">date/time</th>
             <th width="auto">Ref</th>
             <th>Equipe</th>
@@ -121,11 +143,12 @@ const Home = (p) => {
                 </td>
                 <td>{m.details}</td>
                 <td>{m.pDD}</td>
-                <td>{m.cableStatus}</td>
+                <td style={stylec(m.cableStatus)}>{m.cableStatus}</td>
               </tr>
             ))}
         </tbody>
       </table>
+      <h2 className={c.titleCab2}>all cables</h2>
       <table className={`${c.table}`}>
         <thead>
           <tr style={{ backgroundColor: "black" }}>
@@ -169,7 +192,7 @@ const Home = (p) => {
                 </td>
                 <td>{m.details}</td>
                 <td>{m.pDD}</td>
-                <td>{m.cableStatus}</td>
+                <td style={stylec(m.cableStatus)}>{m.cableStatus}</td>
                 <td>{m.pPD}</td>
                 <td>{m.idPD}</td>
                 <td>{m.teamLeaderAction}</td>
