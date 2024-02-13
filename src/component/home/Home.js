@@ -40,7 +40,7 @@ const Home = (p) => {
 
   const callback = useCallback(async () => {
     try {
-      const response = await fetch(`${api}/data?page=${page.page}&limit=5`, {
+      const response = await fetch(`${api}/data?page=${page.page}&limit=10`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
