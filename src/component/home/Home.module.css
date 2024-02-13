@@ -141,7 +141,7 @@
     "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
     "Segoe UI Symbol";
 }
-.timed{
+.timed {
   color: orange;
   font-weight: bold;
 }
@@ -212,4 +212,34 @@
 .underl {
   color: #fdcec4;
   font-weight: 450;
+  margin: auto;
+  width: 95%;
+  padding: 0;
+}
+.listu{
+  text-align: left;
+}
+
+.paginationd {
+  cursor: pointer;
+  width: 2rem;
+  height: 2rem;
+  border: 1px solid orange;
+  border-radius: 50%;
+}
+.paginationd:hover {
+  background-color: orangered;
+  border: 1px solid orangered;
+  transform: scale(1.2);
+  color: aliceblue;
+  font-size: 21px;
+}
+.pagination {
+  margin-top: 1rem;
+  color: orange;
+  font-size: 20px;
+  min-width: 7%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
 }

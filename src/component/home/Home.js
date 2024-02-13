@@ -42,6 +42,22 @@ const Home = (p) => {
     callback();
   }, [callback]);
 
+  const onclickHandler = (e, t) => {
+    if (t === "plus" && page.page < page.totalPage) {
+      setPage((prev) => ({
+        ...prev,
+        page: page.page + 1,
+      }));
+    }
+
+    if (t === "min" && page.page > 1) {
+      setPage((prev) => ({
+        ...prev,
+        page: page.page - 1,
+      }));
+    }
+  };
+
   return (
     <div className={c.holder}>
       {popUp && <BackDrop click={clickHandler} />}
@@ -70,39 +86,57 @@ const Home = (p) => {
           </tr>
         </thead>
         <tbody>
-          {data.length>0 && data.map((m) => (
-            <tr key={m._id}>
-              <td>{m.createdAt.split("T")[0]}<br/><span className={c.timed}>{m.createdAt.split("T")[1].split(":")[0]}:{m.createdAt.split("T")[1].split(":")[1]}</span></td>
-              <td>{m.reference}</td>
-              <td>{m.crew}</td>
-              <td>
-                <ul className={c.underl}>
-                  {m.problem.map((m, i) => (
-                    <li key={i} className={c.listu}> {m} </li>
-                  ))}
-                </ul>
-              </td>
-              <td>{m.details}</td>
-              <td>{m.pDD}</td>
-              <td>{m.cableStatus}</td>
-              <td>{m.pPD}</td>
-              <td>{m.idPD}</td>
-              <td>{m.teamLeaderAction}</td>
-              <td>{m.cP}</td>
-              <td>{m.auditorAction}</td>
-              <td>{m.shiftLeaderAction}</td>
-            </tr>
-          ))}
+          {data.length > 0 &&
+            data.map((m) => (
+              <tr key={m._id}>
+                <td>
+                  {m.createdAt.split("T")[0]}
+                  <br />
+                  <span className={c.timed}>
+                    {m.createdAt.split("T")[1].split(":")[0]}:
+                    {m.createdAt.split("T")[1].split(":")[1]}
+                  </span>
+                </td>
+                <td>{m.reference}</td>
+                <td>{m.crew}</td>
+                <td style={{padding:"8px 0"}}>
+                  <ul className={c.underl}>
+                    {m.problem.map((m, i) => (
+                      <li key={i} className={c.listu}>
+                        {m}
+                      </li>
+                    ))}
+                  </ul>
+                </td>
+                <td>{m.details}</td>
+                <td>{m.pDD}</td>
+                <td>{m.cableStatus}</td>
+                <td>{m.pPD}</td>
+                <td>{m.idPD}</td>
+                <td>{m.teamLeaderAction}</td>
+                <td>{m.cP}</td>
+                <td>{m.auditorAction}</td>
+                <td>{m.shiftLeaderAction}</td>
+              </tr>
+            ))}
         </tbody>
       </table>
-      <div>
-            <span>
-            &laquo;
-            </span>
-            {page.page}/{page.totalPage}
-            <span>
-            &raquo;
-            </span>
+      <div className={c.pagination}>
+        <span
+          className={c.paginationd}
+          onClick={(e) => onclickHandler(e, "min")}
+        >
+          &laquo;
+        </span>
+        <span>
+          {page.page}/{page.totalPage}
+        </span>
+        <span
+          className={c.paginationd}
+          onClick={(e) => onclickHandler(e, "plus")}
+        >
+          &raquo;
+        </span>
       </div>
       <div className={c.ter}>
         <ul className={c.underList}>

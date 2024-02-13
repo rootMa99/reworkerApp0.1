@@ -26,15 +26,16 @@ const loginS = createSlice({
       s.isLoged = { login: false, role: "", token: "", id: "", username: "" };
     },
     addData(s, p) {
-      if (s.data.length === 0) {
-        if (p.payload.status) {
-          s.data.push(...p.payload.data);
-        } else {
-          s.data.push(p.payload);
-        }
-      } else {
-        s.data.unshift(p.payload);
-      }
+      s.data=p.payload.data;
+      // if (s.data.length === 0) {
+      //   if (p.payload.status) {
+      //     s.data.push(...p.payload.data);
+      //   } else {
+      //     s.data.push(p.payload);
+      //   }
+      // } else {
+      //   s.data.unshift(p.payload);
+      // }
     },
     addaudit(s, p) {
       const index = s.data.findIndex((f) => f._id === p.payload.id);
