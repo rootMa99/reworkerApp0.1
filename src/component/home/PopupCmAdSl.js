@@ -216,7 +216,7 @@ const PopupCmAdSl = (p) => {
                 name="cp"
                 id="cp"
                 type="text"
-                pattern="[0-9]*"
+                // pattern="[0-9]*"
                 onChange={(e) => onchangeHandler(e, "cp")}
                 value={dataCm.cp}
               />
