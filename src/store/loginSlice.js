@@ -61,7 +61,7 @@ const loginS = createSlice({
       const index = s.data.findIndex((f) => f._id === p.payload.id);
 
       if (s.data[index].cP.trim() !== "") {
-        s.data[index].cP = p.payload.cotp;
+        s.data[index].cP = p.payload.cp;
       }
       if (s.data[index].auditorAction.trim() !== "") {
         s.data[index].auditorAction = p.payload.audia;

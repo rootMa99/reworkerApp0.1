@@ -16,6 +16,9 @@
     height: auto;
     color: #fffcf9;
   }
+  .descrHolder .wrapDt span{
+    text-transform: capitalize;
+  }
   
   .descrHolder .wrapDt h3 {
     margin: 0;

@@ -18,7 +18,7 @@ const PopupFormRef = (p) => {
 
   const submitHandler = async (e) => {
     e.preventDefault();
-    if (refd.length !== 8) {
+    if (refd.length > 9) {
       alert("reference invalid, please try again");
       return;
     }

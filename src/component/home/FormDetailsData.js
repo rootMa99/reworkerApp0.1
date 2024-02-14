@@ -43,7 +43,7 @@ const FormDetailsData = (p) => {
         <h3>reworker ID: </h3>
         <span>{p.data.reworkerID}</span>
       </div>
-      {p.data.reworkerID_CS !== p.data.reworkerID && (
+      {(p.data.reworkerID_CS !== p.data.reworkerID && p.data.reworkerID_CS!==undefined ) && (
         <div className={c.wrapDt}>
           <h3>reworker ID_cs: </h3>
           <span>{p.data.reworkerID_CS}</span>
@@ -70,12 +70,6 @@ const FormDetailsData = (p) => {
         <span style={style}>{p.data.cableStatus}</span>
       </div>
 
-      {p.data.auditorAction.trim() !== "" && (
-        <div className={c.wrapDt}>
-          <h3>audit Action: </h3>
-          <span>{p.data.auditorAction}</span>
-        </div>
-      )}
       {p.data.pPD.trim() !== "" && (
         <div className={c.wrapDt}>
           <h3>PPD: </h3>
@@ -98,6 +92,12 @@ const FormDetailsData = (p) => {
         <div className={c.wrapDt}>
           <h3>cP: </h3>
           <span>{p.data.cP}</span>
+        </div>
+      )}
+      {p.data.auditorAction.trim() !== "" && (
+        <div className={c.wrapDt}>
+          <h3>auditor Action: </h3>
+          <span>{p.data.auditorAction}</span>
         </div>
       )}
     </div>
