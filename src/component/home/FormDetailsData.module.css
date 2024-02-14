@@ -9,6 +9,7 @@
     overflow: hidden;
     gap: 1rem;
     justify-content: center;
+    text-align: justify;
   }
   
   .descrHolder .wrapDt {

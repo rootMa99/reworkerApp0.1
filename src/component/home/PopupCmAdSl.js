@@ -3,6 +3,7 @@ import c from "./FormAddDetails.module.css";
 import FormDetailsData from "./FormDetailsData";
 import { useDispatch, useSelector } from "react-redux";
 import { loginSActions } from "../../store/loginSlice";
+import api from "../../services/api";
 
 const PopupCmAdSl = (p) => {
   const { isLoged } = useSelector((s) => s.loginr);
@@ -13,10 +14,32 @@ const PopupCmAdSl = (p) => {
   });
   const dispatch = useDispatch();
 
-  const submitHandler = (e) => {
+  const submitHandler = async (e) => {
     e.preventDefault();
     console.log(dataCm);
-    dispatch(loginSActions.addTL({ ...dataCm, id: p.data._id }));
+    if (isLoged.role === "Teamleader") {
+      try {
+        const body = {
+          pPD: dataCm.ppd,
+          idPD: dataCm.idpd,
+          teamLeaderAction: dataCm.cma,
+        };
+        const response = await fetch(`${api}/teamleader/update/${p.data._id}`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${isLoged.token}`,
+          },
+          body: JSON.stringify(body),
+        });
+        const data = await response.json();
+        console.log(data);
+        dispatch(loginSActions.addTL({ ...dataCm, id: p.data._id }));
+        p.click();
+      } catch (error) {
+        console.error("Error:", error);
+      }
+    }
   };
   const onchangeHandler = (e, t) => {
     console.log(e.target.value);
