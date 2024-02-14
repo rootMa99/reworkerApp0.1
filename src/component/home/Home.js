@@ -5,6 +5,7 @@ import PopupFormRef from "./PopupFormRef";
 import { useDispatch, useSelector } from "react-redux";
 import api from "../../services/api";
 import { loginSActions } from "../../store/loginSlice";
+import PopupCmAdSl from "./PopupCmAdSl";
 
 const stylec = (status) => {
   return status === "Repaired"
@@ -28,7 +29,7 @@ const stylec = (status) => {
 
 const Home = (p) => {
   const [popUp, setPopUp] = useState(false);
-  const [popUpEdite, setPopUpEdite] = useState(false);
+  const [popUpEdite, setPopUpEdite] = useState({ states: false, data: {} });
   const [page, setPage] = useState({ page: 1, totalPage: 0 });
   const { urgent, isLoged, data, urgentData } = useSelector((s) => s.loginr);
   const dispatch = useDispatch();
@@ -36,7 +37,8 @@ const Home = (p) => {
   console.log(urgent);
   const clickHandler = (e) => {
     isLoged.role === "Reworker" && setPopUp(!popUp);
-    isLoged.role !== "Reworker" && setPopUpEdite(!popUpEdite);
+    isLoged.role !== "Reworker" &&
+      setPopUpEdite((prev) => ({ ...prev, states: !prev.states }));
   };
 
   const callback = useCallback(async () => {
@@ -96,14 +98,15 @@ const Home = (p) => {
     }
   };
   const trClicked = (e, dt) => {
-    isLoged.role !== "Reworker" && setPopUpEdite(true);
+    isLoged.role !== "Reworker" && setPopUpEdite({states:true, data: dt});
     console.log(dt);
   };
 
   return (
     <div className={c.holder}>
-      {(popUp || popUpEdite) && <BackDrop click={clickHandler} />}
+      {(popUp || popUpEdite.states) && <BackDrop click={clickHandler} />}
       {popUp && <PopupFormRef click={clickHandler} page={page.page} />}
+      {popUpEdite.states && <PopupCmAdSl data={popUpEdite.data} />}
 
       {isLoged.role === "Reworker" && (
         <button className={c.button} onClick={clickHandler}>
