@@ -72,7 +72,6 @@ const loginS = createSlice({
       }
     },
     addTL(s, p) {
-      console.log(p.payload)
       const index = s.data.findIndex((f) => f._id === p.payload.id);
       if (s.data[index].pPD.trim() !== "") {
         s.data[index].pPD = p.payload.ppd;

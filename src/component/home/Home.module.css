@@ -272,6 +272,7 @@ tr.hostin{
   cursor: pointer;
 }
 tr.hostin:hover{
-  background-color: #ff340720;
-  transform: scale(1.01);
+  background-color: #000000;
+  transform: scale(1.023);
+  box-shadow: 0px 0px 25px 2000px rgba(0, 0, 0, 0.119);
 }

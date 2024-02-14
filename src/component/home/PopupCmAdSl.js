@@ -4,16 +4,82 @@ import FormDetailsData from "./FormDetailsData";
 import { useDispatch, useSelector } from "react-redux";
 import { loginSActions } from "../../store/loginSlice";
 import api from "../../services/api";
+import Select from "react-select";
+import { selectCreator } from "../hooks/benifFunc";
 
+const customStyles = {
+    control: (provided, state) => ({
+      ...provided,
+      width: "97%",
+      height: "auto",
+      fontWeight: "600",
+      textTransform: "uppercase",
+      borderRadius: "5px",
+      fontFamily: `Formular, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+                  "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
+                  "Segoe UI Symbol"`,
+      letterSpacing: "2px",
+      textAlign: "center",
+      outline: "none",
+      border: "1px solid #414141",
+      backgroundColor: "transparent",
+      boxShadow: "none",
+      margin: "auto",
+      "&:hover": {
+        border: "1px solid #f33716",
+        cursor: "pointer",
+      },
+    }),
+    option: (provided, state) => ({
+      width: "97%",
+      padding: "0.5rem",
+      color: state.isFocused ? "#f3f3f3" : "#f33716",
+      backgroundColor: state.isFocused && "#474b4d",
+      fontFamily: `Formular, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+                  "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
+                  "Segoe UI Symbol"`,
+      textTransform: "uppercase",
+      outline: "none",
+      textAlign: "center",
+      "&:hover": {
+        cursor: "pointer",
+      },
+    }),
+    input: (provided) => ({
+      ...provided,
+      color: "#f3f3f3",
+    }),
+    singleValue: (p) => ({
+      ...p,
+      color: "#f3f3f3",
+    }),
+    menuList: (provided) => ({
+      maxHeight: "200px",
+      overflowY: "auto",
+      overflowX: "hidden",
+      scrollbarWidth: "thin",
+      msOverflowStyle: "none",
+      "&::-webkit-scrollbar": {
+        width: "5px",
+        backgroundColor: "#535151",
+      },
+      "&::-webkit-scrollbar-thumb": {
+        backgroundColor: "#f33716",
+      },
+      "&::-webkit-scrollbar-track": {
+        backgroundColor: "transparent",
+      },
+    }),
+  };
 const PopupCmAdSl = (p) => {
-  const { isLoged } = useSelector((s) => s.loginr);
+  const { isLoged, dataSelect } = useSelector((s) => s.loginr);
   const [dataCm, setDatacm] = useState({
-    ppd: "",
-    idpd: "",
-    cma: "",
+    ppd: p.data.pPD,
+    idpd: p.data.idPD,
+    cma: p.data.teamLeaderAction,
   });
   const dispatch = useDispatch();
-
+  console.log(p.data)
   const submitHandler = async (e) => {
     e.preventDefault();
     console.log(dataCm);
@@ -42,13 +108,14 @@ const PopupCmAdSl = (p) => {
     }
   };
   const onchangeHandler = (e, t) => {
-    console.log(e.target.value);
     switch (t) {
       case "ppd":
-        setDatacm((prev) => ({ ...prev, ppd: e.target.value }));
+        setDatacm((prev) => ({ ...prev, ppd: e.value }));
         break;
       case "idpd":
-        setDatacm((prev) => ({ ...prev, idpd: e.target.value }));
+        if (/^\d*$/.test(e.target.value)) {
+            setDatacm((prev) => ({ ...prev, idpd: e.target.value }));
+        }
         break;
       case "cma":
         setDatacm((prev) => ({ ...prev, cma: e.target.value }));
@@ -66,16 +133,21 @@ const PopupCmAdSl = (p) => {
               you can set on change ppd, idpd and conste-maitre actions
             </h3>
             <FormDetailsData data={p.data} />
+           
             <div className={c["form-group"]}>
-              <label htmlFor="ppd">ppd</label>
-              <input
-                required
-                name="ppd"
-                id="ppd"
-                type="text"
-                onChange={(e) => onchangeHandler(e, "ppd")}
-              />
-            </div>
+                <label htmlFor="crew">ppd</label>
+                <Select
+                  options={selectCreator(dataSelect.postes)}
+                  id="multiSelect"
+                  inputId="shiftleader1"
+                  styles={customStyles}
+                  defaultValue={{
+                    value: dataCm.ppd,
+                    label: dataCm.ppd,
+                  }}
+                  onChange={(e) => onchangeHandler(e, "ppd")}
+                />
+              </div>
             <div className={c["form-group"]}>
               <label htmlFor="idpd">idpd</label>
               <input
@@ -83,7 +155,9 @@ const PopupCmAdSl = (p) => {
                 name="idpd"
                 id="idpd"
                 type="text"
+                pattern="[0-9]*"
                 onChange={(e) => onchangeHandler(e, "idpd")}
+                value={dataCm.idpd}
               />
             </div>
             <div className={c["form-group"]}>
@@ -94,6 +168,7 @@ const PopupCmAdSl = (p) => {
                 id="cma"
                 type="text"
                 onChange={(e) => onchangeHandler(e, "cma")}
+                value={dataCm.cma}
               />
             </div>
           </React.Fragment>

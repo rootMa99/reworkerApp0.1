@@ -106,7 +106,7 @@ const Home = (p) => {
     <div className={c.holder}>
       {(popUp || popUpEdite.states) && <BackDrop click={clickHandler} />}
       {popUp && <PopupFormRef click={clickHandler} page={page.page} />}
-      {popUpEdite.states && <PopupCmAdSl data={popUpEdite.data} />}
+      {popUpEdite.states && <PopupCmAdSl data={popUpEdite.data} click={clickHandler}/>}
 
       {isLoged.role === "Reworker" && (
         <button className={c.button} onClick={clickHandler}>
