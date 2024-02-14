@@ -72,25 +72,27 @@ const loginS = createSlice({
       }
     },
     addTL(s, p) {
+      console.log(p.payload)
       const index = s.data.findIndex((f) => f._id === p.payload.id);
+      if (s.data[index].pPD.trim() !== "") {
+        s.data[index].pPD = p.payload.ppd;
+      }
+      if (s.data[index].idPD.trim() !== "") {
+        s.data[index].idPD = p.payload.idpd;
+      }
+      if (s.data[index].teamLeaderAction.trim() !== "") {
+        s.data[index].teamLeaderAction = p.payload.cma;
+      }
       if (
-        s.data[index].positionOfWhoProducesDefect.trim() === "" &&
-        s.data[index].idOfWhoProducesDefect.trim() === "" &&
-        s.data[index].foremanAction.trim() === ""
+        s.data[index].pPD.trim() === "" &&
+        s.data[index].idPD.trim() === "" &&
+        s.data[index].teamLeaderAction.trim() === ""
       ) {
-        s.data[index].positionOfWhoProducesDefect = p.payload.cppd;
-        s.data[index].idOfWhoProducesDefect = p.payload.idpd;
-        s.data[index].foremanAction = p.payload.tlact;
+        s.data[index].pPD = p.payload.ppd;
+        s.data[index].idPD = p.payload.idpd;
+        s.data[index].teamLeaderAction = p.payload.cma;
       }
-      if (s.data[index].positionOfWhoProducesDefect.trim() !== "") {
-        s.data[index].positionOfWhoProducesDefect = p.payload.cppd;
-      }
-      if (s.data[index].idOfWhoProducesDefect.trim() !== "") {
-        s.data[index].idOfWhoProducesDefect = p.payload.idpd;
-      }
-      if (s.data[index].foremanAction.trim() !== "") {
-        s.data[index].foremanAction = p.payload.tlact;
-      }
+    
     },
     addRoot(s, p) {
       const index = s.data.findIndex((f) => f._id === p.payload.id);
