@@ -7,11 +7,11 @@ const loginS = createSlice({
     data: [],
     dataSelect: {},
     urgent: { urgent: false, data: null },
-    urgentData:[]
+    urgentData: [],
   },
   reducers: {
-    addUrgentData(s,p){
-      s.urgentData=p.payload
+    addUrgentData(s, p) {
+      s.urgentData = p.payload;
     },
     addDataSelect(s, p) {
       s.dataSelect = p.payload;
@@ -50,25 +50,28 @@ const loginS = createSlice({
         data = { ...data, cableStatus: p.payload.cableStatus };
         s.data.push(data);
       }
-      if(p.payload.urgent){
-        const t=JSON.parse(JSON.stringify(s.urgentData)).filter(f=>f._id!==p.payload.id)
-        s.urgentData=t
+      if (p.payload.urgent) {
+        const t = JSON.parse(JSON.stringify(s.urgentData)).filter(
+          (f) => f._id !== p.payload.id
+        );
+        s.urgentData = t;
       }
     },
     addaudit(s, p) {
       const index = s.data.findIndex((f) => f._id === p.payload.id);
+
+      if (s.data[index].cP.trim() !== "") {
+        s.data[index].cP = p.payload.cotp;
+      }
+      if (s.data[index].auditorAction.trim() !== "") {
+        s.data[index].auditorAction = p.payload.audia;
+      }
       if (
-        s.data[index].causeOfTheProblem.trim() === "" &&
-        s.data[index].auditAction.trim() === ""
+        s.data[index].cP.trim() === "" &&
+        s.data[index].auditorAction.trim() === ""
       ) {
-        s.data[index].causeOfTheProblem = p.payload.cotp;
-        s.data[index].auditAction = p.payload.audAct;
-      }
-      if (s.data[index].causeOfTheProblem.trim() !== "") {
-        s.data[index].causeOfTheProblem = p.payload.cotp;
-      }
-      if (s.data[index].auditAction.trim() !== "") {
-        s.data[index].auditAction = p.payload.audAct;
+        s.data[index].cP = p.payload.cp;
+        s.data[index].auditorAction = p.payload.audia;
       }
     },
     addTL(s, p) {
@@ -91,7 +94,6 @@ const loginS = createSlice({
         s.data[index].idPD = p.payload.idpd;
         s.data[index].teamLeaderAction = p.payload.cma;
       }
-    
     },
     addRoot(s, p) {
       const index = s.data.findIndex((f) => f._id === p.payload.id);
