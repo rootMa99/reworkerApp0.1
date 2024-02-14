@@ -6,36 +6,37 @@ import { useDispatch, useSelector } from "react-redux";
 import api from "../../services/api";
 import { loginSActions } from "../../store/loginSlice";
 
-
-const stylec=status=>{
+const stylec = (status) => {
   return status === "Repaired"
-      ? {
-          color: "#006B63",
-          fontWeight: "700",
-          borderBottom: "9px solid #006B63",
-        }
-      : status === "in-Progress"
-      ? {
-          color: "#D9F28B",
-          fontWeight: "700",
-          borderBottom: "9px solid #D9F28B",
-        }
-      : {
-          color: "#CF3335",
-          fontWeight: "700",
-          borderBottom: "9px solid #CF3335",
-        };
-}
+    ? {
+        color: "#006B63",
+        fontWeight: "700",
+        borderBottom: "9px solid #006B63",
+      }
+    : status === "in-Progress"
+    ? {
+        color: "#D9F28B",
+        fontWeight: "700",
+        borderBottom: "9px solid #D9F28B",
+      }
+    : {
+        color: "#CF3335",
+        fontWeight: "700",
+        borderBottom: "9px solid #CF3335",
+      };
+};
 
 const Home = (p) => {
   const [popUp, setPopUp] = useState(false);
+  const [popUpEdite, setPopUpEdite] = useState(false);
   const [page, setPage] = useState({ page: 1, totalPage: 0 });
   const { urgent, isLoged, data, urgentData } = useSelector((s) => s.loginr);
   const dispatch = useDispatch();
 
   console.log(urgent);
   const clickHandler = (e) => {
-    setPopUp(!popUp);
+    isLoged.role === "Reworker" && setPopUp(!popUp);
+    isLoged.role !== "Reworker" && setPopUpEdite(!popUpEdite);
   };
 
   const callback = useCallback(async () => {
@@ -55,7 +56,6 @@ const Home = (p) => {
         totalPage: data.totalPages,
       }));
       dispatch(loginSActions.addData({ data: data.data, status: true }));
-      
     } catch (error) {
       console.error("Error:", error);
     }
@@ -71,7 +71,6 @@ const Home = (p) => {
       const data = await response.json();
       console.log(data);
       dispatch(loginSActions.addUrgentData(data));
-      
     } catch (error) {
       console.error("Error:", error);
     }
@@ -96,19 +95,28 @@ const Home = (p) => {
       }));
     }
   };
+  const trClicked = (e, dt) => {
+    isLoged.role !== "Reworker" && setPopUpEdite(true);
+    console.log(dt);
+  };
 
   return (
     <div className={c.holder}>
-      {popUp && <BackDrop click={clickHandler} />}
+      {(popUp || popUpEdite) && <BackDrop click={clickHandler} />}
       {popUp && <PopupFormRef click={clickHandler} page={page.page} />}
 
-      {isLoged.role==="Reworker" &&<button className={c.button} onClick={clickHandler}>
-        scan reference
-      </button>}
+      {isLoged.role === "Reworker" && (
+        <button className={c.button} onClick={clickHandler}>
+          scan reference
+        </button>
+      )}
       <h2 className={c.titleCab}>urgent cables</h2>
-      <table className={`${c.table} ${c.tableur}`} style={{marginBottom:"2rem"}}>
+      <table
+        className={`${c.table} ${c.tableur}`}
+        style={{ marginBottom: "2rem" }}
+      >
         <thead>
-          <tr style={{ backgroundColor: "black"}}>
+          <tr style={{ backgroundColor: "black" }}>
             <th width="auto">date/time</th>
             <th width="auto">Ref</th>
             <th>Equipe</th>
@@ -132,7 +140,7 @@ const Home = (p) => {
                 </td>
                 <td>{m.reference}</td>
                 <td>{m.crew}</td>
-                <td style={{padding:"8px 0"}}>
+                <td style={{ padding: "8px 0" }}>
                   <ul className={c.underl}>
                     {m.problem.map((m, i) => (
                       <li key={i} className={c.listu}>
@@ -170,7 +178,11 @@ const Home = (p) => {
         <tbody>
           {data.length > 0 &&
             data.map((m) => (
-              <tr key={m._id}>
+              <tr
+                key={m._id}
+                className={isLoged.role !== "Reworker" && c.hostin}
+                onClick={(e) => trClicked(e, m)}
+              >
                 <td>
                   {m.createdAt.split("T")[0]}
                   <br />
@@ -181,7 +193,7 @@ const Home = (p) => {
                 </td>
                 <td>{m.reference}</td>
                 <td>{m.crew}</td>
-                <td style={{padding:"8px 0"}}>
+                <td style={{ padding: "8px 0" }}>
                   <ul className={c.underl}>
                     {m.problem.map((m, i) => (
                       <li key={i} className={c.listu}>

@@ -267,3 +267,11 @@
 .titleCab{
   color: #f33716;
 }
+
+tr.hostin{
+  cursor: pointer;
+}
+tr.hostin:hover{
+  background-color: #ff340720;
+  transform: scale(1.01);
+}
