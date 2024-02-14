@@ -216,7 +216,7 @@
   width: 95%;
   padding: 0;
 }
-.listu{
+.listu {
   text-align: left;
 }
 
@@ -244,35 +244,52 @@
   align-items: center;
 }
 
-.tableur th{
+.tableur th {
   color: #f33716;
 }
-.tableur .timed{
+.tableur .timed {
   color: #f33716;
 }
 
-.titleCab2, .titleCab{
+.titleCab2,
+.titleCab {
   text-transform: uppercase;
   margin: 0;
   margin-right: auto;
   margin-left: 2.5rem;
-  margin-bottom: 0.20rem;
+  margin-bottom: 0.2rem;
   font-family: Formular, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-  "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
-  "Segoe UI Symbol";
+    "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
+    "Segoe UI Symbol";
 }
-.titleCab2{
+.titleCab2 {
   color: orange;
 }
-.titleCab{
+.titleCab {
   color: #f33716;
 }
 
-tr.hostin{
+tr.hostin {
   cursor: pointer;
 }
-tr.hostin:hover{
+tr.hostin:hover {
   background-color: #000000;
-  transform: scale(1.023);
-  box-shadow: 0px 0px 25px 2000px rgba(0, 0, 0, 0.119);
+  /* box-shadow: 0px 0px 25px 2000px rgba(0, 0, 0, 0.363); */
+  /* box-shadow: rgba(0, 0, 0, 0.17) 0px -23px 25px 0px inset,
+    rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset,
+    rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px,
+    rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px,
+    rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px; */
+    animation: 1s linear 0s forwards alternate shadow;
+}
+
+@keyframes shadow {
+  from{
+    box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0.363);
+    transform: scale(1);
+  }
+  to{
+    box-shadow: 0px 0px 25px 2000px rgba(0, 0, 0, 0.363);
+    transform: scale(1.023);
+  }
 }
