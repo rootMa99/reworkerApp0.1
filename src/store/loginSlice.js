@@ -8,6 +8,7 @@ const loginS = createSlice({
     dataSelect: {},
     urgent: { urgent: false, data: null },
     urgentData: [],
+    scrap:[]
   },
   reducers: {
     addUrgentData(s, p) {
@@ -18,6 +19,9 @@ const loginS = createSlice({
     },
     setUrgent(s, p) {
       s.urgent = { urgent: p.payload.urgent, data: p.payload.data };
+    },
+    addScrap(s, p){
+      s.scrap=p.payload
     },
     login(s, p) {
       s.isLoged.login = true;

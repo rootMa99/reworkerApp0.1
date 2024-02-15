@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import c from "./Home.module.css";
 import BackDrop from "../ui/BackDrop";
 import PopupFormRef from "./PopupFormRef";
@@ -31,7 +31,9 @@ const Home = (p) => {
   const [popUp, setPopUp] = useState(false);
   const [popUpEdite, setPopUpEdite] = useState({ states: false, data: {} });
   const [page, setPage] = useState({ page: 1, totalPage: 0 });
-  const { urgent, isLoged, data, urgentData } = useSelector((s) => s.loginr);
+  const { urgent, isLoged, data, urgentData, scrap } = useSelector(
+    (s) => s.loginr
+  );
   const dispatch = useDispatch();
 
   console.log(urgent);
@@ -76,7 +78,25 @@ const Home = (p) => {
     } catch (error) {
       console.error("Error:", error);
     }
-  }, [dispatch, page.page, isLoged.token]);
+
+    if (isLoged.role === "ShiftLeader") {
+      try {
+        const response = await fetch(`${api}/scrap`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${isLoged.token}`,
+          },
+        });
+
+        const data = await response.json();
+        console.log(data);
+        dispatch(loginSActions.addScrap(data));
+      } catch (error) {
+        console.error("Error:", error);
+      }
+    }
+  }, [dispatch, page.page, isLoged]);
 
   useEffect(() => {
     callback();
@@ -98,7 +118,7 @@ const Home = (p) => {
     }
   };
   const trClicked = (e, dt) => {
-    isLoged.role !== "Reworker" && setPopUpEdite({states:true, data: dt});
+    isLoged.role !== "Reworker" && setPopUpEdite({ states: true, data: dt });
     console.log(dt);
   };
 
@@ -106,7 +126,9 @@ const Home = (p) => {
     <div className={c.holder}>
       {(popUp || popUpEdite.states) && <BackDrop click={clickHandler} />}
       {popUp && <PopupFormRef click={clickHandler} page={page.page} />}
-      {popUpEdite.states && <PopupCmAdSl data={popUpEdite.data} click={clickHandler}/>}
+      {popUpEdite.states && (
+        <PopupCmAdSl data={popUpEdite.data} click={clickHandler} />
+      )}
 
       {isLoged.role === "Reworker" && (
         <button className={c.button} onClick={clickHandler}>
@@ -159,6 +181,59 @@ const Home = (p) => {
             ))}
         </tbody>
       </table>
+      {isLoged.role === "ShiftLeader" && (
+        <React.Fragment>
+          <h2 className={c.titleCab2}>scrap cables</h2>
+          <table className={`${c.table}`} style={{ marginBottom: "2rem" }}>
+            <thead>
+              <tr style={{ backgroundColor: "black" }}>
+                <th width="auto">date/time</th>
+                <th width="auto">Ref</th>
+                <th>Equipe</th>
+                <th width="15%">Problem</th>
+                <th width="15%">Details</th>
+                <th>pdd*</th>
+                <th>Status</th>
+                <th width="25%">Sl. Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              {scrap.length > 0 &&
+                scrap.map((m) => (
+                  <tr
+                    key={m._id}
+                    className={isLoged.role !== "Reworker" && c.hostin}
+                    onClick={(e) => trClicked(e, m)}
+                  >
+                    <td>
+                      {m.createdAt.split("T")[0]}
+                      <br />
+                      <span className={c.timed}>
+                        {m.createdAt.split("T")[1].split(":")[0]}:
+                        {m.createdAt.split("T")[1].split(":")[1]}
+                      </span>
+                    </td>
+                    <td>{m.reference}</td>
+                    <td>{m.crew}</td>
+                    <td style={{ padding: "8px 0" }}>
+                      <ul className={c.underl}>
+                        {m.problem.map((m, i) => (
+                          <li key={i} className={c.listu}>
+                            {m}
+                          </li>
+                        ))}
+                      </ul>
+                    </td>
+                    <td>{m.details}</td>
+                    <td>{m.pDD}</td>
+                    <td style={stylec(m.cableStatus)}>{m.cableStatus}</td>
+                    <td>{m.shiftLeaderAction}</td>
+                  </tr>
+                ))}
+            </tbody>
+          </table>
+        </React.Fragment>
+      )}
       <h2 className={c.titleCab2}>all cables</h2>
       <table className={`${c.table}`}>
         <thead>
