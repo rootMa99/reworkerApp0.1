@@ -71,7 +71,20 @@ const customStyles = {
     },
   }),
 };
-
+const statusC = [
+    {
+      value: "in-Progress",
+      label: "in-Progress",
+    },
+    {
+      value: "Repaired",
+      label: "Repaired",
+    },
+    {
+      value: "Scrap",
+      label: "Scrap",
+    },
+  ];
 const getlabelandvalue = (data) => {
   const retData = [];
 
@@ -191,7 +204,7 @@ const PopupCmAdSl = (p) => {
           shiftLeaderAction: dataCm.sl,
         };
         const response = await fetch(
-          `${api}/shiftleader/update/${p.data._id}`,
+          `${api}/coordinator/update/${p.data._id}`,
           {
             method: "PUT",
             headers: {
@@ -203,15 +216,47 @@ const PopupCmAdSl = (p) => {
         );
         const data = await response.json();
         console.log(data);
-        dispatch(loginSActions.addsl({ sl: dataCm.sl, id: p.data._id }));
+        dispatch(loginSActions.addRoot({ data: dataCm, id: p.data._id }));
         p.click();
       } catch (error) {
         console.error("Error:", error);
       }
     }
   };
+
+  const deleteRec = async () => {
+    try {
+      const response = await fetch(`${api}/coordinator/delete/${p.data._id}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${isLoged.token}`,
+        },
+      });
+      const datares = response.data;
+      dispatch(loginSActions.deleteRow(p.data._id));
+      console.log(datares);
+      p.click();
+    } catch (error) {
+      //alert(error.response.data.msg);
+      console.log(error);
+    }
+  };
+
   const onchangeHandler = (e, t) => {
     switch (t) {
+      case "crew":
+        setDatacm((prev) => ({ ...prev, ppd: e.value }));
+        break;
+      case "problem":
+        setDatacm((prev) => ({ ...prev, ppd: e.value }));
+        break;
+      case "detail":
+        setDatacm((prev) => ({ ...prev, ppd: e.value }));
+        break;
+      case "pdd":
+        setDatacm((prev) => ({ ...prev, ppd: e.value }));
+        break;
       case "ppd":
         setDatacm((prev) => ({ ...prev, ppd: e.value }));
         break;
@@ -232,10 +277,14 @@ const PopupCmAdSl = (p) => {
       case "sld":
         setDatacm((prev) => ({ ...prev, sl: e.target.value }));
         break;
+      case "status":
+        setDatacm((prev) => ({ ...prev, cs: e.value }));
+        break;
       default:
     }
   };
-  const classStyleForm=isLoged.role === "Coordinator"?  { width:"60rem"}: {}
+  const classStyleForm =
+    isLoged.role === "Coordinator" ? { width: "60rem" } : {};
   return (
     <div className={c["form-container"]} style={classStyleForm}>
       <form className={c.form} onSubmit={submitHandler}>
@@ -336,7 +385,7 @@ const PopupCmAdSl = (p) => {
         )}
         {isLoged.role === "Coordinator" && (
           <React.Fragment>
-          <h3 className={c.notif}>you can update or delete this cable</h3>
+            <h3 className={c.notif}>you can update or delete this cable</h3>
             <div className={c.editForm}>
               <div className={c.formpd}>
                 <div className={c["form-group"]}>
@@ -419,6 +468,20 @@ const PopupCmAdSl = (p) => {
                 </div>
               </div>
               <div className={c.formpd}>
+              <div className={c["form-group"]}>
+                <label htmlFor="problem">cable status</label>
+                <Select
+                  options={statusC}
+                  id="multiSelect"
+                  inputId="shiftleader1"
+                  styles={customStyles}
+                  defaultValue={{
+                    value: dataCm.cs,
+                    label: dataCm.cs,
+                  }}
+                  onChange={(e) => onchangeHandler(e, "status")}
+                />
+              </div>
                 <div className={c["form-group"]}>
                   <label htmlFor="idpd">idpd</label>
                   <input
@@ -432,7 +495,7 @@ const PopupCmAdSl = (p) => {
                   />
                 </div>
                 <div className={c["form-group"]}>
-                  <label htmlFor="cma">au actions</label>
+                  <label htmlFor="cma">contre-maitre actions</label>
                   <input
                     required
                     name="cma"
@@ -443,7 +506,7 @@ const PopupCmAdSl = (p) => {
                   />
                 </div>
                 <div className={c["form-group"]}>
-                  <label htmlFor="cp">cp</label>
+                  <label htmlFor="cp">cause de problem</label>
                   <input
                     required
                     name="cp"
@@ -486,7 +549,11 @@ const PopupCmAdSl = (p) => {
             <button type="submit" className={c["form-submit-btnS"]}>
               Update
             </button>
-            <button type="button" className={c["form-submit-btnD"]}>
+            <button
+              type="button"
+              className={c["form-submit-btnD"]}
+              onClick={deleteRec}
+            >
               Delete
             </button>
           </div>

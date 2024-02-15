@@ -122,23 +122,27 @@ const loginS = createSlice({
     addRoot(s, p) {
       const index = s.data.findIndex((f) => f._id === p.payload.id);
       s.data[index].crew = p.payload.data.crew;
-      s.data[index].reference = p.payload.data.reference;
       s.data[index].problem = p.payload.data.problem;
-      s.data[index].motif = p.payload.data.motif;
-      s.data[index].motif = p.payload.data.motif;
-      s.data[index].positionToDetectFault =
-        p.payload.data.positionToDetectFault;
-      s.data[index].cableStatus = p.payload.data.foremanAction;
-      s.data[index].positionOfWhoProducesDefect =
-        p.payload.data.positionOfWhoProducesDefect;
-      s.data[index].idOfWhoProducesDefect =
-        p.payload.data.idOfWhoProducesDefect;
-      s.data[index].foremanAction = p.payload.data.foremanAction;
-      s.data[index].causeOfTheProblem = p.payload.data.causeOfTheProblem;
-      s.data[index].auditAction = p.payload.data.auditAction;
+      s.data[index].details = p.payload.data.detail;
+      s.data[index].cableStatus = p.payload.data.cs;
+      s.data[index].pDD = p.payload.data.pdd;
+      s.data[index].cP = p.payload.data.cp;
+      s.data[index].pPD = p.payload.data.ppd;
+      s.data[index].idPD = p.payload.data.idpd;
+      s.data[index].teamLeaderAction = p.payload.data.cma;
+      s.data[index].auditorAction = p.payload.data.audia;
+      s.data[index].shiftLeaderAction = p.payload.data.sl;
     },
     deleteRow(s, p) {
       s.data = s.data.filter((f) => f._id !== p.payload);
+      const index = s.scrap.findIndex((f) => f._id === p.payload.id);
+      if (index !== -1) {
+        s.scrap = s.scrap.filter((f) => f._id !== p.payload);
+      }
+      const indexu = s.urgentData.findIndex((f) => f._id === p.payload.id);
+      if (indexu !== -1) {
+        s.urgentData = s.urgentData.filter((f) => f._id !== p.payload);
+      }
     },
   },
 });
