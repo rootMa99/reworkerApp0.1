@@ -7,6 +7,7 @@
   position: relative;
   margin-top: 1rem;
 }
+
 .button {
   font-size: 20px;
   color: orange;
@@ -252,12 +253,11 @@
   color: #f33716;
 }
 .tableurscrap th {
-  color: #CF3335;
+  color: #cf3335;
 }
 .tableurscrap .timed {
-  color: #CF3335;
+  color: #cf3335;
 }
-
 
 .titleCab2,
 .titleCab,
@@ -271,8 +271,8 @@
     "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
     "Segoe UI Symbol";
 }
-.titleCabsl{
-  color: #CF3335;
+.titleCabsl {
+  color: #cf3335;
 }
 .titleCab2 {
   color: orange;
@@ -292,14 +292,13 @@ tr.hostin:hover {
     rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px,
     rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px,
     rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px; */
-    box-shadow: 5px 8px 84px 8px #262525;
+  box-shadow: 5px 8px 84px 8px #262525;
   animation: 0.35s linear 0s forwards alternate scale;
 }
 
 @keyframes scale {
   from {
     transform: scale(1);
-   
   }
   to {
     transform: scale(1.011);
@@ -315,3 +314,19 @@ tr.hostin:hover {
     box-shadow: 0px 0px 25px 2000px rgba(0, 0, 0, 0.363);
   }
 } */
+
+.holderlog {
+  width: 100%;
+  display: flex;
+}
+
+.holderref {
+  width: 30%;
+  height: 200rem;
+  background-color: aliceblue;
+}
+.holderupload {
+  width: 70%;
+  height: 50rem;
+  background-color: #f3baae;
+}
