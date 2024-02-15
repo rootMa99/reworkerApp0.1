@@ -71,9 +71,28 @@ const customStyles = {
     },
   }),
 };
+
+const getlabelandvalue = (data) => {
+  const retData = [];
+
+  data.map((m) =>
+    retData.push({
+      value: m,
+      label: m,
+    })
+  );
+  return retData;
+};
+
 const PopupCmAdSl = (p) => {
   const { isLoged, dataSelect } = useSelector((s) => s.loginr);
   const [dataCm, setDatacm] = useState({
+    ref: p.data.reference,
+    crew: p.data.crew,
+    problem: p.data.problem,
+    detail: p.data.details,
+    pdd: p.data.pDD,
+    cs: p.data.cableStatus,
     ppd: p.data.pPD,
     idpd: p.data.idPD,
     cma: p.data.teamLeaderAction,
@@ -155,6 +174,41 @@ const PopupCmAdSl = (p) => {
         console.error("Error:", error);
       }
     }
+    if (isLoged.role === "Coordinator") {
+      try {
+        const body = {
+          reference: dataCm.ref,
+          crew: dataCm.crew,
+          problem: dataCm.problem,
+          details: dataCm.detail,
+          pDD: dataCm.pdd,
+          cableStatus: dataCm.cs,
+          pPD: dataCm.ppd,
+          idPD: dataCm.idpd,
+          teamLeaderAction: dataCm.cma,
+          cP: dataCm.cp,
+          auditorAction: dataCm.audia,
+          shiftLeaderAction: dataCm.sl,
+        };
+        const response = await fetch(
+          `${api}/shiftleader/update/${p.data._id}`,
+          {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${isLoged.token}`,
+            },
+            body: JSON.stringify(body),
+          }
+        );
+        const data = await response.json();
+        console.log(data);
+        dispatch(loginSActions.addsl({ sl: dataCm.sl, id: p.data._id }));
+        p.click();
+      } catch (error) {
+        console.error("Error:", error);
+      }
+    }
   };
   const onchangeHandler = (e, t) => {
     switch (t) {
@@ -181,9 +235,9 @@ const PopupCmAdSl = (p) => {
       default:
     }
   };
-
+  const classStyleForm=isLoged.role === "Coordinator"?  { width:"60rem"}: {}
   return (
-    <div className={c["form-container"]}>
+    <div className={c["form-container"]} style={classStyleForm}>
       <form className={c.form} onSubmit={submitHandler}>
         {isLoged.role === "Teamleader" && (
           <React.Fragment>
@@ -282,87 +336,157 @@ const PopupCmAdSl = (p) => {
         )}
         {isLoged.role === "Coordinator" && (
           <React.Fragment>
-            <h3 className={c.notif}>you can update or delete this cable</h3>
-            <div className={c["form-group"]}>
-              <label htmlFor="crew">ppd</label>
-              <Select
-                options={selectCreator(dataSelect.postes)}
-                id="multiSelect"
-                inputId="shiftleader1"
-                styles={customStyles}
-                defaultValue={{
-                  value: dataCm.ppd,
-                  label: dataCm.ppd,
-                }}
-                onChange={(e) => onchangeHandler(e, "ppd")}
-              />
-            </div>
-            <div className={c["form-group"]}>
-              <label htmlFor="idpd">idpd</label>
-              <input
-                required
-                name="idpd"
-                id="idpd"
-                type="text"
-                pattern="[0-9]*"
-                onChange={(e) => onchangeHandler(e, "idpd")}
-                value={dataCm.idpd}
-              />
-            </div>
-            <div className={c["form-group"]}>
-              <label htmlFor="cma">au actions</label>
-              <input
-                required
-                name="cma"
-                id="cma"
-                type="text"
-                onChange={(e) => onchangeHandler(e, "cma")}
-                value={dataCm.cma}
-              />
-            </div>
-            <div className={c["form-group"]}>
-              <label htmlFor="cp">cp</label>
-              <input
-                required
-                name="cp"
-                id="cp"
-                type="text"
-                // pattern="[0-9]*"
-                onChange={(e) => onchangeHandler(e, "cp")}
-                value={dataCm.cp}
-              />
-            </div>
-            <div className={c["form-group"]}>
-              <label htmlFor="audia">Auditor actions</label>
-              <input
-                required
-                name="audia"
-                id="audia"
-                type="text"
-                onChange={(e) => onchangeHandler(e, "audia")}
-                value={dataCm.audia}
-              />
-            </div>
-            <div className={c["form-group"]}>
-              <label htmlFor="textarea">Details</label>
-              <textarea
-                required
-                cols="25"
-                rows="5"
-                id="textarea"
-                name="textarea96"
-                onChange={(e) => onchangeHandler(e, "sld")}
-                value={dataCm.sl}
-              ></textarea>
+          <h3 className={c.notif}>you can update or delete this cable</h3>
+            <div className={c.editForm}>
+              <div className={c.formpd}>
+                <div className={c["form-group"]}>
+                  <label htmlFor="reference">reference</label>
+                  <input
+                    required
+                    name="reference"
+                    id="reference"
+                    type="text"
+                    value={dataCm.ref}
+                    disabled
+                  />
+                </div>
+                <div className={c["form-group"]}>
+                  <label htmlFor="crew">crew</label>
+                  <Select
+                    options={selectCreator(dataSelect.crews)}
+                    id="multiSelect"
+                    inputId="shiftleader1"
+                    styles={customStyles}
+                    defaultValue={{
+                      value: dataCm.crew,
+                      label: dataCm.crew,
+                    }}
+                    onChange={(e) => onchangeHandler(e, "crew")}
+                  />
+                </div>
+                <div className={c["form-group"]}>
+                  <label htmlFor="problem">Problem</label>
+                  <Select
+                    options={selectCreator(dataSelect.problems)}
+                    id="multiSelect"
+                    inputId="shiftleader1"
+                    styles={customStyles}
+                    defaultValue={getlabelandvalue(dataCm.problem)}
+                    isMulti
+                    onChange={(e) => onchangeHandler(e, "problem")}
+                  />
+                </div>
+                <div className={c["form-group"]}>
+                  <label htmlFor="textarea">Details</label>
+                  <textarea
+                    required
+                    cols="25"
+                    rows="5"
+                    id="textarea"
+                    name="textarea96"
+                    onChange={onchangeHandler}
+                    value={dataCm.detail}
+                  ></textarea>
+                </div>
+                <div className={c["form-group"]}>
+                  <label htmlFor="pdd">pdd</label>
+                  <Select
+                    options={selectCreator(dataSelect.postes)}
+                    id="multiSelect"
+                    inputId="shiftleader1"
+                    styles={customStyles}
+                    defaultValue={{
+                      value: dataCm.pdd,
+                      label: dataCm.pdd,
+                    }}
+                    menuPlacement="top"
+                    onChange={(e) => onchangeHandler(e, "pdd")}
+                  />
+                </div>
+                <div className={c["form-group"]}>
+                  <label htmlFor="crew">ppd</label>
+                  <Select
+                    options={selectCreator(dataSelect.postes)}
+                    id="multiSelect"
+                    inputId="shiftleader1"
+                    styles={customStyles}
+                    defaultValue={{
+                      value: dataCm.ppd,
+                      label: dataCm.ppd,
+                    }}
+                    onChange={(e) => onchangeHandler(e, "ppd")}
+                  />
+                </div>
+              </div>
+              <div className={c.formpd}>
+                <div className={c["form-group"]}>
+                  <label htmlFor="idpd">idpd</label>
+                  <input
+                    required
+                    name="idpd"
+                    id="idpd"
+                    type="text"
+                    pattern="[0-9]*"
+                    onChange={(e) => onchangeHandler(e, "idpd")}
+                    value={dataCm.idpd}
+                  />
+                </div>
+                <div className={c["form-group"]}>
+                  <label htmlFor="cma">au actions</label>
+                  <input
+                    required
+                    name="cma"
+                    id="cma"
+                    type="text"
+                    onChange={(e) => onchangeHandler(e, "cma")}
+                    value={dataCm.cma}
+                  />
+                </div>
+                <div className={c["form-group"]}>
+                  <label htmlFor="cp">cp</label>
+                  <input
+                    required
+                    name="cp"
+                    id="cp"
+                    type="text"
+                    // pattern="[0-9]*"
+                    onChange={(e) => onchangeHandler(e, "cp")}
+                    value={dataCm.cp}
+                  />
+                </div>
+                <div className={c["form-group"]}>
+                  <label htmlFor="audia">Auditor actions</label>
+                  <input
+                    required
+                    name="audia"
+                    id="audia"
+                    type="text"
+                    onChange={(e) => onchangeHandler(e, "audia")}
+                    value={dataCm.audia}
+                  />
+                </div>
+                <div className={c["form-group"]}>
+                  <label htmlFor="textarea">Details</label>
+                  <textarea
+                    required
+                    cols="25"
+                    rows="5"
+                    id="textarea"
+                    name="textarea96"
+                    onChange={(e) => onchangeHandler(e, "sld")}
+                    value={dataCm.sl}
+                  ></textarea>
+                </div>
+              </div>
             </div>
           </React.Fragment>
         )}
         {isLoged.role === "Coordinator" ? (
           <div className={c["form-submit-btn-holder"]}>
             <button type="submit" className={c["form-submit-btnS"]}>
-              Submit
+              Update
             </button>
-            <button type="submit" className={c["form-submit-btnD"]}>
+            <button type="button" className={c["form-submit-btnD"]}>
               Delete
             </button>
           </div>

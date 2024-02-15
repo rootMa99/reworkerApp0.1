@@ -156,8 +156,60 @@
 }
 .form-submit-btnD {
   background-color: transparent;
-  /* color: red;
-  border: 1px solid red; */
+  /* color: red; */
+  border: 1px solid transparent;
+  border-bottom: 1px solid #414141;
+  border-radius: 0;
 }
 .form-submit-btnS {
+  background-color: #f33716;
+  border-color: #f33716;
+  color: #fff;
+}
+.form-submit-btnS:hover {
+  background: #313131;
+  border: 1px solid #414141;
+  color: #fff;
+  transform: scale(1.03);
+}
+
+.form-submit-btnD:hover {
+  background: transparent;
+  color: #fb0606;
+  /* border: 1px solid #f40606; */
+  animation: 1s linear 0s forwards alternate scale;
+}
+.editForm {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  align-items: stretch;
+}
+.formpd {
+  width: 50%;
+}
+
+@keyframes scale {
+  0% {
+    border-bottom: 1px solid #f40606;
+    border-radius: 6px;
+  }
+  25% {
+    border-right: 1px solid #f40606;
+    border-radius: 6px;
+  }
+  50% {
+    border-top: 1px solid #f40606;
+    border-radius: 6px;
+  }
+  75% {
+    border-left: 1px solid #f40606;
+    border-radius: 6px;
+  }
+  100% {
+    border-bottom: 1px solid #f40606;
+  }
 }
