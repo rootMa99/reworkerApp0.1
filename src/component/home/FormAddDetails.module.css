@@ -157,8 +157,8 @@
 .form-submit-btnD {
   background-color: transparent;
   /* color: red; */
-  border: 1px solid transparent;
-  border-bottom: 1px solid #414141;
+  border: 3px solid transparent;
+  border-bottom: 3px solid #414141;
   border-radius: 0;
 }
 .form-submit-btnS {
@@ -194,22 +194,22 @@
 
 @keyframes scale {
   0% {
-    border-bottom: 1px solid #f40606;
-    border-radius: 6px;
+    border-bottom: 3px solid #f40606;
+    border-radius: 56px;
   }
   25% {
-    border-right: 1px solid #f40606;
-    border-radius: 6px;
+    border-right: 3px solid #f40606;
+    border-radius: 56px;
   }
   50% {
-    border-top: 1px solid #f40606;
-    border-radius: 6px;
+    border-top: 3px solid #f40606;
+    border-radius: 56px;
   }
   75% {
-    border-left: 1px solid #f40606;
-    border-radius: 6px;
+    border-left: 3px solid #f40606;
+    border-radius: 56px;
   }
-  100% {
-    border-bottom: 1px solid #f40606;
+  100%,0% {
+    border-bottom: 3px solid #f40606;
   }
 }
