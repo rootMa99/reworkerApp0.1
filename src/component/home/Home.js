@@ -183,8 +183,8 @@ const Home = (p) => {
       </table>
       {isLoged.role === "ShiftLeader" && (
         <React.Fragment>
-          <h2 className={c.titleCab2}>scrap cables</h2>
-          <table className={`${c.table}`} style={{ marginBottom: "2rem" }}>
+          <h2 className={c.titleCabsl}>scrap cables</h2>
+          <table className={`${c.table} ${c.tableurscrap}`} style={{ marginBottom: "2rem" }}>
             <thead>
               <tr style={{ backgroundColor: "black" }}>
                 <th width="auto">date/time</th>

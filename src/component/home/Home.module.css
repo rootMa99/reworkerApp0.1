@@ -250,9 +250,17 @@
 .tableur .timed {
   color: #f33716;
 }
+.tableurscrap th {
+  color: #CF3335;
+}
+.tableurscrap .timed {
+  color: #CF3335;
+}
+
 
 .titleCab2,
-.titleCab {
+.titleCab,
+.titleCabsl {
   text-transform: uppercase;
   margin: 0;
   margin-right: auto;
@@ -261,6 +269,9 @@
   font-family: Formular, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
     "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
     "Segoe UI Symbol";
+}
+.titleCabsl{
+  color: #CF3335;
 }
 .titleCab2 {
   color: orange;

@@ -99,6 +99,26 @@ const loginS = createSlice({
         s.data[index].teamLeaderAction = p.payload.cma;
       }
     },
+    addsl(s, p) {
+      const index = s.data.findIndex((f) => f._id === p.payload.id);
+      const index2 = s.scrap.findIndex((f) => f._id === p.payload.id);
+      if (s.data[index].shiftLeaderAction.trim() !== "") {
+        s.data[index].shiftLeaderAction = p.payload.sl;
+      }
+      if (s.scrap[index2].shiftLeaderAction.trim() !== "") {
+        s.data[index].shiftLeaderAction = p.payload.sl;
+      }
+      if (
+        s.data[index].shiftLeaderAction.trim() === ""
+      ) {
+        s.data[index].shiftLeaderAction = p.payload.sl;
+      }
+      if (
+        s.scrap[index2].shiftLeaderAction.trim() === ""
+      ) {
+        s.scrap[index2].shiftLeaderAction = p.payload.sl;
+      }
+    },
     addRoot(s, p) {
       const index = s.data.findIndex((f) => f._id === p.payload.id);
       s.data[index].crew = p.payload.data.crew;

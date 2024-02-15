@@ -79,6 +79,7 @@ const PopupCmAdSl = (p) => {
     cma: p.data.teamLeaderAction,
     audia: p.data.auditorAction,
     cp: p.data.cP,
+    sl: p.data.shiftLeaderAction,
   });
   const dispatch = useDispatch();
   console.log(p.data);
@@ -130,6 +131,27 @@ const PopupCmAdSl = (p) => {
         console.error("Error:", error);
       }
     }
+    if (isLoged.role === "ShiftLeader") {
+      try {
+        const body = {
+            shiftLeaderAction: dataCm.sl,
+        };
+        const response = await fetch(`${api}/shiftleader/update/${p.data._id}`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${isLoged.token}`,
+          },
+          body: JSON.stringify(body),
+        });
+        const data = await response.json();
+        console.log(data);
+        dispatch(loginSActions.addaudit({ ...dataCm, id: p.data._id }));
+        p.click();
+      } catch (error) {
+        console.error("Error:", error);
+      }
+    }
   };
   const onchangeHandler = (e, t) => {
     switch (t) {
@@ -149,6 +171,9 @@ const PopupCmAdSl = (p) => {
         break;
       case "cp":
         setDatacm((prev) => ({ ...prev, cp: e.target.value }));
+        break;
+      case "sld":
+        setDatacm((prev) => ({ ...prev, sl: e.target.value }));
         break;
       default:
     }
@@ -232,6 +257,26 @@ const PopupCmAdSl = (p) => {
                 value={dataCm.audia}
               />
             </div>
+          </React.Fragment>
+        )}
+        {isLoged.role === "ShiftLeader" && (
+          <React.Fragment>
+            <h3 className={c.notif}>
+              please set action to this scrap cable
+            </h3>
+            <FormDetailsData data={p.data} />
+            <div className={c["form-group"]}>
+            <label htmlFor="textarea">Details</label>
+            <textarea
+              required
+              cols="25"
+              rows="5"
+              id="textarea"
+              name="textarea96"
+              onChange={(e) => onchangeHandler(e, "sld")}
+              value={dataCm.sl}
+            ></textarea>
+          </div>
           </React.Fragment>
         )}
 
