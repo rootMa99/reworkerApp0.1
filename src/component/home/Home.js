@@ -82,13 +82,16 @@ const Home = (p) => {
 
     if (isLoged.role === "ShiftLeader") {
       try {
-        const response = await fetch(`${api}/scrap?page=${pagescrap.page}&limit=5`, {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${isLoged.token}`,
-          },
-        });
+        const response = await fetch(
+          `${api}/scrap?page=${pagescrap.page}&limit=5`,
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${isLoged.token}`,
+            },
+          }
+        );
 
         const data = await response.json();
         setPagescrap((prev) => ({
@@ -107,28 +110,28 @@ const Home = (p) => {
   }, [callback]);
 
   const onclickHandler = (e, t, scrap) => {
-    if(scrap==="scrap"){
+    if (scrap === "scrap") {
       if (t === "plus" && pagescrap.page < pagescrap.totalPage) {
         setPagescrap((prev) => ({
           ...prev,
           page: pagescrap.page + 1,
         }));
       }
-  
+
       if (t === "min" && pagescrap.page > 1) {
         setPagescrap((prev) => ({
           ...prev,
           page: pagescrap.page - 1,
         }));
       }
-    }else{
+    } else {
       if (t === "plus" && page.page < page.totalPage) {
         setPage((prev) => ({
           ...prev,
           page: page.page + 1,
         }));
       }
-  
+
       if (t === "min" && page.page > 1) {
         setPage((prev) => ({
           ...prev,

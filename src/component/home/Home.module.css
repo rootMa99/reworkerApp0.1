@@ -97,6 +97,7 @@
   color: #fdcec4;
   text-transform: capitalize;
   font-weight: 450;
+  font-size: small;
 }
 
 .table tr:last-of-type td:last-of-type {
