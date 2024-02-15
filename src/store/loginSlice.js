@@ -8,7 +8,7 @@ const loginS = createSlice({
     dataSelect: {},
     urgent: { urgent: false, data: null },
     urgentData: [],
-    scrap:[]
+    scrap: [],
   },
   reducers: {
     addUrgentData(s, p) {
@@ -20,8 +20,8 @@ const loginS = createSlice({
     setUrgent(s, p) {
       s.urgent = { urgent: p.payload.urgent, data: p.payload.data };
     },
-    addScrap(s, p){
-      s.scrap=p.payload
+    addScrap(s, p) {
+      s.scrap = p.payload;
     },
     login(s, p) {
       s.isLoged.login = true;
@@ -102,20 +102,20 @@ const loginS = createSlice({
     addsl(s, p) {
       const index = s.data.findIndex((f) => f._id === p.payload.id);
       const index2 = s.scrap.findIndex((f) => f._id === p.payload.id);
-      if (s.data[index].shiftLeaderAction.trim() !== "") {
-        s.data[index].shiftLeaderAction = p.payload.sl;
+
+      if (index !== -1) {
+        if (s.data[index].shiftLeaderAction.trim() !== "") {
+          s.data[index].shiftLeaderAction = p.payload.sl;
+        }
+        if (s.data[index].shiftLeaderAction.trim() === "") {
+          s.data[index].shiftLeaderAction = p.payload.sl;
+        }
       }
       if (s.scrap[index2].shiftLeaderAction.trim() !== "") {
-        s.data[index].shiftLeaderAction = p.payload.sl;
+        s.scrap[index2].shiftLeaderAction = p.payload.sl;
       }
-      if (
-        s.data[index].shiftLeaderAction.trim() === ""
-      ) {
-        s.data[index].shiftLeaderAction = p.payload.sl;
-      }
-      if (
-        s.scrap[index2].shiftLeaderAction.trim() === ""
-      ) {
+
+      if (s.scrap[index2].shiftLeaderAction.trim() === "") {
         s.scrap[index2].shiftLeaderAction = p.payload.sl;
       }
     },

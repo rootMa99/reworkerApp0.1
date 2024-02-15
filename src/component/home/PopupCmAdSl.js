@@ -146,7 +146,7 @@ const PopupCmAdSl = (p) => {
         });
         const data = await response.json();
         console.log(data);
-        dispatch(loginSActions.addaudit({ ...dataCm, id: p.data._id }));
+        dispatch(loginSActions.addsl({ sl:dataCm.sl, id: p.data._id }));
         p.click();
       } catch (error) {
         console.error("Error:", error);
