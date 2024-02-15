@@ -134,19 +134,22 @@ const PopupCmAdSl = (p) => {
     if (isLoged.role === "ShiftLeader") {
       try {
         const body = {
-            shiftLeaderAction: dataCm.sl,
+          shiftLeaderAction: dataCm.sl,
         };
-        const response = await fetch(`${api}/shiftleader/update/${p.data._id}`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${isLoged.token}`,
-          },
-          body: JSON.stringify(body),
-        });
+        const response = await fetch(
+          `${api}/shiftleader/update/${p.data._id}`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${isLoged.token}`,
+            },
+            body: JSON.stringify(body),
+          }
+        );
         const data = await response.json();
         console.log(data);
-        dispatch(loginSActions.addsl({ sl:dataCm.sl, id: p.data._id }));
+        dispatch(loginSActions.addsl({ sl: dataCm.sl, id: p.data._id }));
         p.click();
       } catch (error) {
         console.error("Error:", error);
@@ -261,28 +264,113 @@ const PopupCmAdSl = (p) => {
         )}
         {isLoged.role === "ShiftLeader" && (
           <React.Fragment>
-            <h3 className={c.notif}>
-              please set action to this scrap cable
-            </h3>
+            <h3 className={c.notif}>please set action to this scrap cable</h3>
             <FormDetailsData data={p.data} />
             <div className={c["form-group"]}>
-            <label htmlFor="textarea">Details</label>
-            <textarea
-              required
-              cols="25"
-              rows="5"
-              id="textarea"
-              name="textarea96"
-              onChange={(e) => onchangeHandler(e, "sld")}
-              value={dataCm.sl}
-            ></textarea>
-          </div>
+              <label htmlFor="textarea">Details</label>
+              <textarea
+                required
+                cols="25"
+                rows="5"
+                id="textarea"
+                name="textarea96"
+                onChange={(e) => onchangeHandler(e, "sld")}
+                value={dataCm.sl}
+              ></textarea>
+            </div>
           </React.Fragment>
         )}
-
-        <button type="submit" className={c["form-submit-btn"]}>
-          Submit
-        </button>
+        {isLoged.role === "Coordinator" && (
+          <React.Fragment>
+            <h3 className={c.notif}>you can update or delete this cable</h3>
+            <div className={c["form-group"]}>
+              <label htmlFor="crew">ppd</label>
+              <Select
+                options={selectCreator(dataSelect.postes)}
+                id="multiSelect"
+                inputId="shiftleader1"
+                styles={customStyles}
+                defaultValue={{
+                  value: dataCm.ppd,
+                  label: dataCm.ppd,
+                }}
+                onChange={(e) => onchangeHandler(e, "ppd")}
+              />
+            </div>
+            <div className={c["form-group"]}>
+              <label htmlFor="idpd">idpd</label>
+              <input
+                required
+                name="idpd"
+                id="idpd"
+                type="text"
+                pattern="[0-9]*"
+                onChange={(e) => onchangeHandler(e, "idpd")}
+                value={dataCm.idpd}
+              />
+            </div>
+            <div className={c["form-group"]}>
+              <label htmlFor="cma">au actions</label>
+              <input
+                required
+                name="cma"
+                id="cma"
+                type="text"
+                onChange={(e) => onchangeHandler(e, "cma")}
+                value={dataCm.cma}
+              />
+            </div>
+            <div className={c["form-group"]}>
+              <label htmlFor="cp">cp</label>
+              <input
+                required
+                name="cp"
+                id="cp"
+                type="text"
+                // pattern="[0-9]*"
+                onChange={(e) => onchangeHandler(e, "cp")}
+                value={dataCm.cp}
+              />
+            </div>
+            <div className={c["form-group"]}>
+              <label htmlFor="audia">Auditor actions</label>
+              <input
+                required
+                name="audia"
+                id="audia"
+                type="text"
+                onChange={(e) => onchangeHandler(e, "audia")}
+                value={dataCm.audia}
+              />
+            </div>
+            <div className={c["form-group"]}>
+              <label htmlFor="textarea">Details</label>
+              <textarea
+                required
+                cols="25"
+                rows="5"
+                id="textarea"
+                name="textarea96"
+                onChange={(e) => onchangeHandler(e, "sld")}
+                value={dataCm.sl}
+              ></textarea>
+            </div>
+          </React.Fragment>
+        )}
+        {isLoged.role === "Coordinator" ? (
+          <div className={c["form-submit-btn-holder"]}>
+            <button type="submit" className={c["form-submit-btnS"]}>
+              Submit
+            </button>
+            <button type="submit" className={c["form-submit-btnD"]}>
+              Delete
+            </button>
+          </div>
+        ) : (
+          <button type="submit" className={c["form-submit-btn"]}>
+            Submit
+          </button>
+        )}
       </form>
     </div>
   );

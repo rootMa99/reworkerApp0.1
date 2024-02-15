@@ -31,6 +31,7 @@ const Home = (p) => {
   const [popUp, setPopUp] = useState(false);
   const [popUpEdite, setPopUpEdite] = useState({ states: false, data: {} });
   const [page, setPage] = useState({ page: 1, totalPage: 0 });
+  const [pagescrap, setPagescrap] = useState({ page: 1, totalPage: 0 });
   const { urgent, isLoged, data, urgentData, scrap } = useSelector(
     (s) => s.loginr
   );
@@ -81,7 +82,7 @@ const Home = (p) => {
 
     if (isLoged.role === "ShiftLeader") {
       try {
-        const response = await fetch(`${api}/scrap`, {
+        const response = await fetch(`${api}/scrap?page=${pagescrap.page}&limit=5`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -90,31 +91,50 @@ const Home = (p) => {
         });
 
         const data = await response.json();
-        console.log(data);
-        dispatch(loginSActions.addScrap(data));
+        setPagescrap((prev) => ({
+          ...prev,
+          totalPage: data.totalPages,
+        }));
+        dispatch(loginSActions.addScrap(data.data));
       } catch (error) {
         console.error("Error:", error);
       }
     }
-  }, [dispatch, page.page, isLoged]);
+  }, [dispatch, page.page, isLoged.token, isLoged.role, pagescrap.page]);
 
   useEffect(() => {
     callback();
   }, [callback]);
 
-  const onclickHandler = (e, t) => {
-    if (t === "plus" && page.page < page.totalPage) {
-      setPage((prev) => ({
-        ...prev,
-        page: page.page + 1,
-      }));
-    }
-
-    if (t === "min" && page.page > 1) {
-      setPage((prev) => ({
-        ...prev,
-        page: page.page - 1,
-      }));
+  const onclickHandler = (e, t, scrap) => {
+    if(scrap==="scrap"){
+      if (t === "plus" && pagescrap.page < pagescrap.totalPage) {
+        setPagescrap((prev) => ({
+          ...prev,
+          page: pagescrap.page + 1,
+        }));
+      }
+  
+      if (t === "min" && pagescrap.page > 1) {
+        setPagescrap((prev) => ({
+          ...prev,
+          page: pagescrap.page - 1,
+        }));
+      }
+    }else{
+      if (t === "plus" && page.page < page.totalPage) {
+        setPage((prev) => ({
+          ...prev,
+          page: page.page + 1,
+        }));
+      }
+  
+      if (t === "min" && page.page > 1) {
+        setPage((prev) => ({
+          ...prev,
+          page: page.page - 1,
+        }));
+      }
     }
   };
   const trClicked = (e, dt) => {
@@ -184,7 +204,10 @@ const Home = (p) => {
       {isLoged.role === "ShiftLeader" && (
         <React.Fragment>
           <h2 className={c.titleCabsl}>scrap cables</h2>
-          <table className={`${c.table} ${c.tableurscrap}`} style={{ marginBottom: "2rem" }}>
+          <table
+            className={`${c.table} ${c.tableurscrap}`}
+            // style={{ marginBottom: "2rem" }}
+          >
             <thead>
               <tr style={{ backgroundColor: "black" }}>
                 <th width="auto">date/time</th>
@@ -234,6 +257,27 @@ const Home = (p) => {
           </table>
         </React.Fragment>
       )}
+
+      {isLoged.role === "ShiftLeader" && (
+        <div className={c.pagination}>
+          <span
+            className={c.paginationd}
+            onClick={(e) => onclickHandler(e, "min", "scrap")}
+          >
+            &laquo;
+          </span>
+          <span>
+            {pagescrap.page}/{pagescrap.totalPage}
+          </span>
+          <span
+            className={c.paginationd}
+            onClick={(e) => onclickHandler(e, "plus", "scrap")}
+          >
+            &raquo;
+          </span>
+        </div>
+      )}
+
       <h2 className={c.titleCab2}>all cables</h2>
       <table className={`${c.table}`}>
         <thead>
