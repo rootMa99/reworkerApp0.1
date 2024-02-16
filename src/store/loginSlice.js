@@ -148,6 +148,12 @@ const loginS = createSlice({
         s.urgentData = s.urgentData.filter((f) => f._id !== p.payload);
       }
     },
+    deleteRef(s, p){
+      const index = s.logistics.findIndex((f) => f._id === p.payload);
+      if (index !== -1) {
+        s.logistics = s.logistics.filter((f) => f._id !== p.payload);
+      }
+    }
   },
 });
 

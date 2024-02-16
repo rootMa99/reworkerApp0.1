@@ -8,6 +8,7 @@ import { loginSActions } from "../../store/loginSlice";
 import PopupCmAdSl from "./PopupCmAdSl";
 import trash from "../../assets/trash.png";
 import UploadExcelData from "./UploadExcelData";
+import Notification from "../ui/Notification";
 
 const stylec = (status) => {
   return status === "Repaired"
@@ -37,6 +38,7 @@ const Home = (p) => {
   const { urgent, isLoged, data, urgentData, scrap, logistics } = useSelector(
     (s) => s.loginr
   );
+  const [notify, setNotify]=useState({logic:false, id: 0, ref:""});
   const dispatch = useDispatch();
 
   console.log(urgent);
@@ -165,13 +167,19 @@ const Home = (p) => {
   };
 
 
-  const deleteHandlerRef=e=>{
-    alert("clicked delete")
+  const deleteHandlerRef=(e, id, ref)=>{
+    setNotify({logic:true, id: id, ref: ref})
+  }
+  const deleteHandlerRefclose=()=>{
+    setNotify({logic:false, id: 0, ref:""})
   }
 
 
   return (
     <React.Fragment>
+    {
+      notify.logic && <Notification del={true} id={notify.id} refid={notify.ref} close={deleteHandlerRefclose} />
+    }
       {isLoged.role !== "Logistics" && (
         <div className={c.holder}>
           {(popUp || popUpEdite.states) && <BackDrop click={clickHandler} />}
@@ -424,7 +432,7 @@ const Home = (p) => {
                           </span>
                         </div>
                       </div>
-                      <img src={trash} alt="trash" onClick={deleteHandlerRef}/>
+                      <img src={trash} alt="trash" onClick={e=>deleteHandlerRef(e, m._id, m.ref) }/>
                     </li>
                   ))}
               </ul>

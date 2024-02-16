@@ -1,7 +1,13 @@
 import React from "react";
 import c from "./Notification.module.css";
-
+import api from "../../services/api";
+import { useDispatch, useSelector } from "react-redux";
+import { loginSActions } from "../../store/loginSlice";
 const Notification = (p) => {
+  const {isLoged} = useSelector(
+    (s) => s.loginr
+  );
+  const dispatch=useDispatch();
   const classe = !p.urg
     ? `${c["notifications-container"]}`
     : `${c["notifications-containerurg"]}`;
@@ -10,12 +16,27 @@ const Notification = (p) => {
     ? `${c["alert-prompt-wrap"]}`
     : `${c["alert-prompt-wrap-urg"]}`;
 
-  const clickHandler=(e, t)=>{
+  const clickHandler=async (e, t)=>{
     if (t==="cancel"){
-      
+      p.close();
     }
     if (t==="continue"){
+      try {
+        const response = await fetch(`${api}/logistics/delete/${p.id}`, {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${isLoged.token}`,
+          },
+        });
 
+        const data = await response.json();
+        dispatch(loginSActions.deleteRef(p.id));
+        console.log(data)
+      } catch (error) {
+        console.error("Error:", error);
+      }
+      p.close();
     }
   }
 
@@ -24,14 +45,7 @@ const Notification = (p) => {
     <React.Fragment>
       {p.del ? (
         <div className={`${c.notify} ${c.anim}`}>
-          <p>
-            <span>
-              {p.data.name} {p.data.lastName}
-            </span>
-            , matricule <span>{p.data.matricule}</span> cannot work the night
-            shift.
-          </p>
-          <p>Which shift might work best for him?</p>
+          <p>do you want to delete this ref <span>{p.refid}</span> ?</p>
           <div className={c.btnHolder}>
             <button onClick={e=>clickHandler(e, "cancel")}>
               <span>cancel</span>
