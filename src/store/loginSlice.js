@@ -9,7 +9,7 @@ const loginS = createSlice({
     urgent: { urgent: false, data: null },
     urgentData: [],
     scrap: [],
-    logistics:[]
+    logistics: [],
   },
   reducers: {
     addUrgentData(s, p) {
@@ -115,12 +115,14 @@ const loginS = createSlice({
           s.data[index].shiftLeaderAction = p.payload.sl;
         }
       }
-      if (s.scrap[index2].shiftLeaderAction.trim() !== "") {
-        s.scrap[index2].shiftLeaderAction = p.payload.sl;
-      }
+      if (index2 !== -1) {
+        if (s.scrap[index2].shiftLeaderAction.trim() !== "") {
+          s.scrap[index2].shiftLeaderAction = p.payload.sl;
+        }
 
-      if (s.scrap[index2].shiftLeaderAction.trim() === "") {
-        s.scrap[index2].shiftLeaderAction = p.payload.sl;
+        if (s.scrap[index2].shiftLeaderAction.trim() === "") {
+          s.scrap[index2].shiftLeaderAction = p.payload.sl;
+        }
       }
     },
     addRoot(s, p) {
@@ -148,12 +150,12 @@ const loginS = createSlice({
         s.urgentData = s.urgentData.filter((f) => f._id !== p.payload);
       }
     },
-    deleteRef(s, p){
+    deleteRef(s, p) {
       const index = s.logistics.findIndex((f) => f._id === p.payload);
       if (index !== -1) {
         s.logistics = s.logistics.filter((f) => f._id !== p.payload);
       }
-    }
+    },
   },
 });
 
