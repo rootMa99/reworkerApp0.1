@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import api from "../../services/api";
 import { loginSActions } from "../../store/loginSlice";
 import PopupCmAdSl from "./PopupCmAdSl";
+import trash from "../../assets/trash.png";
 
 const stylec = (status) => {
   return status === "Repaired"
@@ -380,10 +381,62 @@ const Home = (p) => {
       {isLoged.role === "Logistics" && (
         <div className={c.holder}>
           <div className={c.holderlog}>
-          
-          <div className={c.holderref}></div>
-          <div className={c.holderupload}></div>
-
+            <div className={c.holderref}>
+              <h2>list urgent</h2>
+              <ul>
+                <li>
+                  <div>
+                    ref: 
+                  </div>
+                  <span className={c.ref}>4B101048</span>
+                  <div>
+                    created At: <span>2024-02-11 14:32</span>
+                  </div>
+                  <div>
+                    <img src={trash} alt="trash" />
+                  </div>
+                </li>
+                <li>
+                  <div>
+                    ref: 
+                  </div>
+                  <span className={c.ref}>4B101048</span>
+                  <div>
+                    created At: <span>2024-02-11 14:32</span>
+                  </div>
+                  <div>
+                    <img src={trash} alt="trash" />
+                  </div>
+                </li>
+                <li>
+                  <div>
+                    ref: 
+                  </div>
+                  <span className={c.ref}>4B101048</span>
+                  <div>
+                    created At: <span>2024-02-11 14:32</span>
+                  </div>
+                  <div>
+                    <img src={trash} alt="trash" />
+                  </div>
+                </li>
+                <li>
+                  <div>
+                    ref: 
+                  </div>
+                  <span className={c.ref}>4B101048</span>
+                  <div>
+                    created At: <span>2024-02-11 14:32</span>
+                  </div>
+                  <div>
+                    <img src={trash} alt="trash" />
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div className={c.holderupload}>
+              <h2>upload list urgent</h2>
+            </div>
           </div>
         </div>
       )}

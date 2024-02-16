@@ -318,15 +318,66 @@ tr.hostin:hover {
 .holderlog {
   width: 100%;
   display: flex;
+  justify-content: space-evenly;
+  align-items: flex-start;
+  margin-top: 1rem;
 }
 
 .holderref {
-  width: 30%;
-  height: 200rem;
-  background-color: aliceblue;
+  width: 28%;
+  height: auto;
+  border: 2px solid orangered;
+  border-radius: 14px;
+  position: relative;
 }
 .holderupload {
   width: 70%;
-  height: 50rem;
-  background-color: #f3baae;
+  height: 25rem;
+  border: 2px solid orangered;
+  border-radius: 14px;
+  position: relative;
+}
+.holderref h2,
+.holderupload h2 {
+  position: absolute;
+  top: -2.3rem;
+  left: 1rem;
+  background-color: transparent;
+  backdrop-filter: blur(6px);
+  padding-inline: 10px;
+  color: orangered;
+  text-transform: uppercase;
+}
+.holderref ul {
+  list-style: none;
+  padding: 0;
+}
+.holderref ul li {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex-direction: row;
+  text-transform: capitalize;
+  color: #fbfbfb;
+  font-size: medium;
+  padding: 10px 0;
+}
+.holderref ul li:nth-child(even) {
+  background-color: rgba(144, 144, 144, 0.248);
+}
+.ref{
+  color: rgb(250, 146, 108);
+  font-size: x-large;
+  border-bottom: 2px solid;
+  font-weight: bold;
+  margin-left: 10px;
+}
+.holderref ul li img {
+  width: 1.5rem;
+  cursor: pointer;
+}
+.holderref ul li img:hover {
+  filter: drop-shadow(1px 2px 3px hsla(0, 96%, 41%, 0.3))
+    drop-shadow(2px 4px 6px hsla(0, 98%, 38%, 0.3))
+    drop-shadow(4px 8px 12px hsla(0, 100%, 49%, 0.3));
 }
