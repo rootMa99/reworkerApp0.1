@@ -89,3 +89,107 @@
     background-position: 0% 50%;
   }
 }
+
+.notify {
+  position: fixed;
+  z-index: 11111;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 50%;
+  border: 1px solid #f84018;
+  border-radius: 14px;
+  padding: 1rem 1rem;
+  padding-bottom: 0.5rem;
+  background-color: #962106;
+}
+.anim {
+  animation: rsin 4s ease-in infinite;
+}
+
+.notify p,
+.notify p span {
+  font-family: Formular, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
+    "Segoe UI Symbol";
+  color: #f97d62;
+  text-align: center;
+  text-transform: uppercase;
+  font-size: large;
+  font-weight: bolder;
+}
+.notify p span {
+  background-color: #f84018;
+  color: aliceblue;
+  padding: 5px;
+  border-radius: 10px;
+}
+.btnHolder {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  margin-top: 3rem;
+}
+.btnHolder button {
+    width: 30%;
+  outline: none;
+  cursor: pointer;
+  border: none;
+  padding: 10px 2rem;
+  margin: 0;
+  font-family: inherit;
+  font-size: inherit;
+  position: relative;
+  display: inline-block;
+  letter-spacing: 0.05rem;
+  font-weight: 700;
+  font-size: 17px;
+  border-radius: 5px;
+  overflow: hidden;
+  background: #f84018;
+  color: ghostwhite;
+}
+
+.btnHolder button span {
+  position: relative;
+  z-index: 10;
+  transition: color 0.4s;
+  text-transform: uppercase;
+}
+
+.btnHolder button:hover span {
+  color: black;
+}
+
+.btnHolder button::before,
+.btnHolder button::after {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+}
+
+.btnHolder button::before {
+  content: "";
+  background: #f97d62;
+  width: 120%;
+  left: -10%;
+  transform: skew(30deg);
+  transition: transform 0.4s cubic-bezier(0.3, 1, 0.8, 1);
+}
+
+.btnHolder button:hover::before {
+  transform: translate3d(100%, 0, 0);
+}
+
+@keyframes rsin {
+  0%,
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.02);
+  }
+}

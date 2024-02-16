@@ -324,14 +324,14 @@ tr.hostin:hover {
 }
 
 .holderref {
-  width: 28%;
+  width: 38%;
   height: auto;
   border: 2px solid orangered;
   border-radius: 14px;
   position: relative;
 }
 .holderupload {
-  width: 70%;
+  width: 60%;
   height: 90vh;
   border: 2px solid orangered;
   border-radius: 14px;

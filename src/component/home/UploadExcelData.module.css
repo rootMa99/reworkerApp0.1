@@ -49,12 +49,12 @@
     justify-content: center;
     align-items: center;
     overflow: hidden;
-    box-shadow: 0px 0px 30px white , inset 0px 0px 10px white,0px 0px 5px rgb(255, 255, 255);
+    box-shadow: 0px 0px 30px orange , inset 0px 0px 10px orange,0px 0px 5px rgb(255, 255, 255);
     animation: flicker 2s linear infinite;
   }
   
   .icon {
-    color: white;
+    color: orange;
     font-size: 2rem;
     cursor: pointer;
     animation: iconflicker 2s linear infinite;
@@ -70,8 +70,8 @@
   
   @keyframes flicker {
     0% {
-      border: 2px solid white;
-      box-shadow: 0px 0px 30px white , inset 0px 0px 10px white,0px 0px 5px rgb(255, 255, 255);
+      border: 2px solid orange;
+      box-shadow: 0px 0px 30px orange , inset 0px 0px 10px orange,0px 0px 5px rgb(255, 255, 255);
     }
   
     5% {
@@ -80,8 +80,8 @@
     }
   
     10% {
-      border: 2px solid white;
-      box-shadow: 0px 0px 30px white , inset 0px 0px 10px white,0px 0px 5px rgb(255, 255, 255);
+      border: 2px solid orange;
+      box-shadow: 0px 0px 30px orange , inset 0px 0px 10px orange,0px 0px 5px rgb(255, 255, 255);
     }
   
     25% {
@@ -90,13 +90,13 @@
     }
   
     30% {
-      border: 2px solid white;
-      box-shadow: 0px 0px 30px white , inset 0px 0px 10px white,0px 0px 5px rgb(255, 255, 255);
+      border: 2px solid orange;
+      box-shadow: 0px 0px 30px orange , inset 0px 0px 10px orange,0px 0px 5px rgb(255, 255, 255);
     }
   
     100% {
-      border: 2px solid white;
-      box-shadow: 0px 0px 30px white , inset 0px 0px 10px white,0px 0px 5px rgb(255, 255, 255);
+      border: 2px solid orange;
+      box-shadow: 0px 0px 30px orange , inset 0px 0px 10px orange,0px 0px 5px rgb(255, 255, 255);
     }
   }
   
