@@ -332,10 +332,13 @@ tr.hostin:hover {
 }
 .holderupload {
   width: 70%;
-  height: 25rem;
+  height: 90vh;
   border: 2px solid orangered;
   border-radius: 14px;
   position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .holderref h2,
 .holderupload h2 {

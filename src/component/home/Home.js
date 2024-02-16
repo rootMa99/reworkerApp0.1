@@ -7,6 +7,7 @@ import api from "../../services/api";
 import { loginSActions } from "../../store/loginSlice";
 import PopupCmAdSl from "./PopupCmAdSl";
 import trash from "../../assets/trash.png";
+import UploadExcelData from "./UploadExcelData";
 
 const stylec = (status) => {
   return status === "Repaired"
@@ -116,7 +117,7 @@ const Home = (p) => {
         });
 
         const data = await response.json();
-        dispatch(loginSActions.addLogisticsData(data));
+        dispatch(loginSActions.addLogisticsData(data.reverse()));
       } catch (error) {
         console.error("Error:", error);
       }
@@ -162,6 +163,12 @@ const Home = (p) => {
     isLoged.role !== "Reworker" && setPopUpEdite({ states: true, data: dt });
     console.log(dt);
   };
+
+
+  const deleteHandlerRef=e=>{
+    alert("clicked delete")
+  }
+
 
   return (
     <React.Fragment>
@@ -417,13 +424,14 @@ const Home = (p) => {
                           </span>
                         </div>
                       </div>
-                      <img src={trash} alt="trash" />
+                      <img src={trash} alt="trash" onClick={deleteHandlerRef}/>
                     </li>
                   ))}
               </ul>
             </div>
             <div className={c.holderupload}>
               <h2>upload list urgent</h2>
+              <UploadExcelData />
             </div>
           </div>
         </div>
