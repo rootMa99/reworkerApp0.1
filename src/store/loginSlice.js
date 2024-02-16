@@ -9,10 +9,14 @@ const loginS = createSlice({
     urgent: { urgent: false, data: null },
     urgentData: [],
     scrap: [],
+    logistics:[]
   },
   reducers: {
     addUrgentData(s, p) {
       s.urgentData = p.payload;
+    },
+    addLogisticsData(s, p) {
+      s.logistics = p.payload;
     },
     addDataSelect(s, p) {
       s.dataSelect = p.payload;

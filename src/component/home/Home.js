@@ -33,7 +33,7 @@ const Home = (p) => {
   const [popUpEdite, setPopUpEdite] = useState({ states: false, data: {} });
   const [page, setPage] = useState({ page: 1, totalPage: 0 });
   const [pagescrap, setPagescrap] = useState({ page: 1, totalPage: 0 });
-  const { urgent, isLoged, data, urgentData, scrap } = useSelector(
+  const { urgent, isLoged, data, urgentData, scrap, logistics } = useSelector(
     (s) => s.loginr
   );
   const dispatch = useDispatch();
@@ -100,6 +100,23 @@ const Home = (p) => {
           totalPage: data.totalPages,
         }));
         dispatch(loginSActions.addScrap(data.data));
+      } catch (error) {
+        console.error("Error:", error);
+      }
+    }
+
+    if (isLoged.role === "Logistics") {
+      try {
+        const response = await fetch(`${api}/logistics`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${isLoged.token}`,
+          },
+        });
+
+        const data = await response.json();
+        dispatch(loginSActions.addLogisticsData(data));
       } catch (error) {
         console.error("Error:", error);
       }
@@ -384,54 +401,25 @@ const Home = (p) => {
             <div className={c.holderref}>
               <h2>list urgent</h2>
               <ul>
-                <li>
-                  <div>
-                    ref: 
-                  </div>
-                  <span className={c.ref}>4B101048</span>
-                  <div>
-                    created At: <span>2024-02-11 14:32</span>
-                  </div>
-                  <div>
-                    <img src={trash} alt="trash" />
-                  </div>
-                </li>
-                <li>
-                  <div>
-                    ref: 
-                  </div>
-                  <span className={c.ref}>4B101048</span>
-                  <div>
-                    created At: <span>2024-02-11 14:32</span>
-                  </div>
-                  <div>
-                    <img src={trash} alt="trash" />
-                  </div>
-                </li>
-                <li>
-                  <div>
-                    ref: 
-                  </div>
-                  <span className={c.ref}>4B101048</span>
-                  <div>
-                    created At: <span>2024-02-11 14:32</span>
-                  </div>
-                  <div>
-                    <img src={trash} alt="trash" />
-                  </div>
-                </li>
-                <li>
-                  <div>
-                    ref: 
-                  </div>
-                  <span className={c.ref}>4B101048</span>
-                  <div>
-                    created At: <span>2024-02-11 14:32</span>
-                  </div>
-                  <div>
-                    <img src={trash} alt="trash" />
-                  </div>
-                </li>
+                {logistics.length > 0 &&
+                  logistics.map((m) => (
+                    <li key={m._id}>
+                      <div>ref:</div>
+                      <span className={c.ref}>{m.ref}</span>
+                      <div className={c.datet}>
+                        <div>created At:</div>
+                        <div>
+                          <span>{m.createdAt.split("T")[0]}</span>
+                          <br />
+                          <span className={c.timed}>
+                            {m.createdAt.split("T")[1].split(":")[0]}:
+                            {m.createdAt.split("T")[1].split(":")[1]}
+                          </span>
+                        </div>
+                      </div>
+                      <img src={trash} alt="trash" />
+                    </li>
+                  ))}
               </ul>
             </div>
             <div className={c.holderupload}>
