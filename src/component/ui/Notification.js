@@ -56,7 +56,7 @@ const Notification = (p) => {
           </div>
         </div>
       ) : (
-        <div className={classe}>
+        <div className={classe} style={p.urg? {width: "45rem"}: {}}>
           <div className={classealt}>
             <div className={c["flex"]}>
               <div
