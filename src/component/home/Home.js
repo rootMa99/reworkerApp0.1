@@ -38,7 +38,7 @@ const Home = (p) => {
   const { urgent, isLoged, data, urgentData, scrap, logistics } = useSelector(
     (s) => s.loginr
   );
-  const [notify, setNotify]=useState({logic:false, id: 0, ref:""});
+  const [notify, setNotify] = useState({ logic: false, id: 0, ref: "" });
   const dispatch = useDispatch();
 
   console.log(urgent);
@@ -47,6 +47,18 @@ const Home = (p) => {
     isLoged.role !== "Reworker" &&
       setPopUpEdite((prev) => ({ ...prev, states: !prev.states }));
   };
+
+  useEffect(() => {
+    const keyDownHandler = (e) => {
+      if(isLoged.role === "Reworker"){
+        clickHandler();
+      }
+    };
+    document.addEventListener("keydown", keyDownHandler);
+    return () => {
+      document.removeEventListener("keydown", keyDownHandler);
+    };
+  }, [isLoged.role]);
 
   const callback = useCallback(async () => {
     try {
@@ -166,20 +178,23 @@ const Home = (p) => {
     console.log(dt);
   };
 
-
-  const deleteHandlerRef=(e, id, ref)=>{
-    setNotify({logic:true, id: id, ref: ref})
-  }
-  const deleteHandlerRefclose=()=>{
-    setNotify({logic:false, id: 0, ref:""})
-  }
-
+  const deleteHandlerRef = (e, id, ref) => {
+    setNotify({ logic: true, id: id, ref: ref });
+  };
+  const deleteHandlerRefclose = () => {
+    setNotify({ logic: false, id: 0, ref: "" });
+  };
 
   return (
     <React.Fragment>
-    {
-      notify.logic && <Notification del={true} id={notify.id} refid={notify.ref} close={deleteHandlerRefclose} />
-    }
+      {notify.logic && (
+        <Notification
+          del={true}
+          id={notify.id}
+          refid={notify.ref}
+          close={deleteHandlerRefclose}
+        />
+      )}
       {isLoged.role !== "Logistics" && (
         <div className={c.holder}>
           {(popUp || popUpEdite.states) && <BackDrop click={clickHandler} />}
@@ -432,7 +447,11 @@ const Home = (p) => {
                           </span>
                         </div>
                       </div>
-                      <img src={trash} alt="trash" onClick={e=>deleteHandlerRef(e, m._id, m.ref) }/>
+                      <img
+                        src={trash}
+                        alt="trash"
+                        onClick={(e) => deleteHandlerRef(e, m._id, m.ref)}
+                      />
                     </li>
                   ))}
               </ul>
