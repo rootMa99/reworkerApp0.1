@@ -72,19 +72,19 @@ const customStyles = {
   }),
 };
 const statusC = [
-    {
-      value: "in-Progress",
-      label: "in-Progress",
-    },
-    {
-      value: "Repaired",
-      label: "Repaired",
-    },
-    {
-      value: "Scrap",
-      label: "Scrap",
-    },
-  ];
+  {
+    value: "in-Progress",
+    label: "in-Progress",
+  },
+  {
+    value: "Repaired",
+    label: "Repaired",
+  },
+  {
+    value: "Scrap",
+    label: "Scrap",
+  },
+];
 const getlabelandvalue = (data) => {
   const retData = [];
 
@@ -246,16 +246,18 @@ const PopupCmAdSl = (p) => {
   const onchangeHandler = (e, t) => {
     switch (t) {
       case "crew":
-        setDatacm((prev) => ({ ...prev, ppd: e.value }));
+        setDatacm((prev) => ({ ...prev, crew: e.value }));
         break;
       case "problem":
-        setDatacm((prev) => ({ ...prev, ppd: e.value }));
+        const datap = [];
+        t === "problem" && e.map((m) => datap.push(m.value));
+        setDatacm((prev) => ({ ...prev, problem: datap }));
         break;
       case "detail":
-        setDatacm((prev) => ({ ...prev, ppd: e.value }));
+        setDatacm((prev) => ({ ...prev, detail: e.target.value }));
         break;
       case "pdd":
-        setDatacm((prev) => ({ ...prev, ppd: e.value }));
+        setDatacm((prev) => ({ ...prev, pdd: e.value }));
         break;
       case "ppd":
         setDatacm((prev) => ({ ...prev, ppd: e.value }));
@@ -433,7 +435,7 @@ const PopupCmAdSl = (p) => {
                     rows="5"
                     id="textarea"
                     name="textarea96"
-                    onChange={onchangeHandler}
+                    onChange={(e) => onchangeHandler(e, "detail")}
                     value={dataCm.detail}
                   ></textarea>
                 </div>
@@ -468,20 +470,20 @@ const PopupCmAdSl = (p) => {
                 </div>
               </div>
               <div className={c.formpd}>
-              <div className={c["form-group"]}>
-                <label htmlFor="problem">cable status</label>
-                <Select
-                  options={statusC}
-                  id="multiSelect"
-                  inputId="shiftleader1"
-                  styles={customStyles}
-                  defaultValue={{
-                    value: dataCm.cs,
-                    label: dataCm.cs,
-                  }}
-                  onChange={(e) => onchangeHandler(e, "status")}
-                />
-              </div>
+                <div className={c["form-group"]}>
+                  <label htmlFor="problem">cable status</label>
+                  <Select
+                    options={statusC}
+                    id="multiSelect"
+                    inputId="shiftleader1"
+                    styles={customStyles}
+                    defaultValue={{
+                      value: dataCm.cs,
+                      label: dataCm.cs,
+                    }}
+                    onChange={(e) => onchangeHandler(e, "status")}
+                  />
+                </div>
                 <div className={c["form-group"]}>
                   <label htmlFor="idpd">idpd</label>
                   <input
@@ -495,7 +497,7 @@ const PopupCmAdSl = (p) => {
                   />
                 </div>
                 <div className={c["form-group"]}>
-                  <label htmlFor="cma">contre-maitre actions</label>
+                  <label htmlFor="cma">contre-maitre action</label>
                   <input
                     required
                     name="cma"
@@ -529,7 +531,7 @@ const PopupCmAdSl = (p) => {
                   />
                 </div>
                 <div className={c["form-group"]}>
-                  <label htmlFor="textarea">Details</label>
+                  <label htmlFor="textarea">shiftleader action</label>
                   <textarea
                     required
                     cols="25"
@@ -544,7 +546,7 @@ const PopupCmAdSl = (p) => {
             </div>
           </React.Fragment>
         )}
-        {isLoged.role === "Coordinator" ? (
+        {isLoged.role === "Admin" ? (
           <div className={c["form-submit-btn-holder"]}>
             <button type="submit" className={c["form-submit-btnS"]}>
               Update
