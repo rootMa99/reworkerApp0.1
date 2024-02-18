@@ -46,45 +46,9 @@ const PopupFormRef = (p) => {
 
   const handleInputChange = (event) => {
     const value = event.target.value;
-    // const qwertyValue = convertToQwerty(value);
-    // setRefd(qwertyValue.slice(1));
-
     setRefd(value.trim().length === 8 ? value : value.slice(1));
   };
 
-  // const convertToQwerty = (value) => {
-  //   const azertyToQwertyMap = {
-  //     'a': 'q',
-  //     'z': 'w',
-  //     'w': 'z',
-  //     'q': 'a',
-  //     '&':1,
-  //     'é':2,
-  //     '"':3,
-  //     "'":4,
-  //     '(':5,
-  //     '-':6,
-  //     'è':7,
-  //     '_':8,
-  //     'ç':9,
-  //     'à':0,
-  //   };
-
-  //   const qwertyValue = value
-  //     .split('')
-  //     .map(char => azertyToQwertyMap[char] || char)
-  //     .join('');
-
-  //   return qwertyValue;
-  // };
-  // return (
-  //   <form>
-  //     <label>
-  //       Type something:
-  //       <input type="text" ref={inputRef} />
-  //     </label>
-  //   </form>
-  // );
   return (
     <React.Fragment>
       {!init ? (
