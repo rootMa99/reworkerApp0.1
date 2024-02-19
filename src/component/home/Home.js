@@ -58,6 +58,7 @@ const Home = (p) => {
     return () => {
       document.removeEventListener("keydown", keyDownHandler);
     };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isLoged.role]);
 
   const callback = useCallback(async () => {
@@ -131,7 +132,7 @@ const Home = (p) => {
         });
 
         const data = await response.json();
-        dispatch(loginSActions.addLogisticsData(data.reverse()));
+        dispatch(loginSActions.addLogisticsData(data));
       } catch (error) {
         console.error("Error:", error);
       }
