@@ -324,7 +324,7 @@ const PopupCmAdSl = (p) => {
               />
             </div>
             <div className={c["form-group"]}>
-              <label htmlFor="cma">au actions</label>
+              <label htmlFor="cma">contre-maitre actions</label>
               <input
                 required
                 name="cma"
@@ -372,7 +372,7 @@ const PopupCmAdSl = (p) => {
             <h3 className={c.notif}>please set action to this scrap cable</h3>
             <FormDetailsData data={p.data} />
             <div className={c["form-group"]}>
-              <label htmlFor="textarea">Details</label>
+              <label htmlFor="textarea">shiftleader action</label>
               <textarea
                 required
                 cols="25"
