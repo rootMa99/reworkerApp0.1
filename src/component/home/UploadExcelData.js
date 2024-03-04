@@ -1,9 +1,10 @@
 import React, { useRef, useState } from "react";
 import c from "./UploadExcelData.module.css";
 import api from "../../services/api";
-import { useSelector } from "react-redux";
+import {  useSelector } from "react-redux";
 import Notification from "./Notification";
 import UploadLoading from "../ui/UploadLoading";
+//import { loginSActions } from "../../store/loginSlice";
 
 const UploadExcelData = (p) => {
   const dropContainerRef = useRef(null);
@@ -14,7 +15,7 @@ const UploadExcelData = (p) => {
   const [error, setError] = useState(false);
   const { isLoged } = useSelector((s) => s.loginr);
   const [loading, setLoading] = useState(false);
-
+  //const dispatch=useDispatch();
   const handleDragOver = (e) => {
     e.preventDefault();
   };
@@ -69,7 +70,7 @@ const UploadExcelData = (p) => {
         method: "POST",
         body: formData,
         headers: {
-          "Content-Type": "application/json",
+          //"Content-Type": "application/json",
           Authorization: `Bearer ${isLoged.token}`,
         },
       });
@@ -78,7 +79,7 @@ const UploadExcelData = (p) => {
       console.log(data)
       setSuccessfully(true);
         setLoading(false);
-      // dispatch(loginSActions.addLogisticsData(data.reverse()));
+       //dispatch(loginSActions.addLogisticsData(data));
     } catch (error) {
       setError(true);
         setLoading(false);
