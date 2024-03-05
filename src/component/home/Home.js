@@ -23,10 +23,14 @@ const stylec = (status) => {
         fontWeight: "700",
         borderBottom: "9px solid #D9F28B",
       }
-    : {
+    :status === "Scrap"? {
         color: "#CF3335",
         fontWeight: "700",
         borderBottom: "9px solid #CF3335",
+      }:{
+        color: "#929D96",
+        fontWeight: "700",
+        borderBottom: "9px solid #929D96",
       };
 };
 
@@ -35,7 +39,7 @@ const Home = (p) => {
   const [popUpEdite, setPopUpEdite] = useState({ states: false, data: {} });
   const [page, setPage] = useState({ page: 1, totalPage: 0 });
   const [pagescrap, setPagescrap] = useState({ page: 1, totalPage: 0 });
-  const { urgent, isLoged, data, urgentData, scrap, logistics } = useSelector(
+  const { urgent, isLoged, data, urgentData, scrap, logistics, sertissage } = useSelector(
     (s) => s.loginr
   );
   const [notify, setNotify] = useState({ logic: false, id: 0, ref: "" });
@@ -228,6 +232,52 @@ const Home = (p) => {
             <tbody>
               {urgentData.length > 0 &&
                 urgentData.map((m) => (
+                  <tr key={m._id}>
+                    <td>
+                      {m.createdAt.split("T")[0]}
+                      <br />
+                      <span className={c.timed}>
+                        {m.createdAt.split("T")[1].split(":")[0]}:
+                        {m.createdAt.split("T")[1].split(":")[1]}
+                      </span>
+                    </td>
+                    <td>{m.reference}</td>
+                    <td>{m.crew}</td>
+                    <td style={{ padding: "8px 0" }}>
+                      <ul className={c.underl}>
+                        {m.problem.map((m, i) => (
+                          <li key={i} className={c.listu}>
+                            {m}
+                          </li>
+                        ))}
+                      </ul>
+                    </td>
+                    <td>{m.details}</td>
+                    <td>{m.pDD}</td>
+                    <td style={stylec(m.cableStatus)}>{m.cableStatus}</td>
+                  </tr>
+                ))}
+            </tbody>
+          </table>
+          <h2 className={c.titleCabS}>Sertissage cables</h2>
+          <table
+            className={`${c.table} ${c.tableurSER}`}
+            style={{ marginBottom: "2rem" }}
+          >
+            <thead>
+              <tr style={{ backgroundColor: "black" }}>
+                <th width="auto">date/time</th>
+                <th width="auto">Ref</th>
+                <th>Equipe</th>
+                <th width="30%">Problem</th>
+                <th width="15%">Details</th>
+                <th>pdd*</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              {sertissage.length > 0 &&
+                sertissage.map((m) => (
                   <tr key={m._id}>
                     <td>
                       {m.createdAt.split("T")[0]}

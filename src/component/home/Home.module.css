@@ -252,13 +252,19 @@
 .tableur .timed {
   color: #f33716;
 }
+.tableurSER th {
+  color: #929D96;
+}
+.tableurSER .timed {
+  color: #929D96;
+}
 .tableurscrap th {
   color: #cf3335;
 }
 .tableurscrap .timed {
   color: #cf3335;
 }
-
+.titleCabS,
 .titleCab2,
 .titleCab,
 .titleCabsl {
@@ -280,7 +286,9 @@
 .titleCab {
   color: #f33716;
 }
-
+.titleCabS{
+  color: #929D96;
+}
 tr.hostin {
   cursor: pointer;
 }

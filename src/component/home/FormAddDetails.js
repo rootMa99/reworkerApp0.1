@@ -85,18 +85,49 @@ const statusC = [
     value: "Scrap",
     label: "Scrap",
   },
+  {
+    value: "Sertissage",
+    label: "Sertissage",
+  },
 ];
 
+const getlabelandvalue = (data) => {
+  const retData = [];
+  data.map((m) =>
+    retData.push({
+      value: m,
+      label: m,
+    })
+  );
+  return retData;
+};
 const FormAddDetails = (p) => {
   const { dataSelect, urgent, isLoged } = useSelector((s) => s.loginr);
+  console.log(urgent.data, urgent.data === null);
   const [dataInp, setDataInp] = useState({
     reference: p.refs,
     crew: "",
-    problem: [],
-    details: "",
+    problem:
+      urgent.data === null
+        ? []
+        : urgent.data.problem === null
+        ? []
+        : urgent.data.problem,
+    details:
+      urgent.data === null
+        ? ""
+        : urgent.data.details !== null
+        ? urgent.data.details
+        : "",
     pdd: "",
   });
-  const [statusc, setStatusC] = useState("");
+  const [statusc, setStatusC] = useState(
+    urgent.data === null
+      ? ""
+      : urgent.data.cableStatus === null
+      ? ""
+      : urgent.data.cableStatus
+  );
   const dispatch = useDispatch();
 
   console.log(urgent);
@@ -117,8 +148,11 @@ const FormAddDetails = (p) => {
       body = {
         reference: urgent.data.reference,
         cableStatus: statusc,
+        problem: dataInp.problem,
+        details: dataInp.details,
       };
     }
+    console.log(body);
     try {
       const response = await fetch(`${api}/reworker`, {
         method: "POST",
@@ -137,12 +171,17 @@ const FormAddDetails = (p) => {
           dispatch(loginSActions.unshiftDataUrgent(data));
         }
       } else {
+        if(statusc==="Sertissage"){
+          console.log("this is sertissage")
+        }
         dispatch(
           loginSActions.editStatus({
             cableStatus: statusc,
             id: urgent.data._id,
             data: urgent.data,
-            urgent: urgent.urgent
+            urgent: urgent.urgent,
+            details: dataInp.details,
+            problem: dataInp.problem,
           })
         );
       }
@@ -248,6 +287,30 @@ const FormAddDetails = (p) => {
                 This cable has already been stored. Please update its status.
               </h3>
               <FormDetailsData data={urgent.data} />
+              <div className={c["form-group"]}>
+                <label htmlFor="problem">Problem</label>
+                <Select
+                  options={selectCreator(dataSelect.problems)}
+                  id="multiSelect"
+                  inputId="shiftleader1"
+                  styles={customStyles}
+                  defaultValue={getlabelandvalue(urgent.data.problem)}
+                  isMulti
+                  onChange={(e) => onchangeHandler(e, "problem")}
+                />
+              </div>
+              <div className={c["form-group"]}>
+                <label htmlFor="textarea">Details</label>
+                <textarea
+                  required
+                  cols="25"
+                  rows="5"
+                  id="textarea"
+                  name="textarea96"
+                  onChange={onchangeHandler}
+                  defaultValue={urgent.data.details}
+                ></textarea>
+              </div>
               <div className={c["form-group"]}>
                 <label htmlFor="problem">cable status</label>
                 <Select

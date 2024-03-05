@@ -10,6 +10,7 @@ const loginS = createSlice({
     urgentData: [],
     scrap: [],
     logistics: [],
+    sertissage:[],
   },
   reducers: {
     addUrgentData(s, p) {
@@ -52,6 +53,8 @@ const loginS = createSlice({
       const index = s.data.findIndex((f) => f._id === p.payload.id);
       if (index !== -1) {
         s.data[index].cableStatus = p.payload.cableStatus;
+        s.data[index].problem=p.payload.problem;
+        s.data[index].details=p.payload.details;
       } else {
         let data = p.payload.data;
         console.log(data.cableStatus, p.payload.cableStatus);
