@@ -134,7 +134,7 @@ const FormAddDetails = (p) => {
       if (urgent.data === null) {
         dispatch(loginSActions.unshiftData({ data: data, page: p.page }));
         if (urgent.urgent) {
-          dispatch(loginSActions.addUrgentData(data));
+          dispatch(loginSActions.unshiftDataUrgent(data));
         }
       } else {
         dispatch(

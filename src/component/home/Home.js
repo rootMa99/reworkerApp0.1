@@ -279,7 +279,7 @@ const Home = (p) => {
                     scrap.map((m) => (
                       <tr
                         key={m._id}
-                        className={isLoged.role !== "Reworker" && c.hostin}
+                        className={isLoged.role !== "Reworker" ? c.hostin : ""}
                         onClick={(e) => trClicked(e, m)}
                       >
                         <td>
@@ -356,7 +356,7 @@ const Home = (p) => {
                 data.map((m) => (
                   <tr
                     key={m._id}
-                    className={isLoged.role !== "Reworker" && c.hostin}
+                    className={isLoged.role !== "Reworker" ? c.hostin : ""}
                     onClick={(e) => trClicked(e, m)}
                   >
                     <td>
