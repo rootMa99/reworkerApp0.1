@@ -172,7 +172,7 @@ const FormAddDetails = (p) => {
         }
       } else {
         if(statusc==="Sertissage"){
-          console.log("this is sertissage")
+          dispatch(loginSActions.unshiftDataSertissage(data));
         }
         dispatch(
           loginSActions.editStatus({

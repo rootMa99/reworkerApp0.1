@@ -49,6 +49,9 @@ const loginS = createSlice({
     unshiftDataUrgent(s, p) {
       s.urgentData.unshift(p.payload);
     },
+    unshiftDataSertissage(s, p) {
+      s.sertissage.unshift(p.payload);
+    },
     editStatus(s, p) {
       const index = s.data.findIndex((f) => f._id === p.payload.id);
       if (index !== -1) {
@@ -66,6 +69,12 @@ const loginS = createSlice({
           (f) => f._id !== p.payload.id
         );
         s.urgentData = t;
+      }
+      if(p.payload.cableStatus!=="Sertissage"){
+        const t = JSON.parse(JSON.stringify(s.sertissage)).filter(
+          (f) => f._id !== p.payload.id
+        );
+        s.sertissage = t;
       }
     },
     addaudit(s, p) {
