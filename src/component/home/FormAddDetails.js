@@ -134,7 +134,7 @@ const FormAddDetails = (p) => {
       if (urgent.data === null) {
         dispatch(loginSActions.unshiftData({ data: data, page: p.page }));
         if (urgent.urgent) {
-          dispatch(loginSActions.t(data));
+          dispatch(loginSActions.addUrgentData(data));
         }
       } else {
         dispatch(
@@ -157,7 +157,6 @@ const FormAddDetails = (p) => {
     t === "problem" && e.map((m) => datap.push(m.value));
     switch (t) {
       case "problem":
-        
         setDataInp((prev) => ({ ...prev, problem: datap }));
         break;
       case "crew":
