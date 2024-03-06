@@ -2,23 +2,27 @@ import c from "./FormDetailsData.module.css";
 
 const FormDetailsData = (p) => {
   const style =
-    p.data.cableStatus === "Repaired"
-      ? {
-          color: "#006B63",
-          fontWeight: "800",
-          borderBottom: "3px solid #006B63",
-        }
-      : p.data.cableStatus === "in-Progress"
-      ? {
-          color: "#D9F28B",
-          fontWeight: "800",
-          borderBottom: "3px solid #D9F28B",
-        }
-      : {
-          color: "#CF3335",
-          fontWeight: "800",
-          borderBottom: "3px solid #CF3335",
-        };
+    p.data.cableStatus  === "Repaired"
+    ? {
+        color: "#006B63",
+        fontWeight: "700",
+        borderBottom: "9px solid #006B63",
+      }
+    : p.data.cableStatus === "in-Progress"
+    ? {
+        color: "#D9F28B",
+        fontWeight: "700",
+        borderBottom: "9px solid #D9F28B",
+      }
+    :p.data.cableStatus === "Scrap"? {
+        color: "#CF3335",
+        fontWeight: "700",
+        borderBottom: "9px solid #CF3335",
+      }:{
+        color: "#929D96",
+        fontWeight: "700",
+        borderBottom: "9px solid #929D96",
+      };
 
   return (
     <div className={c.descrHolder}>

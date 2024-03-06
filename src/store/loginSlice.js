@@ -94,6 +94,14 @@ const loginS = createSlice({
           (f) => f._id !== p.payload.id
         );
         s.sertissage = t;
+      }else {
+        const d=JSON.parse(JSON.stringify(s.sertissage))
+        const indexur = d.findIndex((f) => f._id === p.payload.id);
+        if (indexur !== -1) {
+          s.sertissage[indexur].cableStatus = p.payload.cableStatus;
+          s.sertissage[indexur].problem = p.payload.problem;
+          s.sertissage[indexur].details = p.payload.details;
+        }
       }
     },
     addaudit(s, p) {
