@@ -84,6 +84,20 @@ const statusC = [
     value: "Scrap",
     label: "Scrap",
   },
+  {
+    value: "Sertissage",
+    label: "Sertissage",
+  },
+];
+const cmAction = [
+  {
+    value: "Apply",
+    label: "Apply",
+  },
+  {
+    value: "N/A",
+    label: "N/A",
+  },
 ];
 const getlabelandvalue = (data) => {
   const retData = [];
@@ -268,7 +282,7 @@ const PopupCmAdSl = (p) => {
         }
         break;
       case "cma":
-        setDatacm((prev) => ({ ...prev, cma: e.target.value }));
+        setDatacm((prev) => ({ ...prev, cma: e.value }));
         break;
       case "audia":
         setDatacm((prev) => ({ ...prev, audia: e.target.value }));
@@ -325,13 +339,16 @@ const PopupCmAdSl = (p) => {
             </div>
             <div className={c["form-group"]}>
               <label htmlFor="cma">contre-maitre actions</label>
-              <input
-                required
-                name="cma"
-                id="cma"
-                type="text"
+              <Select
+                options={cmAction}
+                id="multiSelect"
+                inputId="shiftleader1"
+                styles={customStyles}
+                defaultValue={{
+                  value: dataCm.cma,
+                  label: dataCm.cma,
+                }}
                 onChange={(e) => onchangeHandler(e, "cma")}
-                value={dataCm.cma}
               />
             </div>
           </React.Fragment>
@@ -387,7 +404,7 @@ const PopupCmAdSl = (p) => {
         )}
         {isLoged.role === "Coordinator" && (
           <React.Fragment>
-            <h3 className={c.notif}>you can update or delete this cable</h3>
+            <h3 className={c.notif}>you can update this cable</h3>
             <div className={c.editForm}>
               <div className={c.formpd}>
                 <div className={c["form-group"]}>
@@ -498,19 +515,21 @@ const PopupCmAdSl = (p) => {
                 </div>
                 <div className={c["form-group"]}>
                   <label htmlFor="cma">contre-maitre action</label>
-                  <input
-                    required
-                    name="cma"
-                    id="cma"
-                    type="text"
-                    onChange={(e) => onchangeHandler(e, "cma")}
-                    value={dataCm.cma}
-                  />
+                  <Select
+                  options={cmAction}
+                  id="multiSelect"
+                  inputId="shiftleader1"
+                  styles={customStyles}
+                  defaultValue={{
+                    value: dataCm.cma,
+                    label: dataCm.cma,
+                  }}
+                  onChange={(e) => onchangeHandler(e, "cma")}
+                />
                 </div>
                 <div className={c["form-group"]}>
                   <label htmlFor="cp">cause de problem</label>
                   <input
-                    required
                     name="cp"
                     id="cp"
                     type="text"
@@ -522,7 +541,6 @@ const PopupCmAdSl = (p) => {
                 <div className={c["form-group"]}>
                   <label htmlFor="audia">Auditor actions</label>
                   <input
-                    required
                     name="audia"
                     id="audia"
                     type="text"
@@ -533,7 +551,6 @@ const PopupCmAdSl = (p) => {
                 <div className={c["form-group"]}>
                   <label htmlFor="textarea">shiftleader action</label>
                   <textarea
-                    required
                     cols="25"
                     rows="5"
                     id="textarea"
