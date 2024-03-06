@@ -10,11 +10,14 @@ const loginS = createSlice({
     urgentData: [],
     scrap: [],
     logistics: [],
-    sertissage:[],
+    sertissage: [],
   },
   reducers: {
     addUrgentData(s, p) {
       s.urgentData = p.payload;
+    },
+    addSertissageData(s, p) {
+      s.sertissage = p.payload;
     },
     addLogisticsData(s, p) {
       s.logistics = p.payload;
@@ -47,30 +50,46 @@ const loginS = createSlice({
       }
     },
     unshiftDataUrgent(s, p) {
-      s.urgentData.unshift(p.payload);
+      const index = s.urgentData.findIndex((f) => f._id === p.payload._id);
+      if (index === -1) {
+        s.urgentData.unshift(p.payload);
+      }
     },
     unshiftDataSertissage(s, p) {
-      s.sertissage.unshift(p.payload);
+      const index = s.sertissage.findIndex((f) => f._id === p.payload._id);
+      if (index === -1) {
+        s.sertissage.unshift(p.payload);
+      }
     },
     editStatus(s, p) {
       const index = s.data.findIndex((f) => f._id === p.payload.id);
       if (index !== -1) {
         s.data[index].cableStatus = p.payload.cableStatus;
-        s.data[index].problem=p.payload.problem;
-        s.data[index].details=p.payload.details;
+        s.data[index].problem = p.payload.problem;
+        s.data[index].details = p.payload.details;
       } else {
         let data = p.payload.data;
         console.log(data.cableStatus, p.payload.cableStatus);
         data = { ...data, cableStatus: p.payload.cableStatus };
         s.data.push(data);
       }
-      if (p.payload.urgent) {
+
+      if (p.payload.urgent && p.payload.cableStatus === "Repaired") {
         const t = JSON.parse(JSON.stringify(s.urgentData)).filter(
           (f) => f._id !== p.payload.id
         );
         s.urgentData = t;
+      } else {
+        const d=JSON.parse(JSON.stringify(s.urgentData))
+        const indexur = d.findIndex((f) => f._id === p.payload.id);
+        console.log("else should run", indexur,d, p.payload)
+        if (indexur !== -1) {
+          s.urgentData[indexur].cableStatus = p.payload.cableStatus;
+          s.urgentData[indexur].problem = p.payload.problem;
+          s.urgentData[indexur].details = p.payload.details;
+        }
       }
-      if(p.payload.cableStatus!=="Sertissage"){
+      if (p.payload.cableStatus !== "Sertissage") {
         const t = JSON.parse(JSON.stringify(s.sertissage)).filter(
           (f) => f._id !== p.payload.id
         );

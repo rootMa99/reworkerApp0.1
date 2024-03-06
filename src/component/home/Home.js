@@ -100,6 +100,21 @@ const Home = (p) => {
     } catch (error) {
       console.error("Error:", error);
     }
+    try {
+      const response = await fetch(`${api}/sertissage`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${isLoged.token}`,
+        },
+      });
+
+      const data = await response.json();
+      console.log("sertissage", data);
+      dispatch(loginSActions.addSertissageData(data));
+    } catch (error) {
+      console.error("Error:", error);
+    }
 
     if (isLoged.role === "ShiftLeader") {
       try {

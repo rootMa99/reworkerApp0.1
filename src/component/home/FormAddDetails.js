@@ -174,6 +174,9 @@ const FormAddDetails = (p) => {
         if(statusc==="Sertissage"){
           dispatch(loginSActions.unshiftDataSertissage(data));
         }
+        if (urgent.urgent) {
+          dispatch(loginSActions.unshiftDataUrgent(data));
+        }
         dispatch(
           loginSActions.editStatus({
             cableStatus: statusc,
