@@ -285,7 +285,7 @@ const PopupCmAdSl = (p) => {
         setDatacm((prev) => ({ ...prev, cma: e.value }));
         break;
       case "audia":
-        setDatacm((prev) => ({ ...prev, audia: e.target.value }));
+        setDatacm((prev) => ({ ...prev, audia: e.value }));
         break;
       case "cp":
         setDatacm((prev) => ({ ...prev, cp: e.target.value }));
@@ -373,14 +373,17 @@ const PopupCmAdSl = (p) => {
             </div>
             <div className={c["form-group"]}>
               <label htmlFor="audia">Auditor actions</label>
-              <input
-                required
-                name="audia"
-                id="audia"
-                type="text"
-                onChange={(e) => onchangeHandler(e, "audia")}
-                value={dataCm.audia}
-              />
+              <Select
+              options={cmAction}
+              id="multiSelect"
+              inputId="shiftleader1"
+              styles={customStyles}
+              defaultValue={{
+                value: dataCm.audia,
+                label: dataCm.audia,
+              }}
+              onChange={(e) => onchangeHandler(e, "audia")}
+            />
             </div>
           </React.Fragment>
         )}

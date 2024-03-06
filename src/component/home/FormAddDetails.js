@@ -104,19 +104,20 @@ const getlabelandvalue = (data) => {
 const FormAddDetails = (p) => {
   const { dataSelect, urgent, isLoged } = useSelector((s) => s.loginr);
   console.log(urgent.data, urgent.data === null);
+  const [newAR, setNewAR]=useState(false);
   const [dataInp, setDataInp] = useState({
     reference: p.refs,
     crew: "",
     problem:
       urgent.data === null
         ? []
-        : urgent.data.problem === null
+        : urgent.data.problem === null 
         ? []
         : urgent.data.problem,
     details:
       urgent.data === null
         ? ""
-        : urgent.data.details !== null
+        : urgent.data.details !== null 
         ? urgent.data.details
         : "",
     pdd: "",
@@ -124,7 +125,7 @@ const FormAddDetails = (p) => {
   const [statusc, setStatusC] = useState(
     urgent.data === null
       ? ""
-      : urgent.data.cableStatus === null
+      : urgent.data.cableStatus === null 
       ? ""
       : urgent.data.cableStatus
   );
@@ -136,7 +137,7 @@ const FormAddDetails = (p) => {
     event.preventDefault();
     console.log(dataInp);
     let body;
-    if (urgent.data === null) {
+    if (urgent.data === null || newAR) {
       body = {
         reference: dataInp.reference,
         pDD: dataInp.pdd,
@@ -165,7 +166,7 @@ const FormAddDetails = (p) => {
 
       const data = await response.json();
       console.log(data, p.page);
-      if (urgent.data === null) {
+      if (urgent.data === null || newAR) {
         dispatch(loginSActions.unshiftData({ data: data, page: p.page }));
         if (urgent.urgent) {
           dispatch(loginSActions.unshiftDataUrgent(data));
@@ -224,7 +225,7 @@ const FormAddDetails = (p) => {
       )}
       <div className={c["form-container"]}>
         <form className={c.form} onSubmit={handleSubmit}>
-          {urgent.data === null ? (
+          {urgent.data === null || newAR ? (
             <React.Fragment>
               <div className={c["form-group"]}>
                 <label htmlFor="reference">reference</label>
@@ -333,6 +334,7 @@ const FormAddDetails = (p) => {
           <button type="submit" className={c["form-submit-btn"]}>
             Submit
           </button>
+          <h4 className={c.newAutoRefus} onClick={()=>setNewAR(true)}>this cable has been already stored, do you want to open a new autorefus?</h4>
         </form>
       </div>
     </React.Fragment>
