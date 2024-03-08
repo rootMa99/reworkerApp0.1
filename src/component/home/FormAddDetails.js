@@ -219,7 +219,7 @@ const FormAddDetails = (p) => {
     <React.Fragment>
       {urgent.urgent && (
         <Notification
-          message="caution: this cable is urgent, please don't ignore it"
+          message="caution: this cable is urgent, please treat it with utmost priority"
           urg={true}
         />
       )}
@@ -334,7 +334,7 @@ const FormAddDetails = (p) => {
           <button type="submit" className={c["form-submit-btn"]}>
             Submit
           </button>
-          <h4 className={c.newAutoRefus} onClick={()=>setNewAR(true)}>this cable has been already stored, do you want to open a new autorefus?</h4>
+          <h4 className={c.newAutoRefus} onClick={()=>setNewAR(true)}>this cable has been already stored, Would you like to initiate a new autorefus?</h4>
         </form>
       </div>
     </React.Fragment>
