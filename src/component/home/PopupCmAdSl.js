@@ -112,6 +112,7 @@ const getlabelandvalue = (data) => {
 };
 
 const PopupCmAdSl = (p) => {
+
   const { isLoged, dataSelect } = useSelector((s) => s.loginr);
   const [dataCm, setDatacm] = useState({
     ref: p.data.reference,
@@ -127,6 +128,7 @@ const PopupCmAdSl = (p) => {
     cp: p.data.cP,
     sl: p.data.shiftLeaderAction,
   });
+
   const dispatch = useDispatch();
   console.log(p.data);
   const submitHandler = async (e) => {
@@ -374,16 +376,16 @@ const PopupCmAdSl = (p) => {
             <div className={c["form-group"]}>
               <label htmlFor="audia">Auditor actions</label>
               <Select
-              options={cmAction}
-              id="multiSelect"
-              inputId="shiftleader1"
-              styles={customStyles}
-              defaultValue={{
-                value: dataCm.audia,
-                label: dataCm.audia,
-              }}
-              onChange={(e) => onchangeHandler(e, "audia")}
-            />
+                options={cmAction}
+                id="multiSelect"
+                inputId="shiftleader1"
+                styles={customStyles}
+                defaultValue={{
+                  value: dataCm.audia,
+                  label: dataCm.audia,
+                }}
+                onChange={(e) => onchangeHandler(e, "audia")}
+              />
             </div>
           </React.Fragment>
         )}
@@ -519,16 +521,16 @@ const PopupCmAdSl = (p) => {
                 <div className={c["form-group"]}>
                   <label htmlFor="cma">contre-maitre action</label>
                   <Select
-                  options={cmAction}
-                  id="multiSelect"
-                  inputId="shiftleader1"
-                  styles={customStyles}
-                  defaultValue={{
-                    value: dataCm.cma,
-                    label: dataCm.cma,
-                  }}
-                  onChange={(e) => onchangeHandler(e, "cma")}
-                />
+                    options={cmAction}
+                    id="multiSelect"
+                    inputId="shiftleader1"
+                    styles={customStyles}
+                    defaultValue={{
+                      value: dataCm.cma,
+                      label: dataCm.cma,
+                    }}
+                    onChange={(e) => onchangeHandler(e, "cma")}
+                  />
                 </div>
                 <div className={c["form-group"]}>
                   <label htmlFor="cp">cause de problem</label>

@@ -35,6 +35,7 @@ const stylec = (status) => {
 };
 
 const Home = (p) => {
+
   const [popUp, setPopUp] = useState(false);
   const [popUpEdite, setPopUpEdite] = useState({ states: false, data: {} });
   const [page, setPage] = useState({ page: 1, totalPage: 0 });
