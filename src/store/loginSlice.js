@@ -56,8 +56,12 @@ const loginS = createSlice({
       }
     },
     unshiftDataSertissage(s, p) {
-      const index = s.sertissage.findIndex((f) => f._id === p.payload._id);
-      if (index === -1) {
+      if(s.sertissage.length>0){
+        const index = s.sertissage.findIndex((f) => f._id === p.payload._id);
+        if (index === -1) {
+          s.sertissage.unshift(p.payload);
+        }
+      }else{
         s.sertissage.unshift(p.payload);
       }
     },
@@ -69,7 +73,6 @@ const loginS = createSlice({
         s.data[index].details = p.payload.details;
       } else {
         let data = p.payload.data;
-        console.log(data.cableStatus, p.payload.cableStatus);
         data = { ...data, cableStatus: p.payload.cableStatus };
         s.data.push(data);
       }
@@ -80,9 +83,8 @@ const loginS = createSlice({
         );
         s.urgentData = t;
       } else {
-        const d=JSON.parse(JSON.stringify(s.urgentData))
-        const indexur = d.findIndex((f) => f._id === p.payload.id);
-        console.log("else should run", indexur,d, p.payload)
+        const d = JSON.parse(JSON.stringify(s.urgentData));
+        const indexur = d.length>0? d.findIndex((f) => f._id === p.payload.id) : -1;
         if (indexur !== -1) {
           s.urgentData[indexur].cableStatus = p.payload.cableStatus;
           s.urgentData[indexur].problem = p.payload.problem;
@@ -94,8 +96,8 @@ const loginS = createSlice({
           (f) => f._id !== p.payload.id
         );
         s.sertissage = t;
-      }else {
-        const d=JSON.parse(JSON.stringify(s.sertissage))
+      } else {
+        const d = JSON.parse(JSON.stringify(s.sertissage));
         const indexur = d.findIndex((f) => f._id === p.payload.id);
         if (indexur !== -1) {
           s.sertissage[indexur].cableStatus = p.payload.cableStatus;

@@ -36,7 +36,7 @@ const Login = () => {
             role: data.user.role,
             id: data.user.id,
             username: data.user.username,
-            token: data.token,
+            token: data.accessToken,
           })
         );
       } catch (error) {
@@ -44,6 +44,7 @@ const Login = () => {
         setErr(true);
       }
     }
+    
   };
 
   const nameChangeHadler = (e) => {

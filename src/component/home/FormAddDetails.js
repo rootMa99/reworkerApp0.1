@@ -104,20 +104,20 @@ const getlabelandvalue = (data) => {
 const FormAddDetails = (p) => {
   const { dataSelect, urgent, isLoged } = useSelector((s) => s.loginr);
   console.log(urgent.data, urgent.data === null);
-  const [newAR, setNewAR]=useState(false);
+  const [newAR, setNewAR] = useState(false);
   const [dataInp, setDataInp] = useState({
     reference: p.refs,
     crew: "",
     problem:
       urgent.data === null
         ? []
-        : urgent.data.problem === null 
+        : urgent.data.problem === null
         ? []
         : urgent.data.problem,
     details:
       urgent.data === null
         ? ""
-        : urgent.data.details !== null 
+        : urgent.data.details !== null
         ? urgent.data.details
         : "",
     pdd: "",
@@ -125,7 +125,7 @@ const FormAddDetails = (p) => {
   const [statusc, setStatusC] = useState(
     urgent.data === null
       ? ""
-      : urgent.data.cableStatus === null 
+      : urgent.data.cableStatus === null
       ? ""
       : urgent.data.cableStatus
   );
@@ -155,14 +155,24 @@ const FormAddDetails = (p) => {
     }
     console.log(body);
     try {
-      const response = await fetch(`${api}/reworker`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${isLoged.token}`,
-        },
-        body: JSON.stringify(body),
-      });
+      const response =
+        urgent.data === null || newAR
+          ? await fetch(`${api}/reworker`, {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${isLoged.token}`,
+              },
+              body: JSON.stringify(body),
+            })
+          : await fetch(`${api}/reworker/update/${urgent.data._id}`, {
+              method: "PUT",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${isLoged.token}`,
+              },
+              body: JSON.stringify(body),
+            });
 
       const data = await response.json();
       console.log(data, p.page);
@@ -172,7 +182,7 @@ const FormAddDetails = (p) => {
           dispatch(loginSActions.unshiftDataUrgent(data));
         }
       } else {
-        if(statusc==="Sertissage"){
+        if (statusc === "Sertissage") {
           dispatch(loginSActions.unshiftDataSertissage(data));
         }
         if (urgent.urgent) {
@@ -215,7 +225,7 @@ const FormAddDetails = (p) => {
         setDataInp((prev) => ({ ...prev, details: e.target.value }));
     }
   };
- 
+
   return (
     <React.Fragment>
       {urgent.urgent && (
@@ -335,7 +345,12 @@ const FormAddDetails = (p) => {
           <button type="submit" className={c["form-submit-btn"]}>
             Submit
           </button>
-          <h4 className={c.newAutoRefus} onClick={()=>setNewAR(true)}>this cable has been already stored, Would you like to initiate a new autorefus?</h4>
+          {urgent.data !== null && (
+            <h4 className={c.newAutoRefus} onClick={() => setNewAR(true)}>
+              this cable has been already stored, Would you like to initiate a
+              new autorefus?
+            </h4>
+          )}
         </form>
       </div>
     </React.Fragment>

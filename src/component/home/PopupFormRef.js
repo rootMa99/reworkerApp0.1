@@ -23,7 +23,7 @@ const PopupFormRef = (p) => {
       return;
     }
     try {
-      const response = await fetch(`${api}/reworker/${refd}`, {
+      const response = await fetch(`${api}/data/${refd}`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",

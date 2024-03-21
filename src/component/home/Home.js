@@ -68,6 +68,23 @@ const Home = (p) => {
 
   const callback = useCallback(async () => {
     try {
+      const response = await fetch(`${api}/metadata`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${isLoged.token}`,
+        },
+      });
+
+      const data = await response.json();
+      console.log(data);
+      dispatch(
+        loginSActions.addDataSelect(data)
+      );
+    } catch (error) {
+      console.error("Error:", error);
+    }
+    try {
       const response = await fetch(`${api}/data?page=${page.page}&limit=10`, {
         method: "GET",
         headers: {
@@ -87,7 +104,7 @@ const Home = (p) => {
       console.error("Error:", error);
     }
     try {
-      const response = await fetch(`${api}/urgent`, {
+      const response = await fetch(`${api}/data?isUrgentData=${true}`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -97,12 +114,12 @@ const Home = (p) => {
 
       const data = await response.json();
       console.log(data);
-      dispatch(loginSActions.addUrgentData(data));
+      dispatch(loginSActions.addUrgentData(data.data));
     } catch (error) {
       console.error("Error:", error);
     }
     try {
-      const response = await fetch(`${api}/sertissage`, {
+      const response = await fetch(`${api}/data?cableStatus=Sertissage`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -112,7 +129,7 @@ const Home = (p) => {
 
       const data = await response.json();
       console.log("sertissage", data);
-      dispatch(loginSActions.addSertissageData(data));
+      dispatch(loginSActions.addSertissageData(data.data));
     } catch (error) {
       console.error("Error:", error);
     }
@@ -120,7 +137,7 @@ const Home = (p) => {
     if (isLoged.role === "ShiftLeader") {
       try {
         const response = await fetch(
-          `${api}/scrap?page=${pagescrap.page}&limit=5`,
+          `${api}/data?cableStatus=Scrap&page=${pagescrap.page}&limit=5`,
           {
             method: "GET",
             headers: {
