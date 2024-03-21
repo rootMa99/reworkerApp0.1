@@ -91,12 +91,22 @@ const statusC = [
 ];
 const cmAction = [
   {
-    value: "Apply",
-    label: "Apply",
+    value: "Applied",
+    label: "Applied",
   },
   {
-    value: "N/A",
-    label: "N/A",
+    value: "Not Applied",
+    label: "Not Applied",
+  },
+];
+const aAction = [
+  {
+    value: "Validated",
+    label: "Validated",
+  },
+  {
+    value: "Not Validated",
+    label: "Not Validated",
   },
 ];
 const getlabelandvalue = (data) => {
@@ -362,7 +372,7 @@ const PopupCmAdSl = (p) => {
             </h3>
             <FormDetailsData data={p.data} />
             <div className={c["form-group"]}>
-              <label htmlFor="cp">cp</label>
+              <label htmlFor="cp">problem cause</label>
               <input
                 required
                 name="cp"
@@ -376,7 +386,7 @@ const PopupCmAdSl = (p) => {
             <div className={c["form-group"]}>
               <label htmlFor="audia">Auditor actions</label>
               <Select
-                options={cmAction}
+                options={aAction}
                 id="multiSelect"
                 inputId="shiftleader1"
                 styles={customStyles}
