@@ -1,5 +1,7 @@
 .form-container,
-.formCAdmin, .CAdminUserList {
+.formCAdmin,
+.CAdminUserList,
+.listOfUser {
   width: 45rem;
   background: linear-gradient(#212121, #212121) padding-box,
     linear-gradient(145deg, transparent 35%, #f33716, orange) border-box;
@@ -16,11 +18,27 @@
   background-size: 200% 100%;
   animation: gradient 5s ease infinite;
 }
-.CAdminUserList{
+.CAdminUserList {
+  position: relative;
   width: 95%;
   margin: auto;
   margin-top: 2rem;
   animation: gradient2 15s ease infinite;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  align-items: center;
+}
+.titlenb{
+  position: absolute;
+  top: -1rem;
+  right: 1rem;
+  text-transform: uppercase;
+  color: #717171;
+}
+.titlenb span{
+  color: #fff;
 }
 .form-container {
   position: fixed;
@@ -29,17 +47,41 @@
   left: 50%;
   transform: translate(-50%, -50%);
 }
-.formCAdmin{
+.formCAdmin {
   margin: auto;
   margin-top: 2rem;
 }
-.formCAdmin .title{
+.formCAdmin .title {
   margin: 0;
   color: #717171;
   text-transform: capitalize;
 }
+.listOfUser {
+  width: 48%;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-evenly;
+  border: 1px solid #717171;
+  padding: 10px;
+  cursor: pointer;
+  box-shadow: 8px 6px 20px 0px #c3c3c31c;
+}
+.listOfUser:hover{
+  transform: scale(1.01);
+}
 
-
+.detailsData {
+  display: flex;
+  flex-direction: column;
+}
+.detailsData h3 {
+  color: #717171;
+  text-transform: uppercase;
+}
+.detailsData h2 {
+  color: #ffffff;
+  text-transform: uppercase;
+}
 @keyframes gradient {
   0% {
     background-position: 0% 50%;
@@ -54,7 +96,8 @@
   }
 }
 @keyframes gradient2 {
-  0%,100% {
+  0%,
+  100% {
     background-position: 0% 50%;
   }
   25% {
@@ -72,14 +115,14 @@
   scale: 0.95;
 }
 
-.form-container .form ,
+.form-container .form,
 .formCAdmin .form {
   display: flex;
   flex-direction: column;
   gap: 20px;
 }
 
-.form-container .form-group, 
+.form-container .form-group,
 .formCAdmin .form-group {
   display: flex;
   flex-direction: column;

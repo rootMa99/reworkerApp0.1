@@ -1,7 +1,7 @@
 import Select from "react-select";
 import c from "../home/FormAddDetails.module.css";
 import { useSelector } from "react-redux";
-import React, { useCallback, useEffect } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import api from "../../services/api";
 const ROLES = [
   {
@@ -94,63 +94,98 @@ const customStyles = {
   }),
 };
 const Admin = (p) => {
-    const {isLoged } = useSelector((s) => s.loginr);
+  const { isLoged } = useSelector((s) => s.loginr);
+  const [data, setData] = useState({ data: [], totalItems: 0 });
+  const callback = useCallback(async () => {
+    try {
+      const response = await fetch(`${api}/admin/users`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${isLoged.token}`,
+        },
+      });
 
-    const callback= useCallback(async ()=>{
-        try {
-            const response = await fetch(`${api}/admin/users`, {
-              method: "GET",
-              headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${isLoged.token}`,
-              },
-            });
-      
-            const data = await response.json();
-            console.log(data);
-            // dispatch(
-            //   loginSActions.addDataSelect(data)
-            // );
-          } catch (error) {
-            console.error("Error:", error);
-          }
-    },[isLoged.token]);
+      const data = await response.json();
+      console.log(data);
+      // dispatch(
+      //   loginSActions.addDataSelect(data)
+      // );
+      setData(data);
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  }, [isLoged.token]);
 
-    useEffect(()=>{
-        callback();
-    }, [callback])
-
-
-
+  useEffect(() => {
+    callback();
+  }, [callback]);
 
   return (
     <React.Fragment>
-    <div className={c.formCAdmin}>
-    <h1 className={c.title}>Create a New Account</h1>
-      <form className={c.form}>
-        <div className={c["form-group"]}>
-          <label htmlFor="userName">userName</label>
-          <input required name="userName" id="userName" type="text" placeholder="enter userName"/>
-        </div>
-        <div className={c["form-group"]}>
-          <label htmlFor="password">password</label>
-          <input required name="password" id="password" type="text" placeholder="enter password"/>
-        </div>
-        <div className={c["form-group"]}>
-          <label htmlFor="crew">role</label>
-          <Select
-            options={ROLES}
-            id="multiSelect"
-            inputId="shiftleader1"
-            styles={customStyles}
-          />
-        </div>
-        <button type="submit" className={c["form-submit-btn"]}>
+      <div className={c.formCAdmin}>
+        <h1 className={c.title}>Create a New Account</h1>
+        <form className={c.form}>
+          <div className={c["form-group"]}>
+            <label htmlFor="userName">userName</label>
+            <input
+              required
+              name="userName"
+              id="userName"
+              type="text"
+              placeholder="enter userName"
+            />
+          </div>
+          <div className={c["form-group"]}>
+            <label htmlFor="password">password</label>
+            <input
+              required
+              name="password"
+              id="password"
+              type="text"
+              placeholder="enter password"
+            />
+          </div>
+          <div className={c["form-group"]}>
+            <label htmlFor="crew">role</label>
+            <Select
+              options={ROLES}
+              id="multiSelect"
+              inputId="shiftleader1"
+              styles={customStyles}
+            />
+          </div>
+          <button type="submit" className={c["form-submit-btn"]}>
             Submit
           </button>
-      </form>
-    </div>
-    <div className={c.CAdminUserList}></div>
+        </form>
+      </div>
+      <div className={c.CAdminUserList}>
+        <h3 className={c.titlenb}>
+          nb users <span>{data.totalItems}</span>{" "}
+        </h3>
+        {data.data.length > 0 &&
+          data.data.map((m) => (
+            <div key={m._id} className={c.listOfUser} >
+              <div className={c.detailsData}>
+                <h3>userName</h3>
+                <h2>{m.username}</h2>
+              </div>
+              <div className={c.detailsData}>
+                <h3>role</h3>
+                <h2>{m.role}</h2>
+              </div>
+              <div className={c.detailsData}>
+                <h3>time created</h3>
+                <h2>{m.createdAt.split("T")[0]}</h2>
+              </div>
+              <div className={c.detailsData}>
+                <h3>status</h3>
+                <h2>{m.isActive? "active":"not active"}</h2>
+              </div>
+            </div>
+          ))}
+      </div>
     </React.Fragment>
   );
 };
