@@ -51,13 +51,15 @@
   scale: 0.95;
 }
 
-.form-container .form {
+.form-container .form ,
+.formCAdmin .form {
   display: flex;
   flex-direction: column;
   gap: 20px;
 }
 
-.form-container .form-group {
+.form-container .form-group, 
+.formCAdmin .form-group {
   display: flex;
   flex-direction: column;
   gap: 2px;

@@ -97,8 +97,12 @@ const Admin = (p) => {
     <h1 className={c.title}>Create a New Account</h1>
       <form className={c.form}>
         <div className={c["form-group"]}>
-          <label htmlFor="idpd">idpd</label>
-          <input required name="idpd" id="idpd" type="text" pattern="[0-9]*" />
+          <label htmlFor="userName">userName</label>
+          <input required name="userName" id="userName" type="text"/>
+        </div>
+        <div className={c["form-group"]}>
+          <label htmlFor="password">password</label>
+          <input required name="password" id="password" type="text"/>
         </div>
         <div className={c["form-group"]}>
           <label htmlFor="crew">ppd</label>
