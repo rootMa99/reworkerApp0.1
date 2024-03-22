@@ -313,3 +313,22 @@
 .newAutoRefus:hover {
   color: #fff;
 }
+.updateAcc{
+  position: fixed;
+  z-index: 11111;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.deletion{
+  color: #717171;
+  text-transform: capitalize;
+  cursor: pointer;
+  width: fit-content;
+  margin: auto;
+}
+.deletion:hover{
+  color: #fb0606;
+  transform: scale(1.1);
+  font-weight: bolder;
+}

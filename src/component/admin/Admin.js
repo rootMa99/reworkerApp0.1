@@ -3,6 +3,7 @@ import c from "../home/FormAddDetails.module.css";
 import { useSelector } from "react-redux";
 import React, { useCallback, useEffect, useState } from "react";
 import api from "../../services/api";
+import BackDrop from "../ui/BackDrop";
 const ROLES = [
   {
     value: "Logistics",
@@ -96,6 +97,8 @@ const customStyles = {
 const Admin = (p) => {
   const { isLoged } = useSelector((s) => s.loginr);
   const [data, setData] = useState({ data: [], totalItems: 0 });
+  const [selectedData, setSelectedData] = useState({ data: {}, aut: false });
+
   const callback = useCallback(async () => {
     try {
       const response = await fetch(`${api}/admin/users`, {
@@ -107,10 +110,7 @@ const Admin = (p) => {
       });
 
       const data = await response.json();
-      console.log(data);
-      // dispatch(
-      //   loginSActions.addDataSelect(data)
-      // );
+      console.log(data)
       setData(data);
     } catch (error) {
       console.error("Error:", error);
@@ -121,8 +121,56 @@ const Admin = (p) => {
     callback();
   }, [callback]);
 
+  const close = () => {
+    setSelectedData({ data: {}, aut: false });
+  };
+
   return (
     <React.Fragment>
+      {selectedData.aut && <React.Fragment>
+        <BackDrop click={close} />
+        <div className={`${c.formCAdmin} ${c.updateAcc}`}>
+        <h1 className={c.title}>update Account</h1>
+        <form className={c.form}>
+          <div className={c["form-group"]}>
+            <label htmlFor="userName">userName</label>
+            <input
+              required
+              name="userName"
+              id="userName"
+              type="text"
+              placeholder="enter userName"
+              value={selectedData.data.username}
+            />
+          </div>
+          <div className={c["form-group"]}>
+            <label htmlFor="password">password</label>
+            <input
+              required
+              name="password"
+              id="password"
+              type="text"
+              placeholder="enter password"
+            />
+          </div>
+          <div className={c["form-group"]}>
+            <label htmlFor="crew">Status</label>
+            <Select
+              options={ROLES}
+              id="multiSelect"
+              inputId="shiftleader1"
+              styles={customStyles}
+              value={{value:selectedData.data.isActive ? "activate" : "not activate" ,
+              label: selectedData.data.isActive ? "activate" : "not activate"}}
+            />
+          </div>
+          <button type="submit" className={c["form-submit-btn"]}>
+            update
+          </button>
+          <span className={c.deletion}>delete this Account!</span>
+        </form>
+      </div>
+        </React.Fragment>}
       <div className={c.formCAdmin}>
         <h1 className={c.title}>Create a New Account</h1>
         <form className={c.form}>
@@ -166,7 +214,10 @@ const Admin = (p) => {
         </h3>
         {data.data.length > 0 &&
           data.data.map((m) => (
-            <div key={m._id} className={c.listOfUser} >
+            <div key={m._id} className={c.listOfUser} onClick={()=>setSelectedData({
+                data:m,
+                aut:true
+            })}>
               <div className={c.detailsData}>
                 <h3>userName</h3>
                 <h2>{m.username}</h2>
@@ -181,7 +232,7 @@ const Admin = (p) => {
               </div>
               <div className={c.detailsData}>
                 <h3>status</h3>
-                <h2>{m.isActive? "active":"not active"}</h2>
+                <h2>{m.isActive ? "active" : "not active"}</h2>
               </div>
             </div>
           ))}
