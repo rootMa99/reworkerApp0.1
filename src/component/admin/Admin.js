@@ -1,6 +1,8 @@
 import Select from "react-select";
 import c from "../home/FormAddDetails.module.css";
-
+import { useSelector } from "react-redux";
+import React, { useCallback, useEffect } from "react";
+import api from "../../services/api";
 const ROLES = [
   {
     value: "Logistics",
@@ -92,7 +94,37 @@ const customStyles = {
   }),
 };
 const Admin = (p) => {
+    const {isLoged } = useSelector((s) => s.loginr);
+
+    const callback= useCallback(async ()=>{
+        try {
+            const response = await fetch(`${api}/admin/users`, {
+              method: "GET",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${isLoged.token}`,
+              },
+            });
+      
+            const data = await response.json();
+            console.log(data);
+            // dispatch(
+            //   loginSActions.addDataSelect(data)
+            // );
+          } catch (error) {
+            console.error("Error:", error);
+          }
+    },[isLoged.token]);
+
+    useEffect(()=>{
+        callback();
+    }, [callback])
+
+
+
+
   return (
+    <React.Fragment>
     <div className={c.formCAdmin}>
     <h1 className={c.title}>Create a New Account</h1>
       <form className={c.form}>
@@ -118,6 +150,8 @@ const Admin = (p) => {
           </button>
       </form>
     </div>
+    <div className={c.CAdminUserList}></div>
+    </React.Fragment>
   );
 };
 

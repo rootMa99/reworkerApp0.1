@@ -1,5 +1,5 @@
 .form-container,
-.formCAdmin {
+.formCAdmin, .CAdminUserList {
   width: 45rem;
   background: linear-gradient(#212121, #212121) padding-box,
     linear-gradient(145deg, transparent 35%, #f33716, orange) border-box;
@@ -15,6 +15,12 @@
   border-radius: 16px;
   background-size: 200% 100%;
   animation: gradient 5s ease infinite;
+}
+.CAdminUserList{
+  width: 95%;
+  margin: auto;
+  margin-top: 2rem;
+  animation: gradient2 15s ease infinite;
 }
 .form-container {
   position: fixed;
@@ -45,6 +51,20 @@
 
   100% {
     background-position: 0% 50%;
+  }
+}
+@keyframes gradient2 {
+  0%,100% {
+    background-position: 0% 50%;
+  }
+  25% {
+    background-position: 100% 50%;
+  }
+  50% {
+    background-position: 50% 100%;
+  }
+  75% {
+    background-position: 50% 0%;
   }
 }
 
