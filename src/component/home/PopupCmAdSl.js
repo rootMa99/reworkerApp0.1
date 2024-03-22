@@ -417,7 +417,7 @@ const PopupCmAdSl = (p) => {
             </div>
           </React.Fragment>
         )}
-        {isLoged.role === "Coordinator" && (
+        {(isLoged.role === "Coordinator" ||isLoged.role === "Admin") && (
           <React.Fragment>
             <h3 className={c.notif}>you can update this cable</h3>
             <div className={c.editForm}>
