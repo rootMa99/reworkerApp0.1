@@ -30,6 +30,7 @@
 .formCAdmin .title{
   margin: 0;
   color: #717171;
+  text-transform: capitalize;
 }
 
 
@@ -103,8 +104,11 @@
 }
 
 .form-container .form-group input::placeholder,
-.formCAdmin .form-group input ::placeholder {
+.formCAdmin .form-group input::placeholder {
   opacity: 0.5;
+}
+.formCAdmin .form-group input::placeholder {
+  color: #717171;
 }
 
 .form-container .form-group input:focus,
@@ -123,6 +127,7 @@
   } */
 
 .form-container .form-submit-btn,
+.formCAdmin .form-submit-btn,
 .form-submit-btnD,
 .form-submit-btnS {
   display: flex;
@@ -144,7 +149,8 @@
   border-radius: 6px;
 }
 
-.form-container .form-submit-btn:hover {
+.form-container .form-submit-btn:hover,
+.formCAdmin .form-submit-btn:hover {
   background-color: #f33716;
   border-color: #f33716;
   color: #fff;

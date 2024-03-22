@@ -98,14 +98,14 @@ const Admin = (p) => {
       <form className={c.form}>
         <div className={c["form-group"]}>
           <label htmlFor="userName">userName</label>
-          <input required name="userName" id="userName" type="text"/>
+          <input required name="userName" id="userName" type="text" placeholder="enter userName"/>
         </div>
         <div className={c["form-group"]}>
           <label htmlFor="password">password</label>
-          <input required name="password" id="password" type="text"/>
+          <input required name="password" id="password" type="text" placeholder="enter password"/>
         </div>
         <div className={c["form-group"]}>
-          <label htmlFor="crew">ppd</label>
+          <label htmlFor="crew">role</label>
           <Select
             options={ROLES}
             id="multiSelect"
@@ -113,6 +113,9 @@ const Admin = (p) => {
             styles={customStyles}
           />
         </div>
+        <button type="submit" className={c["form-submit-btn"]}>
+            Submit
+          </button>
       </form>
     </div>
   );
