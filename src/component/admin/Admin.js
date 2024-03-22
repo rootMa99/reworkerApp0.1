@@ -1,4 +1,4 @@
-import Select from "react-select/dist/declarations/src/Select";
+import Select from "react-select";
 import c from "../home/FormAddDetails.module.css";
 
 const ROLES = [
@@ -93,8 +93,13 @@ const customStyles = {
 };
 const Admin = (p) => {
   return (
-    <div className={c["form-container"]}>
+    <div className={c.formCAdmin}>
+    <h1 className={c.title}>Create a New Account</h1>
       <form className={c.form}>
+        <div className={c["form-group"]}>
+          <label htmlFor="idpd">idpd</label>
+          <input required name="idpd" id="idpd" type="text" pattern="[0-9]*" />
+        </div>
         <div className={c["form-group"]}>
           <label htmlFor="crew">ppd</label>
           <Select
@@ -104,11 +109,9 @@ const Admin = (p) => {
             styles={customStyles}
           />
         </div>
-        <div className={c["form-group"]}>
-          <label htmlFor="idpd">idpd</label>
-          <input required name="idpd" id="idpd" type="text" pattern="[0-9]*" />
-        </div>
       </form>
     </div>
   );
 };
+
+export default Admin;

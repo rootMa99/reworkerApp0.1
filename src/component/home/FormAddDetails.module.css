@@ -1,4 +1,5 @@
-.form-container {
+.form-container,
+.formCAdmin {
   width: 45rem;
   background: linear-gradient(#212121, #212121) padding-box,
     linear-gradient(145deg, transparent 35%, #f33716, orange) border-box;
@@ -14,12 +15,23 @@
   border-radius: 16px;
   background-size: 200% 100%;
   animation: gradient 5s ease infinite;
+}
+.form-container {
   position: fixed;
   z-index: 11111;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
 }
+.formCAdmin{
+  margin: auto;
+  margin-top: 2rem;
+}
+.formCAdmin .title{
+  margin: 0;
+  color: #717171;
+}
+
 
 @keyframes gradient {
   0% {
@@ -51,7 +63,8 @@
   gap: 2px;
 }
 
-.form-container .form-group label {
+.form-container .form-group label,
+.formCAdmin .form-group label {
   display: block;
   margin-bottom: 5px;
   color: #717171;
@@ -60,7 +73,8 @@
   text-transform: uppercase;
 }
 
-.form-container .form-group input {
+.form-container .form-group input,
+.formCAdmin .form-group input {
   width: 90%;
   padding: 12px 16px;
   border-radius: 8px;
@@ -86,12 +100,15 @@
   margin: auto;
 }
 
-.form-container .form-group input::placeholder {
+.form-container .form-group input::placeholder,
+.formCAdmin .form-group input ::placeholder {
   opacity: 0.5;
 }
 
 .form-container .form-group input:focus,
 .form-container .form-group input:hover,
+.formCAdmin .form-group input:focus,
+.formCAdmin .form-group input:hover,
 .form-container .form-group textarea:focus,
 .form-container .form-group textarea:hover {
   outline: none;
@@ -209,11 +226,12 @@
     border-left: 3px solid #f40606;
     border-radius: 56px;
   }
-  100%,0% {
+  100%,
+  0% {
     border-bottom: 3px solid #f40606;
   }
 }
-.newAutoRefus{
+.newAutoRefus {
   color: #717171;
   cursor: pointer;
   margin: 0 auto;
@@ -221,6 +239,6 @@
   font-weight: 500;
   width: fit-content;
 }
-.newAutoRefus:hover{
+.newAutoRefus:hover {
   color: #fff;
 }
