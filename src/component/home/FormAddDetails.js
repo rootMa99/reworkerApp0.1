@@ -338,6 +338,7 @@ const FormAddDetails = (p) => {
                     label: urgent.data.cableStatus,
                   }}
                   onChange={(e) => onchangeHandler(e, "status")}
+                  isDisabled={urgent.data.cableStatus==="Scrap" ? true: false}
                 />
               </div>
             </React.Fragment>

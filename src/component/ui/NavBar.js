@@ -2,6 +2,7 @@ import { NavLink } from "react-router-dom";
 import c from "./NavBar.module.css";
 import imglogo from "../../assets/aptiv-logo.svg";
 import { useSelector } from "react-redux";
+import React from "react";
 
 const NavBar = (p) => {
   const { isLoged } = useSelector((s) => s.loginr);
@@ -24,6 +25,24 @@ const NavBar = (p) => {
                 home
               </NavLink>
             </li>
+            {isLoged.role === "Admin" &&  <React.Fragment>
+            <li>
+              <NavLink
+                to="/config"
+                className={({ isActive }) => (isActive ? c.activeLink : c.link)}
+              >
+                Config
+              </NavLink>
+            </li>
+            <li>
+              <NavLink
+                to="/dashboard"
+                className={({ isActive }) => (isActive ? c.activeLink : c.link)}
+              >
+                dashboard
+              </NavLink>
+            </li>
+            </React.Fragment>}
           </ul>
         </div>
       )}

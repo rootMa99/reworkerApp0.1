@@ -56,12 +56,12 @@ const loginS = createSlice({
       }
     },
     unshiftDataSertissage(s, p) {
-      if(s.sertissage.length>0){
+      if (s.sertissage.length > 0) {
         const index = s.sertissage.findIndex((f) => f._id === p.payload._id);
         if (index === -1) {
           s.sertissage.unshift(p.payload);
         }
-      }else{
+      } else {
         s.sertissage.unshift(p.payload);
       }
     },
@@ -84,7 +84,8 @@ const loginS = createSlice({
         s.urgentData = t;
       } else {
         const d = JSON.parse(JSON.stringify(s.urgentData));
-        const indexur = d.length>0? d.findIndex((f) => f._id === p.payload.id) : -1;
+        const indexur =
+          d.length > 0 ? d.findIndex((f) => f._id === p.payload.id) : -1;
         if (indexur !== -1) {
           s.urgentData[indexur].cableStatus = p.payload.cableStatus;
           s.urgentData[indexur].problem = p.payload.problem;
@@ -182,13 +183,33 @@ const loginS = createSlice({
     },
     deleteRow(s, p) {
       s.data = s.data.filter((f) => f._id !== p.payload);
-      const index = s.scrap.findIndex((f) => f._id === p.payload.id);
-      if (index !== -1) {
-        s.scrap = s.scrap.filter((f) => f._id !== p.payload);
+      if (s.scrap.length > 0) {
+        const index = s.scrap.findIndex((f) => f._id === p.payload.id);
+        if (index !== -1) {
+          s.scrap = s.scrap.filter((f) => f._id !== p.payload);
+        }
       }
-      const indexu = s.urgentData.findIndex((f) => f._id === p.payload.id);
-      if (indexu !== -1) {
-        s.urgentData = s.urgentData.filter((f) => f._id !== p.payload);
+      if (s.urgentData.length > 0) {
+        const indexu = s.urgentData.findIndex((f) => f._id === p.payload.id);
+        if (indexu !== -1) {
+          s.urgentData = s.urgentData.filter((f) => f._id !== p.payload);
+        }
+      }
+      if (s.sertissage.length > 0) {
+        const indexu = JSON.parse(JSON.stringify(s.sertissage)).findIndex(
+          (f) => f._id === p.payload
+        );
+        console.log(
+          indexu,
+          JSON.parse(JSON.stringify(s.sertissage)),
+          s.sertissage,
+          p.payload
+        );
+        if (indexu !== -1) {
+          s.sertissage = JSON.parse(JSON.stringify(s.sertissage)).filter(
+            (f) => f._id !== p.payload
+          );
+        }
       }
     },
     deleteRef(s, p) {
