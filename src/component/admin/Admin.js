@@ -97,7 +97,8 @@ const customStyles = {
 const Admin = (p) => {
   const { isLoged } = useSelector((s) => s.loginr);
   const [data, setData] = useState({ data: [], totalItems: 0 });
-  const [selectedData, setSelectedData] = useState({ data: {}, aut: false });
+  const [selectedData, setSelectedData] = useState({});
+  const [aut, setAut] = useState(false);
 
   const callback = useCallback(async () => {
     try {
@@ -110,7 +111,7 @@ const Admin = (p) => {
       });
 
       const data = await response.json();
-      console.log(data)
+      console.log(data);
       setData(data);
     } catch (error) {
       console.error("Error:", error);
@@ -122,55 +123,72 @@ const Admin = (p) => {
   }, [callback]);
 
   const close = () => {
-    setSelectedData({ data: {}, aut: false });
+    setAut(false);
+  };
+
+  const clickUser = (e, m) => {
+    setSelectedData({
+      id: m._id,
+      username: m.username,
+      isActive: m.isActive,
+      password: "",
+    });
   };
 
   return (
     <React.Fragment>
-      {selectedData.aut && <React.Fragment>
-        <BackDrop click={close} />
-        <div className={`${c.formCAdmin} ${c.updateAcc}`}>
-        <h1 className={c.title}>update Account</h1>
-        <form className={c.form}>
-          <div className={c["form-group"]}>
-            <label htmlFor="userName">userName</label>
-            <input
-              required
-              name="userName"
-              id="userName"
-              type="text"
-              placeholder="enter userName"
-              value={selectedData.data.username}
-            />
+      {aut && (
+        <React.Fragment>
+          <BackDrop click={close} />
+          <div className={`${c.formCAdmin} ${c.updateAcc}`}>
+            <h1 className={c.title}>update Account</h1>
+            <form className={c.form}>
+              <div className={c["form-group"]}>
+                <label htmlFor="userName">userName</label>
+                <input
+                  required
+                  name="userName"
+                  id="userName"
+                  type="text"
+                  placeholder="enter userName"
+                  value={selectedData.username}
+                />
+              </div>
+              <div className={c["form-group"]}>
+                <label htmlFor="password">password</label>
+                <input
+                  required
+                  name="password"
+                  id="password"
+                  type="text"
+                  placeholder="enter password"
+                />
+              </div>
+              <div className={c["form-group"]}>
+                <label htmlFor="crew">Status</label>
+                <Select
+                  options={ROLES}
+                  id="multiSelect"
+                  inputId="shiftleader1"
+                  styles={customStyles}
+                  value={{
+                    value: selectedData.isActive
+                      ? "activate"
+                      : "not activate",
+                    label: selectedData.isActive
+                      ? "activate"
+                      : "not activate",
+                  }}
+                />
+              </div>
+              <button type="submit" className={c["form-submit-btn"]}>
+                update
+              </button>
+              <span className={c.deletion}>delete this Account!</span>
+            </form>
           </div>
-          <div className={c["form-group"]}>
-            <label htmlFor="password">password</label>
-            <input
-              required
-              name="password"
-              id="password"
-              type="text"
-              placeholder="enter password"
-            />
-          </div>
-          <div className={c["form-group"]}>
-            <label htmlFor="crew">Status</label>
-            <Select
-              options={ROLES}
-              id="multiSelect"
-              inputId="shiftleader1"
-              styles={customStyles}
-              value={{value:selectedData.data.isActive ? "activate" : "not activate" ,
-              label: selectedData.data.isActive ? "activate" : "not activate"}}
-            />
-          </div>
-          <button type="submit" className={c["form-submit-btn"]}>
-            update
-          </button>
-          <span className={c.deletion}>delete this Account!</span>
-        </form>
-      </div>
-        </React.Fragment>}
+        </React.Fragment>
+      )}
       <div className={c.formCAdmin}>
         <h1 className={c.title}>Create a New Account</h1>
         <form className={c.form}>
@@ -210,14 +228,15 @@ const Admin = (p) => {
       </div>
       <div className={c.CAdminUserList}>
         <h3 className={c.titlenb}>
-          nb users <span>{data.totalItems}</span>{" "}
+          nb users <span>{data.totalItems}</span>
         </h3>
         {data.data.length > 0 &&
           data.data.map((m) => (
-            <div key={m._id} className={c.listOfUser} onClick={()=>setSelectedData({
-                data:m,
-                aut:true
-            })}>
+            <div
+              key={m._id}
+              className={c.listOfUser}
+              onClick={(e) => clickUser(e, m)}
+            >
               <div className={c.detailsData}>
                 <h3>userName</h3>
                 <h2>{m.username}</h2>
