@@ -332,3 +332,22 @@
   transform: scale(1.1);
   font-weight: bolder;
 }
+.navin{
+  display: flex;
+  position: fixed;
+  left: 1rem;
+  top: 3rem;
+  color: #fff;
+  gap: 2rem;
+  z-index: 9999;
+}
+.navin h3{
+  text-transform: uppercase;
+  cursor: pointer;
+  opacity: 0.5;
+  /* border-bottom: 1px solid; */
+}
+.navin h3:hover{
+  opacity: 1;
+  transform: scale(1.1);
+}

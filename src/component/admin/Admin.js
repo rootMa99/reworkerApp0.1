@@ -140,6 +140,7 @@ const Admin = (p) => {
       setError({ status: false, mssg: "" });
     }, 8000);
   }
+  const [navin, setNavin] = useState("U");
 
   const callback = useCallback(async () => {
     try {
@@ -190,7 +191,7 @@ const Admin = (p) => {
       isActive: m.isActive,
       password: "",
       crews: m.crews,
-      role:m.role
+      role: m.role,
     });
     setAut(true);
   };
@@ -232,7 +233,7 @@ const Admin = (p) => {
       console.log("Error:", error);
     }
   };
-  const deleteAcc =async (e) => {
+  const deleteAcc = async (e) => {
     console.log(selectedData);
     try {
       const response = await fetch(`${api}/admin/user/${selectedData.id}`, {
@@ -247,8 +248,8 @@ const Admin = (p) => {
       if (!response.ok) {
         throw new Error(" " + datare.Error);
       }
-      console.log(data.data,"here")
-      const datau = data.data.filter(f=>f._id!==selectedData.id);
+      console.log(data.data, "here");
+      const datau = data.data.filter((f) => f._id !== selectedData.id);
       setData((p) => ({ ...p, data: datau }));
       close();
       setError({
@@ -260,12 +261,11 @@ const Admin = (p) => {
       setError({ status: true, mssg: error, success: false });
       console.log("Error:", error);
     }
-
   };
   const upDateSubmitHandler = async (e) => {
     e.preventDefault();
     console.log(selectedData);
-    
+
     try {
       const response = await fetch(`${api}/admin/user/${selectedData.id}`, {
         method: "PUT",
@@ -280,8 +280,8 @@ const Admin = (p) => {
       if (!response.ok) {
         throw new Error(" " + datare.Error);
       }
-      console.log(data.data,"here")
-      const datau = data.data.filter(f=>f._id!==selectedData.id);
+      console.log(data.data, "here");
+      const datau = data.data.filter((f) => f._id !== selectedData.id);
       datau.push(datare.user);
       setData((p) => ({ ...p, data: datau }));
       close();
@@ -343,192 +343,217 @@ const Admin = (p) => {
   console.log(data, 968523, error.mssg);
   return (
     <React.Fragment>
-      {error.status && (
-        <Notification
-          error={error.status}
-          success={error.success}
-          mssg={error.mssg.toString()}
-        />
-      )}
-      {aut && (
-        <React.Fragment>
-          <BackDrop click={close} />
-          <div className={`${c.formCAdmin} ${c.updateAcc}`}>
-            <h1 className={c.title}>update Account</h1>
-            <form className={c.form} onSubmit={upDateSubmitHandler}>
-              <div className={c["form-group"]}>
-                <label htmlFor="userName">userName</label>
-                <input
-                  required
-                  name="userName"
-                  id="userName"
-                  type="text"
-                  placeholder="enter userName"
-                  value={selectedData.username}
-                  onChange={(e) => onchangeHandlerUpdate(e, "username")}
-                />
-              </div>
-              <div className={c["form-group"]}>
-                <label htmlFor="password">password</label>
-                <input
-                  required
-                  name="password"
-                  id="password"
-                  type="text"
-                  placeholder="enter password"
-                  onChange={(e) => onchangeHandlerUpdate(e, "password")}
-                />
-              </div>
-              <div className={c["form-group"]}>
-                <label htmlFor="crew">crews</label>
-                <Select
-                  options={selectCreator(crews)}
-                  id="multiSelect"
-                  inputId="shiftleader1"
-                  styles={customStyles}
-                  defaultValue={getlabelandvalue(selectedData.crews)}
-                  value={getlabelandvalue(selectedData.crews)}
-                  onChange={(e) => onchangeHandlerUpdate(e, "crews")}
-                  isMulti
-                />
-              </div>
-              <div className={c["form-group"]}>
-                <label htmlFor="role">role</label>
-                <Select
-                  options={ROLES}
-                  id="multiSelect"
-                  inputId="shiftleader1"
-                  onChange={(e) => onchangeHandlerUpdate(e, "role")}
-                  defaultValue={{
-                    value: selectedData.role,
-                    label: selectedData.role,
-                  }}
-                  value={{
-                    value: selectedData.role,
-                    label: selectedData.role,
-                  }}
-                  styles={customStyles}
-                />
-              </div>
-              <div className={c["form-group"]}>
-                <label htmlFor="crew">Status</label>
-                <Select
-                  options={STATUS}
-                  id="multiSelect"
-                  inputId="shiftleader1"
-                  styles={customStyles}
-                  value={{
-                    value: selectedData.isActive ? "activate" : "not activate",
-                    label: selectedData.isActive ? "activate" : "not activate",
-                  }}
-                  onChange={(e) => onchangeHandlerUpdate(e, "active")}
-                />
-              </div>
-              <button type="submit" className={c["form-submit-btn"]}>
-                update
-              </button>
-              <span className={c.deletion} onClick={deleteAcc}>
-                delete this Account!
-              </span>
-            </form>
-          </div>
-        </React.Fragment>
-      )}
-      <div className={c.formCAdmin}>
-        <h1 className={c.title}>Create a New Account</h1>
-        <form className={c.form} onSubmit={submmitHandler}>
-          <div className={c["form-group"]}>
-            <label htmlFor="userName">userName</label>
-            <input
-              required
-              name="userName"
-              id="userName"
-              type="text"
-              placeholder="enter userName"
-              onChange={(e) => onchangeHandler(e, "username")}
-              value={dataCreateuser.username}
-              style={{ textTransform: "none" }}
-            />
-          </div>
-          <div className={c["form-group"]}>
-            <label htmlFor="password">password</label>
-            <input
-              required
-              name="password"
-              id="password"
-              type="text"
-              placeholder="enter password"
-              onChange={(e) => onchangeHandler(e, "password")}
-              value={dataCreateuser.password}
-              style={{ textTransform: "none" }}
-            />
-          </div>
-          <div className={c["form-group"]}>
-            <label htmlFor="role">crews</label>
-            <Select
-              options={selectCreator(crews)}
-              id="multiSelect"
-              inputId="shiftleader1"
-              styles={customStyles}
-              onChange={(e) => onchangeHandler(e, "crews")}
-              defaultValue={getlabelandvalue(dataCreateuser.crews)}
-              value={getlabelandvalue(dataCreateuser.crews)}
-              isMulti
-            />
-          </div>
-          <div className={c["form-group"]}>
-            <label htmlFor="role">role</label>
-            <Select
-              options={ROLES}
-              id="multiSelect"
-              inputId="shiftleader1"
-              onChange={(e) => onchangeHandler(e, "role")}
-              defaultValue={{
-                value: dataCreateuser.role,
-                label: dataCreateuser.role,
-              }}
-              value={{
-                value: dataCreateuser.role,
-                label: dataCreateuser.role,
-              }}
-              styles={customStyles}
-            />
-          </div>
-          <button type="submit" className={c["form-submit-btn"]}>
-            Submit
-          </button>
-        </form>
-      </div>
-      <div className={c.CAdminUserList}>
-        <h3 className={c.titlenb}>
-          nb users <span>{data.totalItems}</span>
+      <div className={c.navin}>
+        <h3
+          onClick={(e) => setNavin("U")}
+          style={
+            navin === "U" ? {borderBottom: "2px solid white", opacity: 1} : {}
+          }
+        >
+          users Settings
         </h3>
-        {data.data.length > 0 &&
-          data.data.map((m) => (
-            <div
-              key={m._id}
-              className={c.listOfUser}
-              onClick={(e) => clickUser(e, m)}
-            >
-              <div className={c.detailsData}>
-                <h3>userName</h3>
-                <h2 style={{ textTransform: "none" }}>{m.username}</h2>
-              </div>
-              <div className={c.detailsData}>
-                <h3>role</h3>
-                <h2>{m.role}</h2>
-              </div>
-              <div className={c.detailsData}>
-                <h3>time created</h3>
-                <h2>{m.createdAt.split("T")[0]}</h2>
-              </div>
-              <div className={c.detailsData}>
-                <h3>status</h3>
-                <h2>{m.isActive ? "active" : "not active"}</h2>
-              </div>
-            </div>
-          ))}
+        <h3 onClick={(e) => setNavin("S")}
+        style={
+          navin === "S" ? {borderBottom: "2px solid white", opacity: 1} : {}
+        }>shifts</h3>
       </div>
+      {navin === "U"&& <React.Fragment>
+        {error.status && (
+          <Notification
+            error={error.status}
+            success={error.success}
+            mssg={error.mssg.toString()}
+          />
+        )}
+        {aut && (
+          <React.Fragment>
+            <BackDrop click={close} />
+            <div className={`${c.formCAdmin} ${c.updateAcc}`}>
+              <h1 className={c.title}>update Account</h1>
+              <form className={c.form} onSubmit={upDateSubmitHandler}>
+                <div className={c["form-group"]}>
+                  <label htmlFor="userName">userName</label>
+                  <input
+                    required
+                    name="userName"
+                    id="userName"
+                    type="text"
+                    placeholder="enter userName"
+                    value={selectedData.username}
+                    onChange={(e) => onchangeHandlerUpdate(e, "username")}
+                  />
+                </div>
+                <div className={c["form-group"]}>
+                  <label htmlFor="password">password</label>
+                  <input
+                    name="password"
+                    id="password"
+                    type="text"
+                    placeholder="enter password"
+                    onChange={(e) => onchangeHandlerUpdate(e, "password")}
+                  />
+                </div>
+                <div className={c["form-group"]}>
+                  <label htmlFor="crew">crews</label>
+                  <Select
+                    options={selectCreator(crews)}
+                    id="multiSelect"
+                    inputId="shiftleader1"
+                    styles={customStyles}
+                    defaultValue={getlabelandvalue(selectedData.crews)}
+                    value={getlabelandvalue(selectedData.crews)}
+                    onChange={(e) => onchangeHandlerUpdate(e, "crews")}
+                    isMulti
+                  />
+                </div>
+                <div className={c["form-group"]}>
+                  <label htmlFor="role">role</label>
+                  <Select
+                    options={ROLES}
+                    id="multiSelect"
+                    inputId="shiftleader1"
+                    onChange={(e) => onchangeHandlerUpdate(e, "role")}
+                    defaultValue={{
+                      value: selectedData.role,
+                      label: selectedData.role,
+                    }}
+                    value={{
+                      value: selectedData.role,
+                      label: selectedData.role,
+                    }}
+                    styles={customStyles}
+                  />
+                </div>
+                <div className={c["form-group"]}>
+                  <label htmlFor="crew">Status</label>
+                  <Select
+                    options={STATUS}
+                    id="multiSelect"
+                    inputId="shiftleader1"
+                    styles={customStyles}
+                    value={{
+                      value: selectedData.isActive
+                        ? "activate"
+                        : "not activate",
+                      label: selectedData.isActive
+                        ? "activate"
+                        : "not activate",
+                    }}
+                    onChange={(e) => onchangeHandlerUpdate(e, "active")}
+                  />
+                </div>
+                <button type="submit" className={c["form-submit-btn"]}>
+                  update
+                </button>
+                <span className={c.deletion} onClick={deleteAcc}>
+                  delete this Account!
+                </span>
+              </form>
+            </div>
+          </React.Fragment>
+        )}
+        <div className={c.formCAdmin}>
+          <h1 className={c.title}>Create a New Account</h1>
+          <form className={c.form} onSubmit={submmitHandler}>
+            <div className={c["form-group"]}>
+              <label htmlFor="userName">userName</label>
+              <input
+                required
+                name="userName"
+                id="userName"
+                type="text"
+                placeholder="enter userName"
+                onChange={(e) => onchangeHandler(e, "username")}
+                value={dataCreateuser.username}
+                style={{ textTransform: "none" }}
+              />
+            </div>
+            <div className={c["form-group"]}>
+              <label htmlFor="password">password</label>
+              <input
+                required
+                name="password"
+                id="password"
+                type="text"
+                placeholder="enter password"
+                onChange={(e) => onchangeHandler(e, "password")}
+                value={dataCreateuser.password}
+                style={{ textTransform: "none" }}
+              />
+            </div>
+            <div className={c["form-group"]}>
+              <label htmlFor="role">crews</label>
+              <Select
+                options={selectCreator(crews)}
+                id="multiSelect"
+                inputId="shiftleader1"
+                styles={customStyles}
+                onChange={(e) => onchangeHandler(e, "crews")}
+                defaultValue={getlabelandvalue(dataCreateuser.crews)}
+                value={getlabelandvalue(dataCreateuser.crews)}
+                isMulti
+              />
+            </div>
+            <div className={c["form-group"]}>
+              <label htmlFor="role">role</label>
+              <Select
+                options={ROLES}
+                id="multiSelect"
+                inputId="shiftleader1"
+                onChange={(e) => onchangeHandler(e, "role")}
+                defaultValue={{
+                  value: dataCreateuser.role,
+                  label: dataCreateuser.role,
+                }}
+                value={{
+                  value: dataCreateuser.role,
+                  label: dataCreateuser.role,
+                }}
+                styles={customStyles}
+              />
+            </div>
+            <button type="submit" className={c["form-submit-btn"]}>
+              Submit
+            </button>
+          </form>
+        </div>
+        <div className={c.CAdminUserList}>
+          <h3 className={c.titlenb}>
+            nb users <span>{data.totalItems}</span>
+          </h3>
+          {data.data.length > 0 &&
+            data.data.map((m) => (
+              <div
+                key={m._id}
+                className={c.listOfUser}
+                onClick={(e) => clickUser(e, m)}
+              >
+                <div className={c.detailsData}>
+                  <h3>userName</h3>
+                  <h2 style={{ textTransform: "none" }}>{m.username}</h2>
+                </div>
+                <div className={c.detailsData}>
+                  <h3>role</h3>
+                  <h2>{m.role}</h2>
+                </div>
+                <div className={c.detailsData}>
+                  <h3>time created</h3>
+                  <h2>{m.createdAt.split("T")[0]}</h2>
+                </div>
+                <div className={c.detailsData}>
+                  <h3>status</h3>
+                  <h2
+                    style={
+                      m.isActive ? { color: "#006B63" } : { color: "#CF3335" }
+                    }
+                  >
+                    {m.isActive ? "active" : "not active"}
+                  </h2>
+                </div>
+              </div>
+            ))}
+        </div>
+      </React.Fragment>}
     </React.Fragment>
   );
 };
