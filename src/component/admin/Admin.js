@@ -232,10 +232,35 @@ const Admin = (p) => {
       console.log("Error:", error);
     }
   };
-  const deleteAcc = (e) => {
+  const deleteAcc =async (e) => {
     console.log(selectedData);
+    try {
+      const response = await fetch(`${api}/admin/user/${selectedData.id}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${isLoged.token}`,
+        },
+      });
+      const datare = await response.json();
+      console.log(datare);
+      if (!response.ok) {
+        throw new Error(" " + datare.Error);
+      }
+      console.log(data.data,"here")
+      const datau = data.data.filter(f=>f._id!==selectedData.id);
+      setData((p) => ({ ...p, data: datau }));
+      close();
+      setError({
+        status: true,
+        mssg: datare.message,
+        success: true,
+      });
+    } catch (error) {
+      setError({ status: true, mssg: error, success: false });
+      console.log("Error:", error);
+    }
 
-    close();
   };
   const upDateSubmitHandler = async (e) => {
     e.preventDefault();
