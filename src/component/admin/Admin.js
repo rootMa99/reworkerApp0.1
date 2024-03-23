@@ -32,6 +32,16 @@ const ROLES = [
     label: "Coordinator",
   },
 ];
+const STATUS = [
+  {
+    value: "activate",
+    label: "activate",
+  },
+  {
+    value: "not activate",
+    label: "not activate",
+  },
+];
 const customStyles = {
   control: (provided, state) => ({
     ...provided,
@@ -114,13 +124,20 @@ const Admin = (p) => {
   const [selectedData, setSelectedData] = useState({});
   const [aut, setAut] = useState(false);
   const [crews, setCrews] = useState([]);
-  const [error, setError]= useState({status:false, mssg:"",success:false});
-  const [dataCreateuser, setDataCreateuser]=useState({
-    crews:[],password:"", role:"", username:""
+  const [error, setError] = useState({
+    status: false,
+    mssg: "",
+    success: false,
+  });
+  const [dataCreateuser, setDataCreateuser] = useState({
+    crews: [],
+    password: "",
+    role: "",
+    username: "",
   });
   if (error.status) {
     setTimeout(() => {
-      setError({status:false, mssg:""});
+      setError({ status: false, mssg: "" });
     }, 8000);
   }
 
@@ -163,7 +180,7 @@ const Admin = (p) => {
 
   const close = () => {
     setAut(false);
-    selectedData({});
+    setSelectedData({});
   };
 
   const clickUser = (e, m) => {
@@ -172,13 +189,15 @@ const Admin = (p) => {
       username: m.username,
       isActive: m.isActive,
       password: "",
+      crews: m.crews,
+      role:m.role
     });
     setAut(true);
   };
 
   const submmitHandler = async (e) => {
     e.preventDefault();
-    const datau=data.data;
+    const datau = data.data;
 
     try {
       const response = await fetch(`${api}/admin/user`, {
@@ -193,23 +212,64 @@ const Admin = (p) => {
       console.log(data);
       if (!response.ok) {
         throw new Error(" " + data.Error);
-    }
-      
-      datau.push(data)
-      setData(p=>({...p, data:datau}));
+      }
+
+      datau.push(data);
+      setData((p) => ({ ...p, data: datau }));
       setDataCreateuser({
-        crews:[],password:"", role:"", username:""
-      })
-      setError({status:true, mssg:"user successfully created", success:true});
-      
+        crews: [],
+        password: "",
+        role: "",
+        username: "",
+      });
+      setError({
+        status: true,
+        mssg: "user successfully created",
+        success: true,
+      });
     } catch (error) {
-      setError({status:true, mssg:error, success:false})
+      setError({ status: true, mssg: error, success: false });
       console.log("Error:", error);
     }
   };
-  const deleteAcc=e=>{
-    console.log(selectedData)
-  }
+  const deleteAcc = (e) => {
+    console.log(selectedData);
+
+    close();
+  };
+  const upDateSubmitHandler = async (e) => {
+    e.preventDefault();
+    console.log(selectedData);
+    
+    try {
+      const response = await fetch(`${api}/admin/user/${selectedData.id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${isLoged.token}`,
+        },
+        body: JSON.stringify(selectedData),
+      });
+      const datare = await response.json();
+      console.log(datare);
+      if (!response.ok) {
+        throw new Error(" " + datare.Error);
+      }
+      console.log(data.data,"here")
+      const datau = data.data.filter(f=>f._id!==selectedData.id);
+      datau.push(datare.user);
+      setData((p) => ({ ...p, data: datau }));
+      close();
+      setError({
+        status: true,
+        mssg: datare.msg,
+        success: true,
+      });
+    } catch (error) {
+      setError({ status: true, mssg: error, success: false });
+      console.log("Error:", error);
+    }
+  };
   const onchangeHandler = (e, t) => {
     const datap = [];
     t === "crews" && e.map((m) => datap.push(m.value));
@@ -229,17 +289,48 @@ const Admin = (p) => {
       default:
     }
   };
+  const onchangeHandlerUpdate = (e, t) => {
+    const datap = [];
+    t === "crews" && e.map((m) => datap.push(m.value));
+    switch (t) {
+      case "crews":
+        setSelectedData((prev) => ({ ...prev, crews: datap }));
+        break;
+      case "password":
+        setSelectedData((prev) => ({ ...prev, password: e.target.value }));
+        break;
+      case "active":
+        setSelectedData((prev) => ({
+          ...prev,
+          isActive: e.value === "activate" ? true : false,
+        }));
+        break;
+      case "role":
+        setSelectedData((prev) => ({ ...prev, role: e.value }));
+        break;
+      case "username":
+        setSelectedData((prev) => ({ ...prev, username: e.target.value }));
+        break;
+      default:
+    }
+  };
 
-  console.log(data, 968523 , error.mssg)
+  console.log(data, 968523, error.mssg);
   return (
     <React.Fragment>
-    {error.status && <Notification error={error.status} success={error.success} mssg={error.mssg.toString()} />}
+      {error.status && (
+        <Notification
+          error={error.status}
+          success={error.success}
+          mssg={error.mssg.toString()}
+        />
+      )}
       {aut && (
         <React.Fragment>
           <BackDrop click={close} />
           <div className={`${c.formCAdmin} ${c.updateAcc}`}>
             <h1 className={c.title}>update Account</h1>
-            <form className={c.form}>
+            <form className={c.form} onSubmit={upDateSubmitHandler}>
               <div className={c["form-group"]}>
                 <label htmlFor="userName">userName</label>
                 <input
@@ -249,6 +340,7 @@ const Admin = (p) => {
                   type="text"
                   placeholder="enter userName"
                   value={selectedData.username}
+                  onChange={(e) => onchangeHandlerUpdate(e, "username")}
                 />
               </div>
               <div className={c["form-group"]}>
@@ -259,12 +351,44 @@ const Admin = (p) => {
                   id="password"
                   type="text"
                   placeholder="enter password"
+                  onChange={(e) => onchangeHandlerUpdate(e, "password")}
+                />
+              </div>
+              <div className={c["form-group"]}>
+                <label htmlFor="crew">crews</label>
+                <Select
+                  options={selectCreator(crews)}
+                  id="multiSelect"
+                  inputId="shiftleader1"
+                  styles={customStyles}
+                  defaultValue={getlabelandvalue(selectedData.crews)}
+                  value={getlabelandvalue(selectedData.crews)}
+                  onChange={(e) => onchangeHandlerUpdate(e, "crews")}
+                  isMulti
+                />
+              </div>
+              <div className={c["form-group"]}>
+                <label htmlFor="role">role</label>
+                <Select
+                  options={ROLES}
+                  id="multiSelect"
+                  inputId="shiftleader1"
+                  onChange={(e) => onchangeHandlerUpdate(e, "role")}
+                  defaultValue={{
+                    value: selectedData.role,
+                    label: selectedData.role,
+                  }}
+                  value={{
+                    value: selectedData.role,
+                    label: selectedData.role,
+                  }}
+                  styles={customStyles}
                 />
               </div>
               <div className={c["form-group"]}>
                 <label htmlFor="crew">Status</label>
                 <Select
-                  options={ROLES}
+                  options={STATUS}
                   id="multiSelect"
                   inputId="shiftleader1"
                   styles={customStyles}
@@ -272,12 +396,15 @@ const Admin = (p) => {
                     value: selectedData.isActive ? "activate" : "not activate",
                     label: selectedData.isActive ? "activate" : "not activate",
                   }}
+                  onChange={(e) => onchangeHandlerUpdate(e, "active")}
                 />
               </div>
               <button type="submit" className={c["form-submit-btn"]}>
                 update
               </button>
-              <span className={c.deletion} onClick={deleteAcc}>delete this Account!</span>
+              <span className={c.deletion} onClick={deleteAcc}>
+                delete this Account!
+              </span>
             </form>
           </div>
         </React.Fragment>
@@ -295,7 +422,7 @@ const Admin = (p) => {
               placeholder="enter userName"
               onChange={(e) => onchangeHandler(e, "username")}
               value={dataCreateuser.username}
-              style={{textTransform:"none"}}
+              style={{ textTransform: "none" }}
             />
           </div>
           <div className={c["form-group"]}>
@@ -308,7 +435,7 @@ const Admin = (p) => {
               placeholder="enter password"
               onChange={(e) => onchangeHandler(e, "password")}
               value={dataCreateuser.password}
-              style={{textTransform:"none"}}
+              style={{ textTransform: "none" }}
             />
           </div>
           <div className={c["form-group"]}>
@@ -359,8 +486,8 @@ const Admin = (p) => {
               onClick={(e) => clickUser(e, m)}
             >
               <div className={c.detailsData}>
-                <h3 >userName</h3>
-                <h2 style={{textTransform:"none"}}>{m.username}</h2>
+                <h3>userName</h3>
+                <h2 style={{ textTransform: "none" }}>{m.username}</h2>
               </div>
               <div className={c.detailsData}>
                 <h3>role</h3>
