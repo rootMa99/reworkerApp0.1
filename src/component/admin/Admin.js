@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import React, { useCallback, useEffect, useState } from "react";
 import api from "../../services/api";
 import BackDrop from "../ui/BackDrop";
+import { selectCreator } from "../hooks/benifFunc";
 const ROLES = [
   {
     value: "Logistics",
@@ -99,8 +100,24 @@ const Admin = (p) => {
   const [data, setData] = useState({ data: [], totalItems: 0 });
   const [selectedData, setSelectedData] = useState({});
   const [aut, setAut] = useState(false);
+  const [crews, setCrews] = useState([]);
 
   const callback = useCallback(async () => {
+    try {
+      const response = await fetch(`${api}/metadata`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${isLoged.token}`,
+        },
+      });
+
+      const data = await response.json();
+      setCrews(data.crews);
+      console.log(data);
+    } catch (error) {
+      console.error("Error:", error);
+    }
     try {
       const response = await fetch(`${api}/admin/users`, {
         method: "GET",
@@ -124,6 +141,7 @@ const Admin = (p) => {
 
   const close = () => {
     setAut(false);
+    selectedData({});
   };
 
   const clickUser = (e, m) => {
@@ -133,8 +151,51 @@ const Admin = (p) => {
       isActive: m.isActive,
       password: "",
     });
+    setAut(true);
   };
 
+  const submmitHandler = async (e) => {
+    e.preventDefault();
+    const datau=data.data;
+
+    try {
+      const response = await fetch(`${api}/admin/user`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${isLoged.token}`,
+        },
+        body: JSON.stringify(selectedData),
+      });
+      const data = await response.json();
+      console.log(data);
+      datau.push(data)
+      setData(p=>({...p, data:datau}));
+     
+    } catch (error) {
+      console.log("Error:", error);
+    }
+  };
+  const onchangeHandler = (e, t) => {
+    const datap = [];
+    t === "crews" && e.map((m) => datap.push(m.value));
+    switch (t) {
+      case "crews":
+        setSelectedData((prev) => ({ ...prev, crews: datap }));
+        break;
+      case "password":
+        setSelectedData((prev) => ({ ...prev, password: e.target.value }));
+        break;
+      case "role":
+        setSelectedData((prev) => ({ ...prev, role: e.value }));
+        break;
+      case "username":
+        setSelectedData((prev) => ({ ...prev, username: e.target.value }));
+        break;
+      default:
+    }
+  };
+  console.log(data)
   return (
     <React.Fragment>
       {aut && (
@@ -172,12 +233,8 @@ const Admin = (p) => {
                   inputId="shiftleader1"
                   styles={customStyles}
                   value={{
-                    value: selectedData.isActive
-                      ? "activate"
-                      : "not activate",
-                    label: selectedData.isActive
-                      ? "activate"
-                      : "not activate",
+                    value: selectedData.isActive ? "activate" : "not activate",
+                    label: selectedData.isActive ? "activate" : "not activate",
                   }}
                 />
               </div>
@@ -191,7 +248,7 @@ const Admin = (p) => {
       )}
       <div className={c.formCAdmin}>
         <h1 className={c.title}>Create a New Account</h1>
-        <form className={c.form}>
+        <form className={c.form} onSubmit={submmitHandler}>
           <div className={c["form-group"]}>
             <label htmlFor="userName">userName</label>
             <input
@@ -200,6 +257,7 @@ const Admin = (p) => {
               id="userName"
               type="text"
               placeholder="enter userName"
+              onChange={(e) => onchangeHandler(e, "username")}
             />
           </div>
           <div className={c["form-group"]}>
@@ -210,14 +268,27 @@ const Admin = (p) => {
               id="password"
               type="text"
               placeholder="enter password"
+              onChange={(e) => onchangeHandler(e, "password")}
             />
           </div>
           <div className={c["form-group"]}>
-            <label htmlFor="crew">role</label>
+            <label htmlFor="role">crews</label>
+            <Select
+              options={selectCreator(crews)}
+              id="multiSelect"
+              inputId="shiftleader1"
+              styles={customStyles}
+              onChange={(e) => onchangeHandler(e, "crews")}
+              isMulti
+            />
+          </div>
+          <div className={c["form-group"]}>
+            <label htmlFor="role">role</label>
             <Select
               options={ROLES}
               id="multiSelect"
               inputId="shiftleader1"
+              onChange={(e) => onchangeHandler(e, "role")}
               styles={customStyles}
             />
           </div>
