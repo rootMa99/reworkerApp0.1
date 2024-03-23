@@ -5,6 +5,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import api from "../../services/api";
 import BackDrop from "../ui/BackDrop";
 import { selectCreator } from "../hooks/benifFunc";
+import Notification from "../home/Notification";
 const ROLES = [
   {
     value: "Logistics",
@@ -95,12 +96,33 @@ const customStyles = {
     },
   }),
 };
+
+const getlabelandvalue = (data) => {
+  const retData = [];
+  data.map((m) =>
+    retData.push({
+      value: m,
+      label: m,
+    })
+  );
+  return retData;
+};
+
 const Admin = (p) => {
   const { isLoged } = useSelector((s) => s.loginr);
   const [data, setData] = useState({ data: [], totalItems: 0 });
   const [selectedData, setSelectedData] = useState({});
   const [aut, setAut] = useState(false);
   const [crews, setCrews] = useState([]);
+  const [error, setError]= useState({status:false, mssg:"",success:false});
+  const [dataCreateuser, setDataCreateuser]=useState({
+    crews:[],password:"", role:"", username:""
+  });
+  if (error.status) {
+    setTimeout(() => {
+      setError({status:false, mssg:""});
+    }, 8000);
+  }
 
   const callback = useCallback(async () => {
     try {
@@ -165,39 +187,53 @@ const Admin = (p) => {
           "Content-Type": "application/json",
           Authorization: `Bearer ${isLoged.token}`,
         },
-        body: JSON.stringify(selectedData),
+        body: JSON.stringify(dataCreateuser),
       });
       const data = await response.json();
       console.log(data);
+      if (!response.ok) {
+        throw new Error(" " + data.Error);
+    }
+      
       datau.push(data)
       setData(p=>({...p, data:datau}));
-     
+      setDataCreateuser({
+        crews:[],password:"", role:"", username:""
+      })
+      setError({status:true, mssg:"user successfully created", success:true});
+      
     } catch (error) {
+      setError({status:true, mssg:error, success:false})
       console.log("Error:", error);
     }
   };
+  const deleteAcc=e=>{
+    console.log(selectedData)
+  }
   const onchangeHandler = (e, t) => {
     const datap = [];
     t === "crews" && e.map((m) => datap.push(m.value));
     switch (t) {
       case "crews":
-        setSelectedData((prev) => ({ ...prev, crews: datap }));
+        setDataCreateuser((prev) => ({ ...prev, crews: datap }));
         break;
       case "password":
-        setSelectedData((prev) => ({ ...prev, password: e.target.value }));
+        setDataCreateuser((prev) => ({ ...prev, password: e.target.value }));
         break;
       case "role":
-        setSelectedData((prev) => ({ ...prev, role: e.value }));
+        setDataCreateuser((prev) => ({ ...prev, role: e.value }));
         break;
       case "username":
-        setSelectedData((prev) => ({ ...prev, username: e.target.value }));
+        setDataCreateuser((prev) => ({ ...prev, username: e.target.value }));
         break;
       default:
     }
   };
-  console.log(data)
+
+  console.log(data, 968523 , error.mssg)
   return (
     <React.Fragment>
+    {error.status && <Notification error={error.status} success={error.success} mssg={error.mssg.toString()} />}
       {aut && (
         <React.Fragment>
           <BackDrop click={close} />
@@ -241,7 +277,7 @@ const Admin = (p) => {
               <button type="submit" className={c["form-submit-btn"]}>
                 update
               </button>
-              <span className={c.deletion}>delete this Account!</span>
+              <span className={c.deletion} onClick={deleteAcc}>delete this Account!</span>
             </form>
           </div>
         </React.Fragment>
@@ -258,6 +294,8 @@ const Admin = (p) => {
               type="text"
               placeholder="enter userName"
               onChange={(e) => onchangeHandler(e, "username")}
+              value={dataCreateuser.username}
+              style={{textTransform:"none"}}
             />
           </div>
           <div className={c["form-group"]}>
@@ -269,6 +307,8 @@ const Admin = (p) => {
               type="text"
               placeholder="enter password"
               onChange={(e) => onchangeHandler(e, "password")}
+              value={dataCreateuser.password}
+              style={{textTransform:"none"}}
             />
           </div>
           <div className={c["form-group"]}>
@@ -279,6 +319,8 @@ const Admin = (p) => {
               inputId="shiftleader1"
               styles={customStyles}
               onChange={(e) => onchangeHandler(e, "crews")}
+              defaultValue={getlabelandvalue(dataCreateuser.crews)}
+              value={getlabelandvalue(dataCreateuser.crews)}
               isMulti
             />
           </div>
@@ -289,6 +331,14 @@ const Admin = (p) => {
               id="multiSelect"
               inputId="shiftleader1"
               onChange={(e) => onchangeHandler(e, "role")}
+              defaultValue={{
+                value: dataCreateuser.role,
+                label: dataCreateuser.role,
+              }}
+              value={{
+                value: dataCreateuser.role,
+                label: dataCreateuser.role,
+              }}
               styles={customStyles}
             />
           </div>
@@ -309,8 +359,8 @@ const Admin = (p) => {
               onClick={(e) => clickUser(e, m)}
             >
               <div className={c.detailsData}>
-                <h3>userName</h3>
-                <h2>{m.username}</h2>
+                <h3 >userName</h3>
+                <h2 style={{textTransform:"none"}}>{m.username}</h2>
               </div>
               <div className={c.detailsData}>
                 <h3>role</h3>
