@@ -16,7 +16,7 @@
   box-sizing: border-box;
   border-radius: 16px;
   background-size: 200% 100%;
-  animation: gradient 5s ease infinite;
+  /* animation: gradient 5s ease infinite; */
 }
 .CAdminUserList {
   position: relative;
@@ -96,21 +96,7 @@
     background-position: 0% 50%;
   }
 }
-@keyframes gradient2 {
-  0%,
-  100% {
-    background-position: 0% 50%;
-  }
-  25% {
-    background-position: 100% 50%;
-  }
-  50% {
-    background-position: 50% 100%;
-  }
-  75% {
-    background-position: 50% 0%;
-  }
-}
+
 
 .form-container button:active {
   scale: 0.95;
