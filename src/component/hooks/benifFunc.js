@@ -10,6 +10,5 @@ export const selectCreator = (data) => {
         })
       );
   }
-
   return returnedArr;
 };
