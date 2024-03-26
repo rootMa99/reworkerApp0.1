@@ -23,7 +23,6 @@
   width: 95%;
   margin: auto;
   margin-top: 2rem;
-  animation: gradient2 15s ease infinite;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
