@@ -27,9 +27,11 @@
     border-radius: 16px;
     background-size: 200% 100%;
     animation: gradient 5s ease infinite;
-    position: relative;
+    position: sticky;
+    top: 20px;
     margin: auto;
     margin-top: 1rem;
+    
   }
   @keyframes gradient {
     0% {
