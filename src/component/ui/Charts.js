@@ -12,10 +12,13 @@ import {
 } from "chart.js";
 import React from "react";
 
+
+
 const Charts = (p) => {
+    console.log(p.datasets)
   const data = {
-    labels: p.datasets.map((m) => m.label),
-    datasets: p.datasets,
+    labels: p.data.labels,
+    datasets: p.data.datasets,
   };
 
   const options = {
@@ -33,7 +36,7 @@ const Charts = (p) => {
           color: "#f3f3f34f",
         },
         ticks: {
-          display: p.home === undefined ? false : true,
+        //   display: p.home === undefined ? false : true,
           color: "white",
           fontWeight: "bold",
         },
@@ -43,6 +46,7 @@ const Charts = (p) => {
       },
     },
     plugins: {
+        
       legend: {
         labels: {
           color: "#FAF0E6",
@@ -53,29 +57,29 @@ const Charts = (p) => {
         display: true,
       },
     },
-    animation: {
-      onComplete: (animation) => {
-        const { chart } = animation;
-        const ctx = chart.ctx;
-        chart.data.datasets.forEach((dataset, index) => {
-          const meta = chart.getDatasetMeta(index);
-          meta.data.forEach((element, index) => {
-            const data = dataset.data[index];
-            let xPos, yPos;
+    // animation: {
+    //   onComplete: (animation) => {
+    //     const { chart } = animation;
+    //     const ctx = chart.ctx;
+    //     chart.data.datasets.forEach((dataset, index) => {
+    //       const meta = chart.getDatasetMeta(index);
+    //       meta.data.forEach((element, index) => {
+    //         const data = dataset.data[index];
+    //         let xPos, yPos;
 
-            xPos = element.x;
-            yPos = element.y - 10;
+    //         xPos = element.x;
+    //         yPos = element.y - 10;
 
-            ctx.save();
-            ctx.textAlign = "center";
-            ctx.fillStyle = "#EEEEEE";
-            ctx.font = "17px Arial";
-            ctx.fillText(data, xPos, yPos);
-            ctx.restore();
-          });
-        });
-      },
-    },
+    //         ctx.save();
+    //         ctx.textAlign = "center";
+    //         ctx.fillStyle = "#EEEEEE";
+    //         ctx.font = "17px Arial";
+    //         ctx.fillText(data, xPos, yPos);
+    //         ctx.restore();
+    //       });
+    //     });
+    //   },
+    // },
   };
   ChartJS.register(
     LineElement,

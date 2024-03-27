@@ -6,9 +6,9 @@ import c from "./Dashboard.module.css"
 
 const Dashboard = (p) => {
   const { isLoged } = useSelector((s) => s.loginr);
-  const [crewsData, setCrewsData] = useState([]);
+  const [crewsData, setCrewsData] = useState(false);
   const [crewsFetch, setCrewsFetch] = useState({
-    timeFrame: "monthly",
+    timeFrame: "daily",
     year: new Date().getFullYear(),
     month: new Date().getMonth() + 1,
     crews: "",
@@ -30,7 +30,7 @@ const Dashboard = (p) => {
 
       const data = await response.json();
       console.log(data);
-      setCrewsData(data.datasets);
+      setCrewsData(data);
     } catch (error) {
       console.error("Error:", error);
     }
@@ -50,7 +50,7 @@ const Dashboard = (p) => {
   console.log(crewsData)
   return (<React.Fragment>
     <div className={c.cahrtH}>
-    {crewsData.length>0 && <Charts datasets={crewsData} title={"top pareto by crews"}/>}
+    {crewsData && <Charts data={crewsData} title={"top pareto by crews"}/>}
     </div>
     </React.Fragment>);
 };
