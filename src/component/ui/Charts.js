@@ -12,16 +12,19 @@ import {
 } from "chart.js";
 import React from "react";
 
-
-
 const Charts = (p) => {
-    console.log(p.datasets)
+  console.log(p.datasets);
   const data = {
     labels: p.data.labels,
     datasets: p.data.datasets,
   };
 
   const options = {
+    hover: {
+      mode: "nearest",
+      intersect: false,
+      animationDuration: 400,
+    },
     responsive: true,
     maintainAspectRatio: false,
     scales: {
@@ -45,7 +48,7 @@ const Charts = (p) => {
       },
     },
     // plugins: {
-        
+
     //   legend: {
     //     labels: {
     //       color: "#FAF0E6",
@@ -55,36 +58,43 @@ const Charts = (p) => {
     //   datalabels: {
     //     display: true,
     //   },
-      
+
     // },
     plugins: {
-        tooltip: {
-          callbacks: {
-            beforeTitle: function(context) {
-              if (context[0].datasetIndex === 0) {
-                return 'First Dataset: ';
-              }
-            },
-            title: function(context) {
-              return context[0].dataset.label;
-            },
-            label: function(context) {
-              const labelIndex = context.dataIndex;
-              const dataset = context.dataset;
-              console.log(labelIndex, context, dataset)
-            //   const label = dataset.labels[labelIndex];
-              const label = context.label
-              const value = context.parsed.y;
- 
-              const statusCounts = dataset.tooltips[label];
- 
-              let statusText = statusCounts.map(sc => `${sc.status}: ${sc.count}`);
-   
-              return `   ${value} ( ${statusText} )`;
-            }
-          }
-        }
+      hover: {
+        mode: "nearest",
+        intersect: false,
+        animationDuration: 400,
       },
+      tooltip: {
+        callbacks: {
+          beforeTitle: function (context) {
+            if (context[0].datasetIndex === 0) {
+              return "First Dataset: ";
+            }
+          },
+          title: function (context) {
+            return context[0].dataset.label;
+          },
+          label: function (context) {
+            const labelIndex = context.dataIndex;
+            const dataset = context.dataset;
+            console.log(labelIndex, context, dataset);
+            //   const label = dataset.labels[labelIndex];
+            const label = context.label;
+            const value = context.parsed.y;
+
+            const statusCounts = dataset.tooltips[label];
+
+            let statusText = statusCounts.map(
+              (sc) => `${sc.status}: ${sc.count}`
+            );
+
+            return `   ${value} ( ${statusText} )`;
+          },
+        },
+      },
+    },
     // animation: {
     //   onComplete: (animation) => {
     //     const { chart } = animation;

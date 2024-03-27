@@ -14,9 +14,9 @@ const loginS = createSlice({
     dataFilter: {
       year: new Date().getFullYear(),
       month: new Date().getMonth() + 1,
-      crews: "",
-      cableStatus: "",
-      problems: "",
+      crews: [],
+      cableStatus: [],
+      problems: [],
     },
   },
   reducers: {
@@ -24,6 +24,15 @@ const loginS = createSlice({
     editYM(s,p){
       s.dataFilter.year=p.payload.year;
       s.dataFilter.month=p.payload.month
+    },
+    editcrew(s,p){
+      s.dataFilter.crews= p.payload
+    },
+    editcableStatus(s,p){
+      s.dataFilter.cableStatus=p.payload
+    },
+    editproblems(s,p){
+      s.dataFilter.problems=p.payload
     },
     addUrgentData(s, p) {
       s.urgentData = p.payload;

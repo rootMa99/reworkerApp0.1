@@ -1,4 +1,3 @@
-
 import React, { useCallback, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import api from "../../services/api";
@@ -7,11 +6,20 @@ import c from "./Dashboard.module.css";
 
 const ReUtilChartDashbord = (p) => {
   const { isLoged, dataFilter } = useSelector((s) => s.loginr);
-  const [crewsData, setCrewsData] = useState(false)
+  const [crewsData, setCrewsData] = useState(false);
+  console.log(dataFilter.crews.map((m) => m.value).toString());
   const callback = useCallback(async () => {
     try {
       const response = await fetch(
-        `${api}/data/chart/${p.type}?timeFrame=daily&year=${dataFilter.year}&month=${dataFilter.month}&cableStatus=${dataFilter.cableStatus}&crews=${dataFilter.crews}&problems=${dataFilter.problems}`,
+        `${api}/data/chart/${p.type}?timeFrame=daily&year=${
+          dataFilter.year
+        }&month=${dataFilter.month}&cableStatus=${dataFilter.cableStatus
+          .map((m) => m.value)
+          .toString()}&crews=${dataFilter.crews
+          .map((m) => m.value)
+          .toString()}&problems=${dataFilter.problems
+          .map((m) => m.value)
+          .toString()}`,
         {
           method: "GET",
           headers: {
@@ -28,9 +36,16 @@ const ReUtilChartDashbord = (p) => {
       console.error("Error:", error);
     }
     try {
-        
       const response = await fetch(
-        `${api}/data/chart/${p.type}?timeFrame=monthly&year=${dataFilter.year}&month=${dataFilter.month}&cableStatus=${dataFilter.cableStatus}&crews=${dataFilter.crews}&problems=${dataFilter.problems}`,
+        `${api}/data/chart/${p.type}?timeFrame=monthly&year=${
+          dataFilter.year
+        }&month=${dataFilter.month}&cableStatus=${dataFilter.cableStatus
+          .map((m) => m.value)
+          .toString()}&crews=${dataFilter.crews
+          .map((m) => m.value)
+          .toString()}&problems=${dataFilter.problems
+          .map((m) => m.value)
+          .toString()}`,
         {
           method: "GET",
           headers: {
@@ -48,7 +63,15 @@ const ReUtilChartDashbord = (p) => {
     }
     try {
       const response = await fetch(
-        `${api}/data/chart/${p.type}?timeFrame=weekly&year=${dataFilter.year}&month=${dataFilter.month}&cableStatus=${dataFilter.cableStatus}&crews=${dataFilter.crews}&problems=${dataFilter.problems}`,
+        `${api}/data/chart/${p.type}?timeFrame=weekly&year=${
+          dataFilter.year
+        }&month=${dataFilter.month}&cableStatus=${dataFilter.cableStatus
+          .map((m) => m.value)
+          .toString()}&crews=${dataFilter.crews
+          .map((m) => m.value)
+          .toString()}&problems=${dataFilter.problems
+          .map((m) => m.value)
+          .toString()}`,
         {
           method: "GET",
           headers: {
@@ -81,10 +104,8 @@ const ReUtilChartDashbord = (p) => {
   console.log(crewsData);
   return (
     <React.Fragment>
-     
-
       <div className={c.chartHolder}>
-        <div className={c.cahrtH} style={{width:"95%"}}> 
+        <div className={c.cahrtH} style={{ width: "95%" }}>
           {crewsData.daily && (
             <Charts
               data={crewsData.daily}

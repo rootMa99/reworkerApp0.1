@@ -102,6 +102,12 @@ const Dashboard = (p) => {
               inputId="shiftleader1"
               styles={customStyles}
               placeholder="select Crews"
+              onChange={(e) => {
+                dispatch(
+                  loginSActions.editcrew(e)
+                );
+              }}
+              isMulti
             />
           </div>
           <div className={c["form-group"]}>
@@ -112,6 +118,12 @@ const Dashboard = (p) => {
               inputId="shiftleader1"
               styles={customStyles}
               placeholder="select problems"
+              onChange={(e) => {
+                dispatch(
+                  loginSActions.editproblems(e)
+                );
+              }}
+              isMulti
             />
           </div>
           <div className={c["form-group"]}>
@@ -122,6 +134,12 @@ const Dashboard = (p) => {
               inputId="shiftleader1"
               styles={customStyles}
               placeholder="select Cable Status"
+              onChange={(e) => {
+                dispatch(
+                  loginSActions.editcableStatus(e)
+                );
+              }}
+              isMulti
             />
           </div>
           <div className={c["form-group"]}>
