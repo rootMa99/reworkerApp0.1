@@ -34,7 +34,9 @@ const NavBar = (p) => {
                 Config
               </NavLink>
             </li>
-            <li>
+            </React.Fragment>}
+            {isLoged.role !== "Reworker" &&
+              <li>
               <NavLink
                 to="/dashboard"
                 className={({ isActive }) => (isActive ? c.activeLink : c.link)}
@@ -42,7 +44,7 @@ const NavBar = (p) => {
                 dashboard
               </NavLink>
             </li>
-            </React.Fragment>}
+            }
           </ul>
         </div>
       )}
