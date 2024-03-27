@@ -42,7 +42,7 @@ const Dashboard = (p) => {
     isLoged,
   ]);
 
-  useEffect(() => callback(), [callback]);
+  useEffect(() => {callback()}, [callback]);
 
   return <React.Fragment></React.Fragment>;
 };
