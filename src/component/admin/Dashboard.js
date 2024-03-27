@@ -1,9 +1,10 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React from "react";
 import ReUtilChartDashbord from "./ReUtilChartDashbord";
 import Select from "react-select";
 import { useDispatch, useSelector } from "react-redux";
 import c from "./Dashboard.module.css";
 import { loginSActions } from "../../store/loginSlice";
+import { selectCreator } from "../hooks/benifFunc";
 const customStyles = {
   control: (provided, state) => ({
     ...provided,
@@ -67,21 +68,60 @@ const customStyles = {
     },
   }),
 };
+const statusC = [
+    {
+      value: "in-Progress",
+      label: "in-Progress",
+    },
+    {
+      value: "Repaired",
+      label: "Repaired",
+    },
+    {
+      value: "Scrap",
+      label: "Scrap",
+    },
+    {
+      value: "Sertissage",
+      label: "Sertissage",
+    },
+  ];
 const Dashboard = (p) => {
   const { dataFilter, dataSelect } = useSelector((s) => s.loginr);
   const dispatch = useDispatch();
+  console.log(dataSelect);
   return (
     <React.Fragment>
       <div className={c.headerD}>
         <div className={c.inputHi}>
           <div className={c["form-group"]}>
-            <label htmlFor="trainingType">Cable Condition</label>
+            <label htmlFor="trainingType">crews</label>
             <Select
-              options={[]}
+              options={selectCreator(dataSelect.crews)}
               id="multiSelect"
               inputId="shiftleader1"
               styles={customStyles}
-              placeholder="select Cable Condition"
+              placeholder="select Crews"
+            />
+          </div>
+          <div className={c["form-group"]}>
+            <label htmlFor="trainingType">problems</label>
+            <Select
+              options={selectCreator(dataSelect.problems)}
+              id="multiSelect"
+              inputId="shiftleader1"
+              styles={customStyles}
+              placeholder="select problems"
+            />
+          </div>
+          <div className={c["form-group"]}>
+            <label htmlFor="trainingType">Cable Status</label>
+            <Select
+              options={statusC}
+              id="multiSelect"
+              inputId="shiftleader1"
+              styles={customStyles}
+              placeholder="select Cable Status"
             />
           </div>
           <div className={c["form-group"]}>
