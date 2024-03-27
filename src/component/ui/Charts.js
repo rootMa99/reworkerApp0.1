@@ -36,7 +36,6 @@ const Charts = (p) => {
           color: "#f3f3f34f",
         },
         ticks: {
-        //   display: p.home === undefined ? false : true,
           color: "white",
           fontWeight: "bold",
         },
@@ -45,18 +44,47 @@ const Charts = (p) => {
         },
       },
     },
-    plugins: {
+    // plugins: {
         
-      legend: {
-        labels: {
-          color: "#FAF0E6",
-        },
-        display: true,
+    //   legend: {
+    //     labels: {
+    //       color: "#FAF0E6",
+    //     },
+    //     display: true,
+    //   },
+    //   datalabels: {
+    //     display: true,
+    //   },
+      
+    // },
+    plugins: {
+        tooltip: {
+          callbacks: {
+            beforeTitle: function(context) {
+              if (context[0].datasetIndex === 0) {
+                return 'First Dataset: ';
+              }
+            },
+            title: function(context) {
+              return context[0].dataset.label;
+            },
+            label: function(context) {
+              const labelIndex = context.dataIndex;
+              const dataset = context.dataset;
+              console.log(labelIndex, context, dataset)
+            //   const label = dataset.labels[labelIndex];
+              const label = context.label
+              const value = context.parsed.y;
+ 
+              const statusCounts = dataset.tooltips[label];
+ 
+              let statusText = statusCounts.map(sc => `${sc.status}: ${sc.count}`);
+   
+              return `   ${value} ( ${statusText} )`;
+            }
+          }
+        }
       },
-      datalabels: {
-        display: true,
-      },
-    },
     // animation: {
     //   onComplete: (animation) => {
     //     const { chart } = animation;
