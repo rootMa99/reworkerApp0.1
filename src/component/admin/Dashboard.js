@@ -1,10 +1,12 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import api from "../../services/api";
+import Charts from "../ui/Charts";
+import c from "./Dashboard.module.css"
 
 const Dashboard = (p) => {
   const { isLoged } = useSelector((s) => s.loginr);
-  const [crewsData, setCrewsData] = useState({});
+  const [crewsData, setCrewsData] = useState([]);
   const [crewsFetch, setCrewsFetch] = useState({
     timeFrame: "monthly",
     year: new Date().getFullYear(),
@@ -28,7 +30,7 @@ const Dashboard = (p) => {
 
       const data = await response.json();
       console.log(data);
-      setCrewsData(data);
+      setCrewsData(data.datasets);
     } catch (error) {
       console.error("Error:", error);
     }
@@ -44,7 +46,13 @@ const Dashboard = (p) => {
 
   useEffect(() => {callback()}, [callback]);
 
-  return <React.Fragment></React.Fragment>;
+
+  console.log(crewsData)
+  return (<React.Fragment>
+    <div className={c.cahrtH}>
+    {crewsData.length>0 && <Charts datasets={crewsData} title={"top pareto by crews"}/>}
+    </div>
+    </React.Fragment>);
 };
 
 export default Dashboard;
