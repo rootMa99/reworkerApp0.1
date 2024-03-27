@@ -1,81 +1,17 @@
 
 import React, { useCallback, useEffect, useState } from "react";
-import Select from "react-select";
 import { useSelector } from "react-redux";
 import api from "../../services/api";
 import Charts from "../ui/Charts";
 import c from "./Dashboard.module.css";
-const customStyles = {
-  control: (provided, state) => ({
-    ...provided,
-    width: "100%",
 
-    textTransform: "uppercase",
-    borderRadius: "5px",
-    fontFamily: `Formular, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-                  "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
-                  "Segoe UI Symbol"`,
-
-    textAlign: "center",
-    outline: "none",
-    border: "1px solid #414141",
-    backgroundColor: "transparent",
-    boxShadow: "none",
-    margin: "auto",
-    "&:hover": {
-      border: "1px solid #f33716",
-      cursor: "pointer",
-    },
-  }),
-  option: (provided, state) => ({
-    width: "97%",
-    padding: "0.5rem",
-    color: state.isFocused ? "#f3f3f3" : "#f33716",
-    backgroundColor: state.isFocused && "#474b4d",
-    fontFamily: `Formular, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-                  "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
-                  "Segoe UI Symbol"`,
-    textTransform: "uppercase",
-    outline: "none",
-    textAlign: "center",
-    "&:hover": {
-      cursor: "pointer",
-    },
-  }),
-  input: (provided) => ({
-    ...provided,
-    color: "#f3f3f3",
-  }),
-  singleValue: (p) => ({
-    ...p,
-    color: "#f3f3f3",
-  }),
-  menuList: (provided) => ({
-    maxHeight: "200px",
-    overflowY: "auto",
-    overflowX: "hidden",
-    scrollbarWidth: "thin",
-    msOverflowStyle: "none",
-    "&::-webkit-scrollbar": {
-      width: "5px",
-      backgroundColor: "#535151",
-    },
-    "&::-webkit-scrollbar-thumb": {
-      backgroundColor: "#f33716",
-    },
-    "&::-webkit-scrollbar-track": {
-      backgroundColor: "transparent",
-    },
-  }),
-};
 const ReUtilChartDashbord = (p) => {
-  const { isLoged } = useSelector((s) => s.loginr);
-  const [crewsData, setCrewsData] = useState(false);
-  const [crewsFetch, setCrewsFetch] = useState(p.crewsFetch);
+  const { isLoged, dataFilter } = useSelector((s) => s.loginr);
+  const [crewsData, setCrewsData] = useState(false)
   const callback = useCallback(async () => {
     try {
       const response = await fetch(
-        `${api}/data/chart/crew?timeFrame=daily&year=${crewsFetch.year}&month=${crewsFetch.month}&cableStatus=${crewsFetch.cableStatus}&crews=${crewsFetch.crews}&problems=${crewsFetch.problems}`,
+        `${api}/data/chart/${p.type}?timeFrame=daily&year=${dataFilter.year}&month=${dataFilter.month}&cableStatus=${dataFilter.cableStatus}&crews=${dataFilter.crews}&problems=${dataFilter.problems}`,
         {
           method: "GET",
           headers: {
@@ -92,8 +28,9 @@ const ReUtilChartDashbord = (p) => {
       console.error("Error:", error);
     }
     try {
+        
       const response = await fetch(
-        `${api}/data/chart/crew?timeFrame=monthly&year=${crewsFetch.year}&month=${crewsFetch.month}&cableStatus=${crewsFetch.cableStatus}&crews=${crewsFetch.crews}&problems=${crewsFetch.problems}`,
+        `${api}/data/chart/${p.type}?timeFrame=monthly&year=${dataFilter.year}&month=${dataFilter.month}&cableStatus=${dataFilter.cableStatus}&crews=${dataFilter.crews}&problems=${dataFilter.problems}`,
         {
           method: "GET",
           headers: {
@@ -111,7 +48,7 @@ const ReUtilChartDashbord = (p) => {
     }
     try {
       const response = await fetch(
-        `${api}/data/chart/crew?timeFrame=weekly&year=${crewsFetch.year}&month=${crewsFetch.month}&cableStatus=${crewsFetch.cableStatus}&crews=${crewsFetch.crews}&problems=${crewsFetch.problems}`,
+        `${api}/data/chart/${p.type}?timeFrame=weekly&year=${dataFilter.year}&month=${dataFilter.month}&cableStatus=${dataFilter.cableStatus}&crews=${dataFilter.crews}&problems=${dataFilter.problems}`,
         {
           method: "GET",
           headers: {
@@ -128,11 +65,12 @@ const ReUtilChartDashbord = (p) => {
       console.error("Error:", error);
     }
   }, [
-    crewsFetch.year,
-    crewsFetch.month,
-    crewsFetch.cableStatus,
-    crewsFetch.crews,
-    crewsFetch.problems,
+    dataFilter.year,
+    dataFilter.month,
+    dataFilter.cableStatus,
+    dataFilter.crews,
+    dataFilter.problems,
+    p.type,
     isLoged,
   ]);
 
@@ -146,7 +84,7 @@ const ReUtilChartDashbord = (p) => {
      
 
       <div className={c.chartHolder}>
-        <div className={c.cahrtH}>
+        <div className={c.cahrtH} style={{width:"95%"}}> 
           {crewsData.daily && (
             <Charts
               data={crewsData.daily}

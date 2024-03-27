@@ -1,8 +1,9 @@
 import React, { useCallback, useEffect, useState } from "react";
 import ReUtilChartDashbord from "./ReUtilChartDashbord";
 import Select from "react-select";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import c from "./Dashboard.module.css";
+import { loginSActions } from "../../store/loginSlice";
 const customStyles = {
   control: (provided, state) => ({
     ...provided,
@@ -67,54 +68,48 @@ const customStyles = {
   }),
 };
 const Dashboard = (p) => {
-    const [crewsFetch, setCrewsFetch] = useState({
-      year: new Date().getFullYear(),
-      month: new Date().getMonth() + 1,
-      crews: "",
-      cableStatus: "",
-      problems: "",
-    });
+  const { dataFilter, dataSelect } = useSelector((s) => s.loginr);
+  const dispatch = useDispatch();
   return (
     <React.Fragment>
-    <div className={c.headerD}>
-    <div className={c.inputHi}>
-      <div className={c["form-group"]}>
-        <label htmlFor="trainingType">Cable Condition</label>
-        <Select
-          options={[]}
-          id="multiSelect"
-          inputId="shiftleader1"
-          styles={customStyles}
-          placeholder="select Cable Condition"
-        />
+      <div className={c.headerD}>
+        <div className={c.inputHi}>
+          <div className={c["form-group"]}>
+            <label htmlFor="trainingType">Cable Condition</label>
+            <Select
+              options={[]}
+              id="multiSelect"
+              inputId="shiftleader1"
+              styles={customStyles}
+              placeholder="select Cable Condition"
+            />
+          </div>
+          <div className={c["form-group"]}>
+            <label htmlFor="ed">end date</label>
+            <input
+              required
+              name="ed"
+              id="ed"
+              type="month"
+              value={
+                dataFilter.month > 9
+                  ? `${dataFilter.year}-${dataFilter.month}`
+                  : `${dataFilter.year}-0${dataFilter.month}`
+              }
+              placeholder="enter TS/h"
+              onChange={(e) => {
+                const value = e.target.value.split("-");
+                dispatch(
+                  loginSActions.editYM({ year: value[0], month: +value[1] })
+                );
+              }}
+            />
+          </div>
+        </div>
       </div>
-      <div className={c["form-group"]}>
-        <label htmlFor="ed">end date</label>
-        <input
-          required
-          name="ed"
-          id="ed"
-          type="month"
-          value={
-            crewsFetch.month > 9
-              ? `${crewsFetch.year}-${crewsFetch.month}`
-              : `${crewsFetch.year}-0${crewsFetch.month}`
-          }
-          placeholder="enter TS/h"
-          onChange={(e) => {
-            const value = e.target.value.split("-");
-            console.log(value);
-            setCrewsFetch((p) => ({
-              ...p,
-              year: value[0],
-              month: +value[1],
-            }));
-          }}
-        />
-      </div>
-    </div>
-  </div>
-      <ReUtilChartDashbord title="crews" crewsFetch={crewsFetch}/>
+      <ReUtilChartDashbord title="crews" type="crew" />
+      <ReUtilChartDashbord title="problems" type="problem" />
+      <ReUtilChartDashbord title="cablestatuses" type="cableStatus" />
     </React.Fragment>
   );
 };

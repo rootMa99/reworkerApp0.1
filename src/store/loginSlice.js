@@ -11,8 +11,20 @@ const loginS = createSlice({
     scrap: [],
     logistics: [],
     sertissage: [],
+    dataFilter: {
+      year: new Date().getFullYear(),
+      month: new Date().getMonth() + 1,
+      crews: "",
+      cableStatus: "",
+      problems: "",
+    },
   },
   reducers: {
+
+    editYM(s,p){
+      s.dataFilter.year=p.payload.year;
+      s.dataFilter.month=p.payload.month
+    },
     addUrgentData(s, p) {
       s.urgentData = p.payload;
     },
