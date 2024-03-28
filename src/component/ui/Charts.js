@@ -105,7 +105,7 @@ const Charts = (p) => {
               return (crew !== 'Other') ? `(${crew}: ${statusText})` : `(${statusText})`;
             }).join(' + ');
 
-            return `${dataset.label}: Total ${value} ${itemsText}`;
+            return `  ${dataset.label}: Total ${value} ${itemsText}`;
           },
         },
       },
