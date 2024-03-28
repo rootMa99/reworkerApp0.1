@@ -77,11 +77,6 @@ const Charts = (p) => {
       },
       tooltip: {
         callbacks: {
-          beforeTitle: function (context) {
-            // if (context[0].datasetIndex === 0) {
-            //   return "First Dataset: ";
-            // }
-          },
           title: function (context) {
             return context[0].dataset.label;
           },
@@ -90,21 +85,30 @@ const Charts = (p) => {
             const label = context.label;
             const value = context.parsed.y;
             const statusCounts = dataset.tooltips[label];
-            let itemsText = statusCounts.map(sc => {
-              let parts = [];
-              (sc.crew !== undefined) && (parts.push(`${sc.crew}`));
-              (sc.status !== undefined) && (parts.push(`${sc.status}`));
-              parts.push(`${sc.count}`);
-              return `(${parts.join(': ')})`;
+            let statusAggregation = {};
+            statusCounts.forEach(sc => {
+              const crewKey = sc.crew || 'Other';
+              const statusKey = sc.status || 'Other';
+
+              if (!statusAggregation[crewKey]) {
+                statusAggregation[crewKey] = {};
+              }
+              if (!statusAggregation[crewKey][statusKey]) {
+                statusAggregation[crewKey][statusKey] = 0;
+              }
+              statusAggregation[crewKey][statusKey] += sc.count;
+            });
+            let itemsText = Object.entries(statusAggregation).map(([crew, statuses]) => {
+              let statusText = Object.entries(statuses).map(([status, count]) => {
+                return (status !== 'Other') ? `${status}: ${count}` : `${count}`;
+              }).join(', ');
+              return (crew !== 'Other') ? `(${crew}: ${statusText})` : `(${statusText})`;
             }).join(' + ');
 
-            return ` ${dataset.label}: Total ${value} ${itemsText}`;
+            return `${dataset.label}: Total ${value} ${itemsText}`;
           },
         },
       },
-
-
-
     },
     // animation: {
     //   onComplete: (animation) => {
