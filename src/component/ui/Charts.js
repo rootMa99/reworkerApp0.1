@@ -61,6 +61,15 @@ const Charts = (p) => {
 
     // },
     plugins: {
+      legend: {
+        labels: {
+          color: "#FAF0E6",
+        },
+        display: true,
+      },
+      datalabels: {
+        display: true,
+      },
       hover: {
         mode: "nearest",
         intersect: false,
@@ -69,31 +78,33 @@ const Charts = (p) => {
       tooltip: {
         callbacks: {
           beforeTitle: function (context) {
-            if (context[0].datasetIndex === 0) {
-              return "First Dataset: ";
-            }
+            // if (context[0].datasetIndex === 0) {
+            //   return "First Dataset: ";
+            // }
           },
           title: function (context) {
             return context[0].dataset.label;
           },
           label: function (context) {
-            const labelIndex = context.dataIndex;
             const dataset = context.dataset;
-            console.log(labelIndex, context, dataset);
-            //   const label = dataset.labels[labelIndex];
             const label = context.label;
             const value = context.parsed.y;
-
             const statusCounts = dataset.tooltips[label];
+            let itemsText = statusCounts.map(sc => {
+              let parts = [];
+              (sc.crew !== undefined) && (parts.push(`${sc.crew}`));
+              (sc.status !== undefined) && (parts.push(`${sc.status}`));
+              parts.push(`${sc.count}`);
+              return `(${parts.join(': ')})`;
+            }).join(' + ');
 
-            let statusText = statusCounts.map(
-              (sc) => `${sc.status}: ${sc.count}`
-            );
-
-            return `   ${value} ( ${statusText} )`;
+            return ` ${dataset.label}: Total ${value} ${itemsText}`;
           },
         },
       },
+
+
+
     },
     // animation: {
     //   onComplete: (animation) => {
