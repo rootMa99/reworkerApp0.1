@@ -86,6 +86,10 @@ const Shifts = (p) => {
     crews: [],
   });
 
+  const submitHandler=e=>{
+    e.preventDefault();
+    console.log(submitHandler)
+  }
   console.log(dataMorning, dataEv, dataNi,ot)
   const onchangeHandler = (e, t) => {
     const datap = [];
@@ -106,7 +110,7 @@ const Shifts = (p) => {
   };
   return (
     <React.Fragment>
-      <div className={c.formCAdmin} style={{width:"80%"}}>
+      <div className={c.formCAdmin} style={{width:"80%"}} onSubmit={submitHandler}>
         <h1 className={c.title}>Shifts</h1>
         <form className={c.form}>
           <div className={c["form-group"]}>
@@ -192,7 +196,7 @@ const Shifts = (p) => {
             </div>
             <div className={c.formCAdmin}>
               <h1 className={c.title}>OT nigth</h1>
-              {ot.map((m, i) => (
+              {otn.map((m, i) => (
                 <div className={c.form} key={i}>
                   <div className={c["form-group"]}>
                     <label htmlFor="role">morning</label>
