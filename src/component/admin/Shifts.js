@@ -76,6 +76,7 @@ const Shifts = (p) => {
     crews: [],
   });
   const [ot, setOt] = useState([{ crew: "", startDate: "" , endDate:""}]);
+  const [otn, setOtn] = useState([{ crew: "", startDate: "" , endDate:""}]);
   const [dataEv, setDataEv] = useState({
     shiftName: "S",
     crews: [],
@@ -191,26 +192,50 @@ const Shifts = (p) => {
             </div>
             <div className={c.formCAdmin}>
               <h1 className={c.title}>OT nigth</h1>
-              <div className={c.form}>
-                <div className={c["form-group"]}>
-                  <label htmlFor="role">morning</label>
-                  <Select
-                    options={selectCreator(p.crews)}
-                    id="multiSelect"
-                    inputId="shiftleader1"
-                    styles={customStyles}
-                    isMulti
-                  />
+              {ot.map((m, i) => (
+                <div className={c.form} key={i}>
+                  <div className={c["form-group"]}>
+                    <label htmlFor="role">morning</label>
+                    <Select
+                      options={selectCreator(p.crews)}
+                      id="multiSelect"
+                      inputId="shiftleader1"
+                      styles={customStyles}
+                      onChange={(e) => {
+                          const newot = [...otn];
+                          newot[i].crew = e.value;
+                          setOtn(newot);
+                        }}
+                    />
+                  </div>
+                  <div className={c["form-group"]}>
+                    <label htmlFor="role">from</label>
+                    <input type="date" 
+                    onChange={(e) => {
+                      const newot = [...otn];
+                      newot[i].startDate = e.target.value;
+                      setOtn(newot);
+                    }}
+                    />
+                  </div>
+                  <div className={c["form-group"]}>
+                    <label htmlFor="role">to</label>
+                    <input type="date"  onChange={(e) => {
+                      const newot = [...otn];
+                      newot[i].endDate = e.target.value;
+                      setOtn(newot);
+                    }}/>
+                  </div>
                 </div>
-                <div className={c["form-group"]}>
-                  <label htmlFor="role">from</label>
-                  <input type="date" />
-                </div>
-                <div className={c["form-group"]}>
-                  <label htmlFor="role">to</label>
-                  <input type="date" />
-                </div>
-              </div>
+            ))}
+              <h4
+              onClick={(e) =>
+                setOtn((p) => [...p, { crew: "", startDate: "" , endDate:""}])
+              }
+              className={c.addP}
+            >
+              add ot
+            </h4>
             </div>
           </div>
           <button type="submit" className={c["form-submit-btn"]}>
