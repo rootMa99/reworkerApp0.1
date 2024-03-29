@@ -6,6 +6,7 @@ import api from "../../services/api";
 import BackDrop from "../ui/BackDrop";
 import { selectCreator } from "../hooks/benifFunc";
 import Notification from "../home/Notification";
+import Shifts from "./Shifts";
 const ROLES = [
   {
     value: "Logistics",
@@ -554,6 +555,9 @@ const Admin = (p) => {
             ))}
         </div>
       </React.Fragment>}
+      {
+        navin === "S" && <Shifts crews={crews}/>
+      }
     </React.Fragment>
   );
 };

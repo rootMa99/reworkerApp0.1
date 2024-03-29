@@ -337,3 +337,19 @@
   opacity: 1;
   transform: scale(1.1);
 }
+
+
+.otC{
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+.addP{
+  cursor: pointer;
+  text-transform: uppercase;
+  opacity: 0.5;
+  color: #fff;
+}
+.addP:hover{
+  opacity: 1;
+}
