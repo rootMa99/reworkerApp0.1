@@ -98,10 +98,16 @@ const Shifts = (p) => {
   });
   const onchangeHandler = (e, t) => {
     const datap = [];
-    t === "sm" && e.map((m) => datap.push(m.value));
+    (t === "sm" || t==="se" || t==="sn") && e.map((m) => datap.push(m.value));
     switch (t) {
       case "sm":
         setDataMorning((prev) => ({ ...prev, crews: datap }));
+        break;
+      case "se":
+        setDataEv((prev) => ({ ...prev, crews: datap }));
+        break;
+      case "sn":
+        setDataNi((prev) => ({ ...prev, crews: datap }));
         break;
 
       default:
@@ -131,6 +137,7 @@ const Shifts = (p) => {
               inputId="shiftleader1"
               styles={customStyles}
               isMulti
+              onChange={(e) => onchangeHandler(e, "se")}
             />
           </div>
           <div className={c["form-group"]}>
@@ -141,6 +148,7 @@ const Shifts = (p) => {
               inputId="shiftleader1"
               styles={customStyles}
               isMulti
+              onChange={(e) => onchangeHandler(e, "sn")}
             />
           </div>
           <div className={c.otC}>
