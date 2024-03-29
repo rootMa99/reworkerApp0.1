@@ -13,8 +13,8 @@ import {
 import React from "react";
 
 const Charts = (p) => {
-  console.log(p.datasets);
-  
+  console.log(p.data, p.title);
+
   const data = {
     labels: p.data.labels,
     datasets: p.data.datasets,
