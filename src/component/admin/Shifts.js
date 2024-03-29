@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Select from "react-select";
-import api from "../../services/api";
+// import api from "../../services/api";
 import c from "../home/FormAddDetails.module.css";
 import { selectCreator } from "../hooks/benifFunc";
 const customStyles = {
@@ -68,34 +68,24 @@ const customStyles = {
   }),
 };
 
-const getlabelandvalue = (data) => {
-  const retData = [];
-  data.map((m) =>
-    retData.push({
-      value: m,
-      label: m,
-    })
-  );
-  return retData;
-};
+
 
 const Shifts = (p) => {
   const [dataMorning, setDataMorning] = useState({
     shiftName: "M",
     crews: [],
-    ot: [],
   });
   const [ot, setOt] = useState([{ crew: "", startDate: "" , endDate:""}]);
   const [dataEv, setDataEv] = useState({
     shiftName: "S",
     crews: [],
-    ot: [],
   });
   const [dataNi, setDataNi] = useState({
     shiftName: "N",
     crews: [],
-    ot: [],
   });
+
+  console.log(dataMorning, dataEv, dataNi,ot)
   const onchangeHandler = (e, t) => {
     const datap = [];
     (t === "sm" || t==="se" || t==="sn") && e.map((m) => datap.push(m.value));
