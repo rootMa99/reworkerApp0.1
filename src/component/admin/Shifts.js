@@ -88,9 +88,8 @@ const Shifts = (p) => {
 
   const submitHandler=e=>{
     e.preventDefault();
-    console.log(submitHandler)
+    console.log(dataMorning, dataEv, dataNi,ot)
   }
-  console.log(dataMorning, dataEv, dataNi,ot)
   const onchangeHandler = (e, t) => {
     const datap = [];
     (t === "sm" || t==="se" || t==="sn") && e.map((m) => datap.push(m.value));
