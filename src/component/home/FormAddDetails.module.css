@@ -29,14 +29,14 @@
   justify-content: space-evenly;
   align-items: center;
 }
-.titlenb{
+.titlenb {
   position: absolute;
   top: -1rem;
   right: 1rem;
   text-transform: uppercase;
   color: #717171;
 }
-.titlenb span{
+.titlenb span {
   color: #fff;
 }
 .form-container {
@@ -65,7 +65,7 @@
   cursor: pointer;
   box-shadow: 8px 6px 20px 0px #c3c3c31c;
 }
-.listOfUser:hover{
+.listOfUser:hover {
   transform: scale(1.01);
   border: 1px solid transparent;
 }
@@ -95,7 +95,6 @@
     background-position: 0% 50%;
   }
 }
-
 
 .form-container button:active {
   scale: 0.95;
@@ -299,26 +298,26 @@
 .newAutoRefus:hover {
   color: #fff;
 }
-.updateAcc{
+.updateAcc {
   position: fixed;
   z-index: 11111;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
 }
-.deletion{
+.deletion {
   color: #717171;
   text-transform: capitalize;
   cursor: pointer;
   width: fit-content;
   margin: auto;
 }
-.deletion:hover{
+.deletion:hover {
   color: #fb0606;
   transform: scale(1.1);
   font-weight: bolder;
 }
-.navin{
+.navin {
   display: flex;
   position: fixed;
   left: 1rem;
@@ -327,29 +326,57 @@
   gap: 2rem;
   z-index: 9999;
 }
-.navin h3{
+.navin h3 {
   text-transform: uppercase;
   cursor: pointer;
   opacity: 0.5;
   /* border-bottom: 1px solid; */
 }
-.navin h3:hover{
+.navin h3:hover {
   opacity: 1;
   transform: scale(1.1);
 }
 
-
-.otC{
+.otC {
   width: 100%;
   display: flex;
   align-items: center;
 }
-.addP{
+.addP {
   cursor: pointer;
   text-transform: uppercase;
   opacity: 0.5;
   color: #fff;
 }
-.addP:hover{
+.addP:hover {
   opacity: 1;
+}
+
+.historyList {
+  width: 30rem;
+  list-style: none;
+  color: wheat;
+  padding: 0;
+}
+.historyList li {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: center;
+  align-content: center;
+  flex-direction: row;
+  text-transform: uppercase;
+  padding: 5px;
+  font-weight: 900;
+}
+.historyContainer {
+  width: fit-content;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.historyH2 {
+  color: aliceblue;
+  text-transform: uppercase;
 }

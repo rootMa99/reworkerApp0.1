@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import c from "./FormAddDetails.module.css";
 
 const DATAC = [
@@ -265,36 +265,77 @@ const DATAC = [
 ];
 
 const FeedBackForm = (p) => {
-
-    const [data, setData]=useState({c:"", v:""});
+  const [data, setData] = useState({ c: "", v: "" });
+  const [history, setHistory] = useState([]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const r=DATAC.filter(f=>f.Connecteur===data.c && f.Voie===+data.v)
-    console.log(r)
-    if(r.length>0){
-        alert(r[0]["Poste/Cellule"])
-    }else{
-        alert("no Poste/Cellule found")
+    const r = DATAC.filter(
+      (f) => f.Connecteur === data.c && f.Voie === +data.v
+    );
+    console.log(r);
+    if (r.length > 0) {
+      alert(r[0]["Poste/Cellule"]);
+      if (
+        history.findIndex(
+          (f) => f.Connecteur === data.c && f.Voie === +data.v
+        ) === -1
+      ) {
+        setHistory((p) => [...p, r[0]]);
+      }
+    } else {
+      alert("no Poste/Cellule found");
     }
   };
-
+  console.log(history, data);
   return (
-    <div className={c["form-container"]}>
-      <form className={c.form} onSubmit={handleSubmit}>
-        <div className={c["form-group"]}>
-          <label htmlFor="reference">Connecteur</label>
-          <input required name="reference" id="reference" type="text"  onChange={e=>setData(p=>({...p, c:e.target.value}))}/>
-        </div>
-        <div className={c["form-group"]}>
-          <label htmlFor="reference">voie</label>
-          <input required name="reference" id="reference" type="text" onChange={e=>setData(p=>({...p, v:e.target.value}))}/>
-        </div>
-        <button type="submit" className={c["form-submit-btn"]}>
-          Submit
-        </button>
-      </form>
-    </div>
+    <React.Fragment>
+      <div className={c["form-container"]}>
+        <form className={c.form} onSubmit={handleSubmit}>
+          <div className={c["form-group"]}>
+            <label htmlFor="reference">Connecteur</label>
+            <input
+              required
+              name="reference"
+              id="reference"
+              type="text"
+              onChange={(e) => setData((p) => ({ ...p, c: e.target.value }))}
+            />
+          </div>
+          <div className={c["form-group"]}>
+            <label htmlFor="reference">voie</label>
+            <input
+              required
+              name="reference"
+              id="references"
+              type="text"
+              onChange={(e) => setData((p) => ({ ...p, v: +e.target.value }))}
+            />
+          </div>
+          <button type="submit" className={c["form-submit-btn"]}>
+            Submit
+          </button>
+        </form>
+      </div>
+      <div className={c.historyContainer}>
+        <h3 className={c.historyH2}>history</h3>
+        <ul className={c.historyList}>
+          <li style={{ color: "#f84018" }}>
+            <span style={{ width: "40%" }}>connecteur</span>
+            <span style={{ width: "20%" }}>voie</span>
+            <span style={{ width: "30%" }}>Poste/Cellule</span>
+          </li>
+          {history.length > 0 &&
+            history.map((f, i) => (
+              <li key={i}>
+                <span style={{ width: "40%" }}>{f.Connecteur}</span>
+                <span style={{ width: "20%" }}>{f.Voie}</span>
+                <span style={{ width: "30%" }}>{f["Poste/Cellule"]}</span>
+              </li>
+            ))}
+        </ul>
+      </div>
+    </React.Fragment>
   );
 };
 
