@@ -370,6 +370,12 @@
   font-weight: 900;
 }
 .historyContainer {
+  margin-top: 1rem;
+  border-radius: 20px;
+  padding: 10px;
+  border: 1px solid orangered;
+  background-color: black;
+  width: -moz-fit-content;
   width: fit-content;
   display: flex;
   flex-direction: column;
