@@ -1,17 +1,20 @@
 import { Suspense } from "react";
 import "./App.css";
 import NavBar from "./component/ui/NavBar";
-import { Navigate, Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes, useLocation } from "react-router-dom";
 import Home from "./component/home/Home";
 import { useSelector } from "react-redux";
 import Login from "./component/ui/Login";
 import Admin from "./component/admin/Admin";
 import Dashboard from "./component/admin/Dashboard";
+import FeedBackForm from "./component/home/FeedBackForm";
 // import api from "./services/api";
 // import { loginSActions } from "./store/loginSlice";
 
 function App() {
   const { isLoged } = useSelector((s) => s.loginr);
+  const location = useLocation();
+  const currentPath = location.pathname;
   //   const dispatch=useDispatch();
 
   //   const callback=useCallback(async ()=>{
@@ -41,6 +44,9 @@ function App() {
   return (
     <div className="App">
       <NavBar />
+      {
+        currentPath === "/fb" && <FeedBackForm />
+      }
       {!isLoged.login && <Login />}
       {isLoged.login && (
         <Suspense>

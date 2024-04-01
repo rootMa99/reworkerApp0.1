@@ -10,6 +10,7 @@ import trash from "../../assets/trash.png";
 import UploadExcelData from "./UploadExcelData";
 import Notification from "../ui/Notification";
 
+
 const stylec = (status) => {
   return status === "Repaired"
     ? {
@@ -23,11 +24,13 @@ const stylec = (status) => {
         fontWeight: "700",
         borderBottom: "9px solid #D9F28B",
       }
-    :status === "Scrap"? {
+    : status === "Scrap"
+    ? {
         color: "#CF3335",
         fontWeight: "700",
         borderBottom: "9px solid #CF3335",
-      }:{
+      }
+    : {
         color: "#929D96",
         fontWeight: "700",
         borderBottom: "9px solid #929D96",
@@ -35,15 +38,14 @@ const stylec = (status) => {
 };
 
 const Home = (p) => {
-
   const [popUp, setPopUp] = useState(false);
   const [popUpEdite, setPopUpEdite] = useState({ states: false, data: {} });
   const [page, setPage] = useState({ page: 1, totalPage: 0 });
   const [pagescrap, setPagescrap] = useState({ page: 1, totalPage: 0 });
-  const { urgent, isLoged, data, urgentData, scrap, logistics, sertissage } = useSelector(
-    (s) => s.loginr
-  );
+  const { urgent, isLoged, data, urgentData, scrap, logistics, sertissage } =
+    useSelector((s) => s.loginr);
   const [notify, setNotify] = useState({ logic: false, id: 0, ref: "" });
+
   const dispatch = useDispatch();
 
   console.log(urgent);
@@ -55,7 +57,7 @@ const Home = (p) => {
 
   useEffect(() => {
     const keyDownHandler = (e) => {
-      if(isLoged.role === "Reworker"){
+      if (isLoged.role === "Reworker") {
         clickHandler();
       }
     };
@@ -63,7 +65,7 @@ const Home = (p) => {
     return () => {
       document.removeEventListener("keydown", keyDownHandler);
     };
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isLoged.role]);
 
   const callback = useCallback(async () => {
@@ -78,9 +80,7 @@ const Home = (p) => {
 
       const data = await response.json();
       console.log(data);
-      dispatch(
-        loginSActions.addDataSelect(data)
-      );
+      dispatch(loginSActions.addDataSelect(data));
     } catch (error) {
       console.error("Error:", error);
     }
@@ -223,6 +223,7 @@ const Home = (p) => {
     setNotify({ logic: false, id: 0, ref: "" });
   };
 
+
   return (
     <React.Fragment>
       {notify.logic && (
@@ -242,9 +243,11 @@ const Home = (p) => {
           )}
 
           {isLoged.role === "Reworker" && (
-            <button className={c.button} onClick={clickHandler}>
-              scan reference
-            </button>
+            <React.Fragment>
+              <button className={c.button} onClick={clickHandler}>
+                scan reference
+              </button>
+            </React.Fragment>
           )}
           <h2 className={c.titleCab}>urgent cables</h2>
           <table

@@ -88,7 +88,7 @@ const Shifts = (p) => {
 
   const submitHandler=e=>{
     e.preventDefault();
-    console.log(dataMorning, dataEv, dataNi,ot)
+    console.log(dataMorning, dataEv, dataNi,ot, otn)
   }
   const onchangeHandler = (e, t) => {
     const datap = [];
