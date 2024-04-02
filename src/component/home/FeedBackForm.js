@@ -303,6 +303,7 @@ const FeedBackForm = (p) => {
       );
 
       const datar = await response.json();
+      setData(datar);
       console.log(datar);
     } catch (error) {
       console.error("Error:", error);
@@ -311,8 +312,18 @@ const FeedBackForm = (p) => {
   console.log(history, data);
   return (
     <React.Fragment>
-      <div className={c["form-container"]}>
-        <form className={c.form} onSubmit={handleSubmit}>
+      <div className={c["form-container"]} style={{ top: "25vh" }}>
+        <form
+          className={c.form}
+          onSubmit={handleSubmit}
+          style={{
+            flexDirection: "row",
+            flexWrap: "wrap",
+            gap: "40px",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
           <div className={c["form-group"]}>
             <label htmlFor="Connecteur">Connecteur</label>
             <input
@@ -362,6 +373,28 @@ const FeedBackForm = (p) => {
             Submit
           </button>
         </form>
+      </div>
+      <div className={c.historyContainer}>
+        <h3 className={c.historyH2}>result</h3>
+        <ul className={c.historyList}>
+          <li style={{ color: "#f84018" }}>
+            <span style={{ width: "30%" }}>wire</span>
+            <span style={{ width: "30%" }}>color</span>
+            <span style={{ width: "40%" }}>connecteur</span>
+            <span style={{ width: "20%" }}>voie</span>
+            <span style={{ width: "30%" }}>Poste/Cellule</span>
+          </li>
+          {history.length > 0 &&
+            history.map((f, i) => (
+              <li key={i}>
+                <span style={{ width: "30%" }}>{f["Poste/Cellule"]}</span>
+                <span style={{ width: "30%" }}>{f["Poste/Cellule"]}</span>
+                <span style={{ width: "40%" }}>{f.Connecteur}</span>
+                <span style={{ width: "20%" }}>{f.Voie}</span>
+                <span style={{ width: "30%" }}>{f["Poste/Cellule"]}</span>
+              </li>
+            ))}
+        </ul>
       </div>
       <div className={c.historyContainer}>
         <h3 className={c.historyH2}>history</h3>

@@ -47,7 +47,7 @@ function App() {
       {
         currentPath === "/fb" && <FeedBackForm />
       }
-      {!isLoged.login && <Login />}
+      {(!isLoged.login && currentPath !== "/fb") && <Login />}
       {isLoged.login && (
         <Suspense>
           <Routes>
