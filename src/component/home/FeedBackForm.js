@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import c from "./FormAddDetails.module.css";
+import api from "../../services/api";
 
 // const DATAC = [
 //   {
@@ -284,13 +285,28 @@ import c from "./FormAddDetails.module.css";
 //   }
 // };
 const FeedBackForm = (p) => {
-  const [data, setData] = useState({ c: "", v: "", cr:"", w:"" });
+  const [data, setData] = useState({ c: "", v: "", cr: "", w: "", p: "" });
   const [history, setHistory] = useState([]);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    
+    try {
+      const response = await fetch(
+        `${api}/metadata/feedback?Wire=${data.w}&Color=${data.cr}&Connecteur=${data.c}&Voie=${data.v}&Poste=${data.p}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      const datar = await response.json();
+      console.log(datar);
+    } catch (error) {
+      console.error("Error:", error);
+    }
   };
   console.log(history, data);
   return (
@@ -300,7 +316,6 @@ const FeedBackForm = (p) => {
           <div className={c["form-group"]}>
             <label htmlFor="Connecteur">Connecteur</label>
             <input
-              required
               name="Connecteur"
               id="Connecteur"
               type="text"
@@ -310,7 +325,6 @@ const FeedBackForm = (p) => {
           <div className={c["form-group"]}>
             <label htmlFor="voie">voie</label>
             <input
-              required
               name="voie"
               id="voie"
               type="text"
@@ -333,6 +347,15 @@ const FeedBackForm = (p) => {
               id="wire"
               type="text"
               onChange={(e) => setData((p) => ({ ...p, w: e.target.value }))}
+            />
+          </div>
+          <div className={c["form-group"]}>
+            <label htmlFor="poste">poste</label>
+            <input
+              name="poste"
+              id="poste"
+              type="text"
+              onChange={(e) => setData((p) => ({ ...p, p: e.target.value }))}
             />
           </div>
           <button type="submit" className={c["form-submit-btn"]}>
