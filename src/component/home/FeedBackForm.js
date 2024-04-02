@@ -286,6 +286,7 @@ import api from "../../services/api";
 // };
 const FeedBackForm = (p) => {
   const [data, setData] = useState({ c: "", v: "", cr: "", w: "", p: "" });
+  const [returnedData, setReturnedData] = useState([]);
   const [history, setHistory] = useState([]);
 
   const handleSubmit = async (e) => {
@@ -303,8 +304,10 @@ const FeedBackForm = (p) => {
       );
 
       const datar = await response.json();
-      setData(datar);
+      setReturnedData(datar);
       console.log(datar);
+
+      setHistory((p) => [...p, ...datar]);
     } catch (error) {
       console.error("Error:", error);
     }
@@ -378,7 +381,7 @@ const FeedBackForm = (p) => {
         className={c.historyContainer}
         style={{
           position: "absolute",
-          top: "50%",
+          top: "53%",
           left: "50%",
           transform: "translate(-50%, -50%)",
           width: "53rem",
@@ -394,16 +397,19 @@ const FeedBackForm = (p) => {
             <span style={{ width: "20%" }}>voie</span>
             <span style={{ width: "30%" }}>Poste/Cellule</span>
           </li>
-          {history.length > 0 &&
-            history.map((f, i) => (
+          {returnedData.length > 0 &&
+            returnedData.map((f, i) => (
               <li key={i}>
-                <span style={{ width: "10%" }}>{f["Poste/Cellule"]}</span>
-                <span style={{ width: "20%" }}>{f["Poste/Cellule"]}</span>
+                <span style={{ width: "10%" }}>{f.Wire}</span>
+                <span style={{ width: "20%" }}>{f.Color}</span>
                 <span style={{ width: "20%" }}>{f.Connecteur}</span>
                 <span style={{ width: "20%" }}>{f.Voie}</span>
                 <span style={{ width: "30%" }}>{f["Poste/Cellule"]}</span>
               </li>
             ))}
+          {returnedData.length === 0 && (
+            <h3 className={c.historyH2}>no data found</h3>
+          )}
         </ul>
       </div>
       <div className={c.historyContainer}>
