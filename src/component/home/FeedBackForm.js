@@ -374,22 +374,32 @@ const FeedBackForm = (p) => {
           </button>
         </form>
       </div>
-      <div className={c.historyContainer}>
+      <div
+        className={c.historyContainer}
+        style={{
+          position: "absolute",
+          top: "50%",
+          left: "50%",
+          transform: "translate(-50%, -50%)",
+          width: "53rem",
+          backgroundColor: "#212121",
+        }}
+      >
         <h3 className={c.historyH2}>result</h3>
-        <ul className={c.historyList}>
+        <ul className={c.historyList} style={{ width: "100%" }}>
           <li style={{ color: "#f84018" }}>
-            <span style={{ width: "30%" }}>wire</span>
-            <span style={{ width: "30%" }}>color</span>
-            <span style={{ width: "40%" }}>connecteur</span>
+            <span style={{ width: "10%" }}>wire</span>
+            <span style={{ width: "20%" }}>color</span>
+            <span style={{ width: "20%" }}>connecteur</span>
             <span style={{ width: "20%" }}>voie</span>
             <span style={{ width: "30%" }}>Poste/Cellule</span>
           </li>
           {history.length > 0 &&
             history.map((f, i) => (
               <li key={i}>
-                <span style={{ width: "30%" }}>{f["Poste/Cellule"]}</span>
-                <span style={{ width: "30%" }}>{f["Poste/Cellule"]}</span>
-                <span style={{ width: "40%" }}>{f.Connecteur}</span>
+                <span style={{ width: "10%" }}>{f["Poste/Cellule"]}</span>
+                <span style={{ width: "20%" }}>{f["Poste/Cellule"]}</span>
+                <span style={{ width: "20%" }}>{f.Connecteur}</span>
                 <span style={{ width: "20%" }}>{f.Voie}</span>
                 <span style={{ width: "30%" }}>{f["Poste/Cellule"]}</span>
               </li>
