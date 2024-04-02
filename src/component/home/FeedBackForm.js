@@ -2,11 +2,9 @@ import React, { useState } from "react";
 import c from "./FormAddDetails.module.css";
 import api from "../../services/api";
 
-
 const FeedBackForm = (p) => {
   const [data, setData] = useState({ c: "", v: "", cr: "", w: "", p: "" });
   const [returnedData, setReturnedData] = useState([]);
-  const [history, setHistory] = useState([]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -25,13 +23,12 @@ const FeedBackForm = (p) => {
       const datar = await response.json();
       setReturnedData(datar);
       console.log(datar);
-
-      setHistory((p) => [...p, ...datar]);
+      setData({ c: "", v: "", cr: "", w: "", p: "" });
     } catch (error) {
       console.error("Error:", error);
     }
   };
-  console.log(history, data);
+
   return (
     <React.Fragment>
       <div className={c["form-container"]} style={{ top: "25vh" }}>
@@ -53,6 +50,7 @@ const FeedBackForm = (p) => {
               id="Connecteur"
               type="text"
               onChange={(e) => setData((p) => ({ ...p, c: e.target.value }))}
+              value={data.c}
             />
           </div>
           <div className={c["form-group"]}>
@@ -62,6 +60,7 @@ const FeedBackForm = (p) => {
               id="voie"
               type="text"
               onChange={(e) => setData((p) => ({ ...p, v: +e.target.value }))}
+              value={data.v}
             />
           </div>
           <div className={c["form-group"]}>
@@ -71,6 +70,7 @@ const FeedBackForm = (p) => {
               id="color"
               type="text"
               onChange={(e) => setData((p) => ({ ...p, cr: e.target.value }))}
+              value={data.cr}
             />
           </div>
           <div className={c["form-group"]}>
@@ -80,6 +80,7 @@ const FeedBackForm = (p) => {
               id="wire"
               type="text"
               onChange={(e) => setData((p) => ({ ...p, w: e.target.value }))}
+              value={data.w}
             />
           </div>
           <div className={c["form-group"]}>
@@ -89,6 +90,7 @@ const FeedBackForm = (p) => {
               id="poste"
               type="text"
               onChange={(e) => setData((p) => ({ ...p, p: e.target.value }))}
+              value={data.p}
             />
           </div>
           <button type="submit" className={c["form-submit-btn"]}>
@@ -108,8 +110,11 @@ const FeedBackForm = (p) => {
         }}
       >
         <h3 className={c.historyH2}>result</h3>
-        <ul className={`${c.historyList} ${c.res}`} style={{ width: "100%", margin:0 }}>
-          <li style={{ color: "#f84018", padding:0 }}>
+        <ul
+          className={`${c.historyList} ${c.res}`}
+          style={{ width: "100%", margin: 0 }}
+        >
+          <li style={{ color: "#f84018", padding: 0 }}>
             <span style={{ width: "10%" }}>wire</span>
             <span style={{ width: "20%" }}>color</span>
             <span style={{ width: "20%" }}>connecteur</span>
@@ -131,24 +136,6 @@ const FeedBackForm = (p) => {
           {returnedData.length === 0 && (
             <h3 className={c.historyH2}>no data found</h3>
           )}
-        </ul>
-      </div>
-      <div className={c.historyContainer}>
-        <h3 className={c.historyH2}>history</h3>
-        <ul className={c.historyList}>
-          <li style={{ color: "#f84018" }}>
-            <span style={{ width: "40%" }}>connecteur</span>
-            <span style={{ width: "20%" }}>voie</span>
-            <span style={{ width: "30%" }}>Poste/Cellule</span>
-          </li>
-          {history.length > 0 &&
-            history.map((f, i) => (
-              <li key={i}>
-                <span style={{ width: "40%" }}>{f.Connecteur}</span>
-                <span style={{ width: "20%" }}>{f.Voie}</span>
-                <span style={{ width: "30%" }}>{f["Poste/Cellule"]}</span>
-              </li>
-            ))}
         </ul>
       </div>
     </React.Fragment>
