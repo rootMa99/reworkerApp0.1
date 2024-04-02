@@ -382,6 +382,7 @@ const Admin = (p) => {
                     placeholder="enter userName"
                     value={selectedData.username}
                     onChange={(e) => onchangeHandlerUpdate(e, "username")}
+                    style={{textTransform:"none"}}
                   />
                 </div>
                 <div className={c["form-group"]}>
@@ -392,6 +393,7 @@ const Admin = (p) => {
                     type="text"
                     placeholder="enter password"
                     onChange={(e) => onchangeHandlerUpdate(e, "password")}
+                    style={{textTransform:"none"}}
                   />
                 </div>
                 <div className={c["form-group"]}>

@@ -1,7 +1,7 @@
 import React, { useRef, useState } from "react";
 import c from "./UploadExcelData.module.css";
 import api from "../../services/api";
-import {  useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import Notification from "./Notification";
 import UploadLoading from "../ui/UploadLoading";
 //import { loginSActions } from "../../store/loginSlice";
@@ -44,46 +44,26 @@ const UploadExcelData = (p) => {
   const handleButtonClick = async () => {
     setLoading(true);
     setShowbutton(false);
-
-    // const jwtToken = isLoged.token;
     const formData = new FormData();
     formData.append("excel", file);
-    // fetch(`${api}/logistics`, {
-    //   method: "POST",
-    //   body: formData,
-    //   headers: {
-    //     Authorization: `Bearer ${jwtToken}`,
-    //   },
-    // }).then((response) => {
-    //   if (response.status === 200) {
-    //     setSuccessfully(true);
-    //     setLoading(false);
-    //   } else {
-    //     setError(true);
-    //     setLoading(false);
-    //     setShowbutton(true);
-    //     throw new Error(`Request failed with status: ${response.status}`);
-    //   }
-    // });
+
     try {
       const response = await fetch(`${api}/logistics`, {
         method: "POST",
         body: formData,
         headers: {
-          //"Content-Type": "application/json",
           Authorization: `Bearer ${isLoged.token}`,
         },
       });
 
       const data = await response.json();
-      console.log(data)
+      console.log(data);
       setSuccessfully(true);
-        setLoading(false);
-       //dispatch(loginSActions.addLogisticsData(data));
+      setLoading(false);
     } catch (error) {
       setError(true);
-        setLoading(false);
-        setShowbutton(true);
+      setLoading(false);
+      setShowbutton(true);
       console.error("Error:", error);
     }
   };

@@ -56,7 +56,7 @@
   text-transform: capitalize;
 }
 .listOfUser {
-  width: 48%;
+  width: 30%;
   flex-direction: row;
   align-items: center;
   justify-content: space-evenly;
@@ -68,6 +68,7 @@
 .listOfUser:hover {
   transform: scale(1.01);
   border: 1px solid transparent;
+  background-color: #000000;
 }
 
 .detailsData {
