@@ -386,3 +386,7 @@
   color: aliceblue;
   text-transform: uppercase;
 }
+.res{
+  max-height: 20rem;
+  overflow: auto;
+}
