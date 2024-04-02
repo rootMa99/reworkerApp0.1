@@ -100,7 +100,7 @@ const FeedBackForm = (p) => {
         className={c.historyContainer}
         style={{
           position: "absolute",
-          top: "64%",
+          top: "65%",
           left: "50%",
           transform: "translate(-50%, -50%)",
           width: "53rem",
@@ -108,14 +108,16 @@ const FeedBackForm = (p) => {
         }}
       >
         <h3 className={c.historyH2}>result</h3>
-        <ul className={`${c.historyList} ${c.res}`} style={{ width: "100%" }}>
-          <li style={{ color: "#f84018" }}>
+        <ul className={`${c.historyList} ${c.res}`} style={{ width: "100%", margin:0 }}>
+          <li style={{ color: "#f84018", padding:0 }}>
             <span style={{ width: "10%" }}>wire</span>
             <span style={{ width: "20%" }}>color</span>
             <span style={{ width: "20%" }}>connecteur</span>
             <span style={{ width: "20%" }}>voie</span>
             <span style={{ width: "30%" }}>Poste/Cellule</span>
           </li>
+        </ul>
+        <ul className={`${c.historyList} ${c.res}`} style={{ width: "100%" }}>
           {returnedData.length > 0 &&
             returnedData.map((f, i) => (
               <li key={i}>
