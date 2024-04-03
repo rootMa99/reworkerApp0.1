@@ -45,9 +45,9 @@ function App() {
     <div className="App">
       <NavBar />
       {
-        currentPath === "/fb" && <FeedBackForm />
+        currentPath === "/feedback" && <FeedBackForm />
       }
-      {(!isLoged.login && currentPath !== "/fb") && <Login />}
+      {(!isLoged.login && currentPath !== "/feedback") && <Login />}
       {isLoged.login && (
         <Suspense>
           <Routes>
