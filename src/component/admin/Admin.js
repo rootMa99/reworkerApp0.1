@@ -25,8 +25,8 @@ const ROLES = [
     label: "Auditor",
   },
   {
-    value: "ShiftLeader",
-    label: "ShiftLeader",
+    value: "Shiftleader",
+    label: "Shiftleader",
   },
   {
     value: "Coordinator",

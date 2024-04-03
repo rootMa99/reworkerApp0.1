@@ -134,7 +134,7 @@ const Home = (p) => {
       console.error("Error:", error);
     }
 
-    if (isLoged.role === "ShiftLeader") {
+    if (isLoged.role === "Shiftleader") {
       try {
         const response = await fetch(
           `${api}/data?cableStatus=Scrap&page=${pagescrap.page}&limit=5`,
@@ -341,7 +341,7 @@ const Home = (p) => {
                 ))}
             </tbody>
           </table>
-          {isLoged.role === "ShiftLeader" && (
+          {isLoged.role === "Shiftleader" && (
             <React.Fragment>
               <h2 className={c.titleCabsl}>scrap cables</h2>
               <table
@@ -390,7 +390,7 @@ const Home = (p) => {
                         <td>{m.details}</td>
                         <td>{m.pDD}</td>
                         <td style={stylec(m.cableStatus)}>{m.cableStatus}</td>
-                        <td>{m.shiftLeaderAction}</td>
+                        <td>{m.shiftleaderAction}</td>
                       </tr>
                     ))}
                 </tbody>
@@ -398,7 +398,7 @@ const Home = (p) => {
             </React.Fragment>
           )}
 
-          {isLoged.role === "ShiftLeader" && (
+          {isLoged.role === "Shiftleader" && (
             <div className={c.pagination}>
               <span
                 className={c.paginationd}
@@ -469,10 +469,10 @@ const Home = (p) => {
                     <td style={stylec(m.cableStatus)}>{m.cableStatus}</td>
                     <td>{m.pPD}</td>
                     <td>{m.idPD}</td>
-                    <td>{m.teamLeaderAction}</td>
+                    <td>{m.teamleaderAction}</td>
                     <td>{m.cP}</td>
                     <td>{m.auditorAction}</td>
-                    <td>{m.shiftLeaderAction}</td>
+                    <td>{m.shiftleaderAction}</td>
                   </tr>
                 ))}
             </tbody>

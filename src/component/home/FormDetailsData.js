@@ -80,10 +80,10 @@ const FormDetailsData = (p) => {
           <span>{p.data.pPD}</span>
         </div>
       )}
-      {p.data.teamLeaderAction.trim() !== "" && (
+      {p.data.teamleaderAction.trim() !== "" && (
         <div className={c.wrapDt}>
-          <h3>teamLeader Action: </h3>
-          <span>{p.data.teamLeaderAction}</span>
+          <h3>teamleader Action: </h3>
+          <span>{p.data.teamleaderAction}</span>
         </div>
       )}
       {p.data.idPD.trim() !== "" && (

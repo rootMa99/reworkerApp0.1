@@ -153,17 +153,17 @@ const loginS = createSlice({
       if (s.data[index].idPD.trim() !== "") {
         s.data[index].idPD = p.payload.idpd;
       }
-      if (s.data[index].teamLeaderAction.trim() !== "") {
-        s.data[index].teamLeaderAction = p.payload.cma;
+      if (s.data[index].teamleaderAction.trim() !== "") {
+        s.data[index].teamleaderAction = p.payload.cma;
       }
       if (
         s.data[index].pPD.trim() === "" &&
         s.data[index].idPD.trim() === "" &&
-        s.data[index].teamLeaderAction.trim() === ""
+        s.data[index].teamleaderAction.trim() === ""
       ) {
         s.data[index].pPD = p.payload.ppd;
         s.data[index].idPD = p.payload.idpd;
-        s.data[index].teamLeaderAction = p.payload.cma;
+        s.data[index].teamleaderAction = p.payload.cma;
       }
     },
     addsl(s, p) {
@@ -171,20 +171,20 @@ const loginS = createSlice({
       const index2 = s.scrap.findIndex((f) => f._id === p.payload.id);
 
       if (index !== -1) {
-        if (s.data[index].shiftLeaderAction.trim() !== "") {
-          s.data[index].shiftLeaderAction = p.payload.sl;
+        if (s.data[index].shiftleaderAction.trim() !== "") {
+          s.data[index].shiftleaderAction = p.payload.sl;
         }
-        if (s.data[index].shiftLeaderAction.trim() === "") {
-          s.data[index].shiftLeaderAction = p.payload.sl;
+        if (s.data[index].shiftleaderAction.trim() === "") {
+          s.data[index].shiftleaderAction = p.payload.sl;
         }
       }
       if (index2 !== -1) {
-        if (s.scrap[index2].shiftLeaderAction.trim() !== "") {
-          s.scrap[index2].shiftLeaderAction = p.payload.sl;
+        if (s.scrap[index2].shiftleaderAction.trim() !== "") {
+          s.scrap[index2].shiftleaderAction = p.payload.sl;
         }
 
-        if (s.scrap[index2].shiftLeaderAction.trim() === "") {
-          s.scrap[index2].shiftLeaderAction = p.payload.sl;
+        if (s.scrap[index2].shiftleaderAction.trim() === "") {
+          s.scrap[index2].shiftleaderAction = p.payload.sl;
         }
       }
     },
@@ -198,9 +198,9 @@ const loginS = createSlice({
       s.data[index].cP = p.payload.data.cp;
       s.data[index].pPD = p.payload.data.ppd;
       s.data[index].idPD = p.payload.data.idpd;
-      s.data[index].teamLeaderAction = p.payload.data.cma;
+      s.data[index].teamleaderAction = p.payload.data.cma;
       s.data[index].auditorAction = p.payload.data.audia;
-      s.data[index].shiftLeaderAction = p.payload.data.sl;
+      s.data[index].shiftleaderAction = p.payload.data.sl;
     },
     deleteRow(s, p) {
       s.data = s.data.filter((f) => f._id !== p.payload);

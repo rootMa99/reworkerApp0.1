@@ -133,10 +133,10 @@ const PopupCmAdSl = (p) => {
     cs: p.data.cableStatus,
     ppd: p.data.pPD,
     idpd: p.data.idPD,
-    cma: p.data.teamLeaderAction,
+    cma: p.data.teamleaderAction,
     audia: p.data.auditorAction,
     cp: p.data.cP,
-    sl: p.data.shiftLeaderAction,
+    sl: p.data.shiftleaderAction,
   });
 
   const dispatch = useDispatch();
@@ -149,7 +149,7 @@ const PopupCmAdSl = (p) => {
         const body = {
           pPD: dataCm.ppd,
           idPD: dataCm.idpd,
-          teamLeaderAction: dataCm.cma,
+          teamleaderAction: dataCm.cma,
         };
         const response = await fetch(`${api}/teamleader/update/${p.data._id}`, {
           method: "POST",
@@ -189,10 +189,10 @@ const PopupCmAdSl = (p) => {
         console.error("Error:", error);
       }
     }
-    if (isLoged.role === "ShiftLeader") {
+    if (isLoged.role === "Shiftleader") {
       try {
         const body = {
-          shiftLeaderAction: dataCm.sl,
+          shiftleaderAction: dataCm.sl,
         };
         const response = await fetch(
           `${api}/shiftleader/update/${p.data._id}`,
@@ -224,10 +224,10 @@ const PopupCmAdSl = (p) => {
           cableStatus: dataCm.cs,
           pPD: dataCm.ppd,
           idPD: dataCm.idpd,
-          teamLeaderAction: dataCm.cma,
+          teamleaderAction: dataCm.cma,
           cP: dataCm.cp,
           auditorAction: dataCm.audia,
-          shiftLeaderAction: dataCm.sl,
+          shiftleaderAction: dataCm.sl,
         };
         const response = await fetch(
           `${api}/coordinator/update/${p.data._id}`,
@@ -399,7 +399,7 @@ const PopupCmAdSl = (p) => {
             </div>
           </React.Fragment>
         )}
-        {isLoged.role === "ShiftLeader" && (
+        {isLoged.role === "Shiftleader" && (
           <React.Fragment>
             <h3 className={c.notif}>please set action to this scrap cable</h3>
             <FormDetailsData data={p.data} />
