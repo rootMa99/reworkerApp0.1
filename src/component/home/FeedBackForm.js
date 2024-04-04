@@ -51,6 +51,7 @@ const FeedBackForm = (p) => {
               type="text"
               onChange={(e) => setData((p) => ({ ...p, c: e.target.value }))}
               value={data.c}
+              style={{textTransform:"none"}}
             />
           </div>
           <div className={c["form-group"]}>
@@ -61,6 +62,7 @@ const FeedBackForm = (p) => {
               type="text"
               onChange={(e) => setData((p) => ({ ...p, v: +e.target.value }))}
               value={data.v}
+              style={{textTransform:"none"}}
             />
           </div>
           <div className={c["form-group"]}>
@@ -71,6 +73,7 @@ const FeedBackForm = (p) => {
               type="text"
               onChange={(e) => setData((p) => ({ ...p, cr: e.target.value }))}
               value={data.cr}
+              style={{textTransform:"none"}}
             />
           </div>
           <div className={c["form-group"]}>
@@ -81,6 +84,7 @@ const FeedBackForm = (p) => {
               type="text"
               onChange={(e) => setData((p) => ({ ...p, w: e.target.value }))}
               value={data.w}
+              style={{textTransform:"none"}}
             />
           </div>
           <div className={c["form-group"]}>
@@ -91,6 +95,7 @@ const FeedBackForm = (p) => {
               type="text"
               onChange={(e) => setData((p) => ({ ...p, p: e.target.value }))}
               value={data.p}
+              style={{textTransform:"none"}}
             />
           </div>
           <button type="submit" className={c["form-submit-btn"]}>
