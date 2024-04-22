@@ -403,3 +403,10 @@
   -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
   background-color: #f33716;
 }
+.checkBox label {
+  font-size: small;
+  color: #f84018;
+  text-transform: uppercase;
+  font-weight: bold;
+  border-bottom: 3px solid;
+}

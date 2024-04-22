@@ -5,13 +5,14 @@ import api from "../../services/api";
 const FeedBackForm = (p) => {
   const [data, setData] = useState({ c: "", v: "", cr: "", w: "", p: "" });
   const [returnedData, setReturnedData] = useState([]);
+  const [isArrival, setIsArrival] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
       const response = await fetch(
-        `${api}/metadata/feedback?Wire=${data.w}&Color=${data.cr}&Connecteur=${data.c}&Voie=${data.v}&Poste=${data.p}`,
+        `${api}/metadata/feedback?Wire=${data.w}&Color=${data.cr}&Connecteur=${data.c}&Voie=${data.v}&Poste=${data.p}&isArrival=${isArrival}`,
         {
           method: "GET",
           headers: {
@@ -51,7 +52,7 @@ const FeedBackForm = (p) => {
               type="text"
               onChange={(e) => setData((p) => ({ ...p, c: e.target.value }))}
               value={data.c}
-              style={{textTransform:"none"}}
+              style={{ textTransform: "none" }}
             />
           </div>
           <div className={c["form-group"]}>
@@ -60,9 +61,9 @@ const FeedBackForm = (p) => {
               name="voie"
               id="voie"
               type="text"
-              onChange={(e) => setData((p) => ({ ...p, v: +e.target.value }))}
+              onChange={(e) => setData((p) => ({ ...p, v: e.target.value }))}
               value={data.v}
-              style={{textTransform:"none"}}
+              style={{ textTransform: "none" }}
             />
           </div>
           <div className={c["form-group"]}>
@@ -73,7 +74,7 @@ const FeedBackForm = (p) => {
               type="text"
               onChange={(e) => setData((p) => ({ ...p, cr: e.target.value }))}
               value={data.cr}
-              style={{textTransform:"none"}}
+              style={{ textTransform: "none" }}
             />
           </div>
           <div className={c["form-group"]}>
@@ -84,7 +85,7 @@ const FeedBackForm = (p) => {
               type="text"
               onChange={(e) => setData((p) => ({ ...p, w: e.target.value }))}
               value={data.w}
-              style={{textTransform:"none"}}
+              style={{ textTransform: "none" }}
             />
           </div>
           <div className={c["form-group"]}>
@@ -95,8 +96,21 @@ const FeedBackForm = (p) => {
               type="text"
               onChange={(e) => setData((p) => ({ ...p, p: e.target.value }))}
               value={data.p}
-              style={{textTransform:"none"}}
+              style={{ textTransform: "none" }}
             />
+          </div>
+          <div className={c.checkBox}>
+            <input
+              type="checkbox"
+              id="horns"
+              name="horns"
+              onChange={(e) => {
+                setIsArrival(e.target.checked);
+              }}
+            />
+            <label htmlFor="horns">
+              Arrival zone
+            </label>
           </div>
           <button type="submit" className={c["form-submit-btn"]}>
             Submit
@@ -110,7 +124,7 @@ const FeedBackForm = (p) => {
           top: "65%",
           left: "50%",
           transform: "translate(-50%, -50%)",
-          width: "53rem",
+          width: "90%",
           backgroundColor: "#212121",
         }}
       >
@@ -121,10 +135,12 @@ const FeedBackForm = (p) => {
         >
           <li style={{ color: "#f84018", padding: 0 }}>
             <span style={{ width: "10%" }}>wire</span>
-            <span style={{ width: "20%" }}>color</span>
-            <span style={{ width: "20%" }}>connecteur</span>
-            <span style={{ width: "20%" }}>voie</span>
-            <span style={{ width: "30%" }}>Poste/Cellule</span>
+            <span style={{ width: "10%" }}>color</span>
+            <span style={{ width: "10%" }}>connecteur</span>
+            <span style={{ width: "10%" }}>voie</span>
+            <span style={{ width: "10%" }}>connecteur-B</span>
+            <span style={{ width: "10%" }}>voie-B</span>
+            <span style={{ width: "10%" }}>Poste/Cellule</span>
           </li>
         </ul>
         <ul className={`${c.historyList} ${c.res}`} style={{ width: "100%" }}>
@@ -132,10 +148,12 @@ const FeedBackForm = (p) => {
             returnedData.map((f, i) => (
               <li key={i}>
                 <span style={{ width: "10%" }}>{f.Wire}</span>
-                <span style={{ width: "20%" }}>{f.Color}</span>
-                <span style={{ width: "20%" }}>{f.Connecteur}</span>
-                <span style={{ width: "20%" }}>{f.Voie}</span>
-                <span style={{ width: "30%" }}>{f["Poste/Cellule"]}</span>
+                <span style={{ width: "10%" }}>{f.Color}</span>
+                <span style={{ width: "10%" }}>{f.Connecteur}</span>
+                <span style={{ width: "10%" }}>{f.Voie}</span>
+                <span style={{ width: "10%" }}>{f.Connecteur_B}</span>
+                <span style={{ width: "10%" }}>{f.Voie_B}</span>
+                <span style={{ width: "10%" }}>{f["Poste/Cellule"]}</span>
               </li>
             ))}
           {returnedData.length === 0 && (
