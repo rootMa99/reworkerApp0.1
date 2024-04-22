@@ -5,14 +5,14 @@ import api from "../../services/api";
 const FeedBackForm = (p) => {
   const [data, setData] = useState({ c: "", v: "", cr: "", w: "", p: "" });
   const [returnedData, setReturnedData] = useState([]);
-  const [isArrival, setIsArrival] = useState(false);
-  console.log(isArrival)
+  // const [isArrival, setIsArrival] = useState(false);
+  // console.log(isArrival)
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
       const response = await fetch(
-        `${api}/metadata/feedback?Wire=${data.w}&Color=${data.cr}&Connecteur=${data.c}&Voie=${data.v}&Poste=${data.p}&isArrival=${isArrival}`,
+        `${api}/metadata/feedback?Wire=${data.w}&Color=${data.cr}&Connecteur=${data.c}&Voie=${data.v}&Poste=${data.p}`,
         {
           method: "GET",
           headers: {
@@ -102,22 +102,7 @@ const FeedBackForm = (p) => {
               style={{ textTransform: "none" }}
             />
           </div>
-          <div className={c.checkBox}>
-            <input
-              type="checkbox"
-              id="horns"
-              name="horns"
-              onChange={(e) => {
-                setIsArrival(e.target.checked);
-              }}
-            />
-            <label htmlFor="horns">
-              Arrival zone {" "}
-              <span>
-              Search by arrival zone only.
-              </span>
-            </label>
-          </div>
+     
           <button type="submit" className={c["form-submit-btn"]}>
             Submit
           </button>
@@ -172,3 +157,23 @@ const FeedBackForm = (p) => {
 };
 
 export default FeedBackForm;
+
+
+
+
+// <div className={c.checkBox}>
+// <input
+//   type="checkbox"
+//   id="horns"
+//   name="horns"
+//   onChange={(e) => {
+//     setIsArrival(e.target.checked);
+//   }}
+// />
+// <label htmlFor="horns">
+//   Arrival zone {" "}
+//   <span>
+//   Search by arrival zone only.
+//   </span>
+// </label>
+// </div>
