@@ -6,7 +6,7 @@ const FeedBackForm = (p) => {
   const [data, setData] = useState({ c: "", v: "", cr: "", w: "", p: "" });
   const [returnedData, setReturnedData] = useState([]);
   const [isArrival, setIsArrival] = useState(false);
-
+  console.log(isArrival)
   const handleSubmit = async (e) => {
     e.preventDefault();
 
