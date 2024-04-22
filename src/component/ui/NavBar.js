@@ -25,26 +25,32 @@ const NavBar = (p) => {
                 home
               </NavLink>
             </li>
-            {isLoged.role === "Admin" &&  <React.Fragment>
-            <li>
-              <NavLink
-                to="/config"
-                className={({ isActive }) => (isActive ? c.activeLink : c.link)}
-              >
-                Config
-              </NavLink>
-            </li>
-            </React.Fragment>}
-            {isLoged.role !== "Reworker" &&
+            {isLoged.role === "Admin" && (
+              <React.Fragment>
+                <li>
+                  <NavLink
+                    to="/config"
+                    className={({ isActive }) =>
+                      isActive ? c.activeLink : c.link
+                    }
+                  >
+                    Config
+                  </NavLink>
+                </li>
+              </React.Fragment>
+            )}
+            {isLoged.role !== "Reworker" && (
               <li>
-              <NavLink
-                to="/dashboard"
-                className={({ isActive }) => (isActive ? c.activeLink : c.link)}
-              >
-                dashboard
-              </NavLink>
-            </li>
-            }
+                <NavLink
+                  to="/dashboard"
+                  className={({ isActive }) =>
+                    isActive ? c.activeLink : c.link
+                  }
+                >
+                  dashboard
+                </NavLink>
+              </li>
+            )}
           </ul>
         </div>
       )}
