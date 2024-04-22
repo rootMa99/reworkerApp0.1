@@ -32,7 +32,10 @@ const FeedBackForm = (p) => {
 
   return (
     <React.Fragment>
-      <div className={c["form-container"]} style={{ top: "25vh" }}>
+      <div
+        className={c["form-container"]}
+        style={{ top: "25vh", width: "90%" }}
+      >
         <form
           className={c.form}
           onSubmit={handleSubmit}
@@ -109,7 +112,10 @@ const FeedBackForm = (p) => {
               }}
             />
             <label htmlFor="horns">
-              Arrival zone
+              Arrival zone {" "}
+              <span>
+              Search by arrival zone only.
+              </span>
             </label>
           </div>
           <button type="submit" className={c["form-submit-btn"]}>
