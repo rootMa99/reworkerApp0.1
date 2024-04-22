@@ -4,10 +4,8 @@ import api from "../../services/api";
 import { useDispatch, useSelector } from "react-redux";
 import { loginSActions } from "../../store/loginSlice";
 const Notification = (p) => {
-  const {isLoged} = useSelector(
-    (s) => s.loginr
-  );
-  const dispatch=useDispatch();
+  const { isLoged } = useSelector((s) => s.loginr);
+  const dispatch = useDispatch();
   const classe = !p.urg
     ? `${c["notifications-container"]}`
     : `${c["notifications-containerurg"]}`;
@@ -16,11 +14,11 @@ const Notification = (p) => {
     ? `${c["alert-prompt-wrap"]}`
     : `${c["alert-prompt-wrap-urg"]}`;
 
-  const clickHandler=async (e, t)=>{
-    if (t==="cancel"){
+  const clickHandler = async (e, t) => {
+    if (t === "cancel") {
       p.close();
     }
-    if (t==="continue"){
+    if (t === "continue") {
       try {
         const response = await fetch(`${api}/logistics/delete/${p.id}`, {
           method: "DELETE",
@@ -32,31 +30,32 @@ const Notification = (p) => {
 
         const data = await response.json();
         dispatch(loginSActions.deleteRef(p.id));
-        console.log(data)
+        console.log(data);
       } catch (error) {
         console.error("Error:", error);
       }
       p.close();
     }
-  }
-
+  };
 
   return (
     <React.Fragment>
       {p.del ? (
         <div className={`${c.notify} ${c.anim}`}>
-          <p>do you want to delete this ref <span>{p.refid}</span> ?</p>
+          <p>
+            do you want to delete this ref <span>{p.refid}</span> ?
+          </p>
           <div className={c.btnHolder}>
-            <button onClick={e=>clickHandler(e, "cancel")}>
+            <button onClick={(e) => clickHandler(e, "cancel")}>
               <span>cancel</span>
             </button>
-            <button onClick={e=>clickHandler(e, "continue")}>
+            <button onClick={(e) => clickHandler(e, "continue")}>
               <span>continue anyway</span>
             </button>
           </div>
         </div>
       ) : (
-        <div className={classe} style={p.urg? {width: "45rem"}: {}}>
+        <div className={classe} style={p.urg ? { width: "45rem" } : {}}>
           <div className={classealt}>
             <div className={c["flex"]}>
               <div

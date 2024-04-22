@@ -10,7 +10,6 @@ import trash from "../../assets/trash.png";
 import UploadExcelData from "./UploadExcelData";
 import Notification from "../ui/Notification";
 
-
 const stylec = (status) => {
   return status === "Repaired"
     ? {
@@ -222,7 +221,6 @@ const Home = (p) => {
   const deleteHandlerRefclose = () => {
     setNotify({ logic: false, id: 0, ref: "" });
   };
-
 
   return (
     <React.Fragment>

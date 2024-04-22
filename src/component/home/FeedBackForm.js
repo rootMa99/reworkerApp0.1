@@ -102,7 +102,7 @@ const FeedBackForm = (p) => {
               style={{ textTransform: "none" }}
             />
           </div>
-     
+
           <button type="submit" className={c["form-submit-btn"]}>
             Submit
           </button>
@@ -157,9 +157,6 @@ const FeedBackForm = (p) => {
 };
 
 export default FeedBackForm;
-
-
-
 
 // <div className={c.checkBox}>
 // <input
