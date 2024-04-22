@@ -87,9 +87,9 @@ const Charts = (p) => {
             const value = context.parsed.y;
             const statusCounts = dataset.tooltips[label];
             let statusAggregation = {};
-            statusCounts.forEach(sc => {
-              const crewKey = sc.crew || 'Other';
-              const statusKey = sc.status || 'Other';
+            statusCounts.forEach((sc) => {
+              const crewKey = sc.crew || "Other";
+              const statusKey = sc.status || "Other";
 
               if (!statusAggregation[crewKey]) {
                 statusAggregation[crewKey] = {};
@@ -99,12 +99,20 @@ const Charts = (p) => {
               }
               statusAggregation[crewKey][statusKey] += sc.count;
             });
-            let itemsText = Object.entries(statusAggregation).map(([crew, statuses]) => {
-              let statusText = Object.entries(statuses).map(([status, count]) => {
-                return (status !== 'Other') ? `${status}: ${count}` : `${count}`;
-              }).join(', ');
-              return (crew !== 'Other') ? `(${crew}: ${statusText})` : `(${statusText})`;
-            }).join(' + ');
+            let itemsText = Object.entries(statusAggregation)
+              .map(([crew, statuses]) => {
+                let statusText = Object.entries(statuses)
+                  .map(([status, count]) => {
+                    return status !== "Other"
+                      ? `${status}: ${count}`
+                      : `${count}`;
+                  })
+                  .join(", ");
+                return crew !== "Other"
+                  ? `(${crew}: ${statusText})`
+                  : `(${statusText})`;
+              })
+              .join(" + ");
 
             return `  ${dataset.label}: Total ${value} ${itemsText}`;
           },

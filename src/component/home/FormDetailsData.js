@@ -2,27 +2,29 @@ import c from "./FormDetailsData.module.css";
 
 const FormDetailsData = (p) => {
   const style =
-    p.data.cableStatus  === "Repaired"
-    ? {
-        color: "#006B63",
-        fontWeight: "700",
-        borderBottom: "9px solid #006B63",
-      }
-    : p.data.cableStatus === "in-Progress"
-    ? {
-        color: "#D9F28B",
-        fontWeight: "700",
-        borderBottom: "9px solid #D9F28B",
-      }
-    :p.data.cableStatus === "Scrap"? {
-        color: "#CF3335",
-        fontWeight: "700",
-        borderBottom: "9px solid #CF3335",
-      }:{
-        color: "#929D96",
-        fontWeight: "700",
-        borderBottom: "9px solid #929D96",
-      };
+    p.data.cableStatus === "Repaired"
+      ? {
+          color: "#006B63",
+          fontWeight: "700",
+          borderBottom: "9px solid #006B63",
+        }
+      : p.data.cableStatus === "in-Progress"
+      ? {
+          color: "#D9F28B",
+          fontWeight: "700",
+          borderBottom: "9px solid #D9F28B",
+        }
+      : p.data.cableStatus === "Scrap"
+      ? {
+          color: "#CF3335",
+          fontWeight: "700",
+          borderBottom: "9px solid #CF3335",
+        }
+      : {
+          color: "#929D96",
+          fontWeight: "700",
+          borderBottom: "9px solid #929D96",
+        };
 
   return (
     <div className={c.descrHolder}>
@@ -47,12 +49,13 @@ const FormDetailsData = (p) => {
         <h3>reworker ID: </h3>
         <span>{p.data.reworkerID}</span>
       </div>
-      {(p.data.reworkerID_CS !== p.data.reworkerID && p.data.reworkerID_CS!==undefined ) && (
-        <div className={c.wrapDt}>
-          <h3>reworker ID_cs: </h3>
-          <span>{p.data.reworkerID_CS}</span>
-        </div>
-      )}
+      {p.data.reworkerID_CS !== p.data.reworkerID &&
+        p.data.reworkerID_CS !== undefined && (
+          <div className={c.wrapDt}>
+            <h3>reworker ID_cs: </h3>
+            <span>{p.data.reworkerID_CS}</span>
+          </div>
+        )}
       <div className={c.wrapDt}>
         <h3>problem: </h3>
         <ul>

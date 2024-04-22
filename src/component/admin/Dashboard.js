@@ -163,15 +163,17 @@ const Dashboard = (p) => {
         </div>
       </div>
       <div className={c.btnhelperholder}>
-        <Link to={`${api}/data/export/repairdata/excel?year=${
-          dataFilter.year
-        }&month=${dataFilter.month}&cableStatus=${dataFilter.cableStatus
-          .map((m) => m.value)
-          .toString()}&crews=${dataFilter.crews
-          .map((m) => m.value)
-          .toString()}&problems=${dataFilter.problems
-          .map((m) => m.value)
-          .toString()}`}>
+        <Link
+          to={`${api}/data/export/repairdata/excel?year=${
+            dataFilter.year
+          }&month=${dataFilter.month}&cableStatus=${dataFilter.cableStatus
+            .map((m) => m.value)
+            .toString()}&crews=${dataFilter.crews
+            .map((m) => m.value)
+            .toString()}&problems=${dataFilter.problems
+            .map((m) => m.value)
+            .toString()}`}
+        >
           <button className={c.button} type="button">
             <span className={c["button__text"]}>Download</span>
             <span className={c["button__icon"]}>
